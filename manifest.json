@@ -1,0 +1,16 @@
+{
+  "name": "猩球力量日志",
+  "short_name": "力量日志",
+  "description": "Week 16 健身房高阶器械与力量进阶打卡应用",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090d13",
+  "theme_color": "#0d1117",
+  "icons": [
+    {
+      "src": "https://www.gstatic.com/lamda/images/gemini_sparkle_4g_512_lt_f94943af3be039176192d.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

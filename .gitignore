@@ -1,0 +1,5 @@
+# Temporary files
+*.log
+*.tmp
+__pycache__/
+edge_profile*/

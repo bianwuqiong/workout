@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d1117">
+  <title>猩球力量日志 · Week 16</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root {
+      --bg: #090d13;
+      --card-bg: #151b23;
+      --card-border: #30363d;
+      --text-main: #f0f6fc;
+      --text-sub: #8b949e;
+      --accent: #2ea043;
+      --accent-glow: rgba(46, 160, 67, 0.35);
+      --highlight: #58a6ff;
+      --warn: #d29922;
+      --danger: #f85149;
+      --radius: 12px;
+      --tap-highlight: transparent;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 90px;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-title span {
+      background: linear-gradient(135deg, #58a6ff, #bc8cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .timer-badge-btn {
+      background: #21262d;
+      border: 1px solid var(--card-border);
+      color: var(--highlight);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .timer-badge-btn.running {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(46, 160, 67, 0.15);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 6px var(--accent-glow); }
+    }
+
+    /* Day Navigation */
+    .day-nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .day-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .day-btn {
+      flex: 0 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .day-btn.active {
+      background: #1f6feb;
+      color: #fff;
+      border-color: #388bfd;
+      box-shadow: 0 3px 12px rgba(31, 111, 235, 0.4);
+    }
+
+    .day-btn .sub {
+      font-size: 0.7rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    /* Day Info Banner */
+    .day-banner {
+      margin: 4px 16px 12px;
+      padding: 10px 14px;
+      background: rgba(33, 38, 45, 0.7);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      line-height: 1.4;
+      border-left: 3px solid var(--highlight);
+    }
+
+    .day-banner strong {
+      color: var(--text-main);
+    }
+
+    /* Exercise Card */
+    .exercise-card {
+      margin: 0 16px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .ex-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .ex-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ex-tag {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--highlight);
+      font-weight: 600;
+      margin-top: 3px;
+      display: inline-block;
+    }
+
+    .ex-cue {
+      font-size: 0.75rem;
+      color: var(--warn);
+      margin-top: 4px;
+    }
+
+    /* Sets Table */
+    .set-row {
+      display: grid;
+      grid-template-columns: 46px 1fr 1fr 48px;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+    }
+
+    .set-row:last-child {
+      border-bottom: none;
+    }
+
+    .set-label {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .num-stepper {
+      display: flex;
+      align-items: center;
+      background: #0d1117;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      overflow: hidden;
+      height: 36px;
+    }
+
+    .step-btn {
+      width: 28px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .step-btn:active {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .step-val {
+      flex: 1;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      outline: none;
+      background: transparent;
+      border: none;
+    }
+
+    .check-btn {
+      width: 38px;
+      height: 36px;
+      border-radius: 8px;
+      background: #21262d;
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .check-btn.done {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Bottom Floating Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13, 17, 23, 0.95);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--card-border);
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      gap: 10px;
+      z-index: 90;
+    }
+
+    .btn-main {
+      flex: 1;
+      background: #238636;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(35, 134, 54, 0.4);
+    }
+
+    .btn-main:active {
+      background: #2ea043;
+      transform: scale(0.98);
+    }
+
+    .btn-sec {
+      background: #21262d;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-sec:active {
+      background: #30363d;
+    }
+
+    /* Rest Timer Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: flex-end;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      background: #161b22;
+      border-top: 1px solid var(--card-border);
+      border-radius: 20px 20px 0 0;
+      padding: 20px 20px calc(24px + env(safe-area-inset-bottom));
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.show .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .timer-display {
+      text-align: center;
+      margin: 15px 0 20px;
+    }
+
+    .timer-big-num {
+      font-size: 4.5rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .quick-time-btn {
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: #21262d;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .quick-time-btn.active {
+      background: var(--highlight);
+      color: #fff;
+      border-color: var(--highlight);
+    }
+
+    .timer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #238636;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-title">
+      🦍 <span>猩球力量日志</span> · Week 16
+    </div>
+    <button class="timer-badge-btn" id="timerBadge" onclick="openTimerModal()">
+      ⏱️ <span id="badgeTimerText">组歇</span>
+    </button>
+  </header>
+
+  <!-- Day Navigation -->
+  <div class="day-nav" id="dayNav"></div>
+
+  <!-- Day Banner Info -->
+  <div class="day-banner" id="dayBanner"></div>
+
+  <!-- Exercises Container -->
+  <main id="exercisesContainer"></main>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <button class="btn-sec" onclick="openTimerModal()">⏱️ 计时</button>
+    <button class="btn-main" onclick="exportWorkoutLog()">📋 复制今日训练手记</button>
+    <button class="btn-sec" onclick="resetDayData()">🔄 重置</button>
+  </div>
+
+  <!-- Rest Timer Modal -->
+  <div class="modal-overlay" id="timerModal" onclick="closeTimerModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 1rem; font-weight: 700;">⏱️ 组间休息计时器</span>
+        <button onclick="closeTimerModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+      </div>
+
+      <div class="timer-display">
+        <div class="timer-big-num" id="modalTimeDisplay">01:30</div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="quick-time-btn" onclick="setTimerSeconds(60)">60s</button>
+        <button class="quick-time-btn active" onclick="setTimerSeconds(90)">90s</button>
+        <button class="quick-time-btn" onclick="setTimerSeconds(120)">120s</button>
+        <button class="quick-time-btn" onclick="setTimerSeconds(180)">180s</button>
+      </div>
+
+      <div class="timer-actions">
+        <button class="btn-sec" style="flex: 1;" onclick="toggleTimer()" id="timerToggleBtn">暂停</button>
+        <button class="btn-sec" style="flex: 1;" onclick="resetTimer()">重置</button>
+        <button class="btn-main" style="flex: 1;" onclick="closeTimerModal()">完成</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">已成功复制今日训练文本！</div>
+
+  <script>
+    // --- Data Definition for Week 16 ---
+    const WEEK16_PLAN = {
+      1: {
+        title: "Day 1",
+        name: "Upper A (垂直拉 + 侧平举 + 上胸)",
+        cue: "重点：高位下拉 50kg 稳定平铺；侧平举顶峰停顿 1 秒；上斜推胸向心挤压。",
+        exercises: [
+          {
+            name: "坐姿高位下拉 (宽握)",
+            tag: "垂直拉 · 背阔肌",
+            cue: "离心 3 秒，下拉至锁骨下沿，严禁耸肩",
+            unit: "kg",
+            sets: [
+              { label: "热身", weight: 45, reps: 12, done: false },
+              { label: "组 1", weight: 50, reps: 12, done: false },
+              { label: "组 2", weight: 50, reps: 12, done: false },
+              { label: "组 3", weight: 50, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "Nautilus Nitro 侧平举机",
+            tag: "肩部孤立 · 肘部驱动",
+            cue: "顶峰等长停顿 1 秒，离心 3 秒下放",
+            unit: "kg",
+            sets: [
+              { label: "组 1", weight: 30, reps: 15, done: false },
+              { label: "组 2", weight: 30, reps: 15, done: false },
+              { label: "组 3", weight: 30, reps: 15, done: false },
+              { label: "组 4", weight: 30, reps: 15, done: false }
+            ]
+          },
+          {
+            name: "上斜哑铃卧推 (30°)",
+            tag: "上胸 · 锁骨头",
+            cue: "肩胛骨下沉内收，小臂垂直地面",
+            unit: "kg",
+            sets: [
+              { label: "热身", weight: 12.5, reps: 10, done: false },
+              { label: "组 1", weight: 15, reps: 12, done: false },
+              { label: "组 2", weight: 15, reps: 10, done: false },
+              { label: "组 3", weight: 15, reps: 10, done: false }
+            ]
+          },
+          {
+            name: "双杠支撑 / 悬垂提膝",
+            tag: "核心 · 腹直肌下段",
+            cue: "骨盆主动后倾向上卷动，严禁用惯性甩腿",
+            unit: "自重",
+            sets: [
+              { label: "组 1", weight: 0, reps: 15, done: false },
+              { label: "组 2", weight: 0, reps: 15, done: false },
+              { label: "组 3", weight: 0, reps: 12, done: false }
+            ]
+          }
+        ]
+      },
+      2: {
+        title: "Day 2",
+        name: "Lower A (哈克深蹲 + 伸腿 + 腿弯举)",
+        cue: "重点：45° 哈克深蹲 75kg 满行程深潜；大腿深过水平面；严防骨盆翻转。",
+        exercises: [
+          {
+            name: "45° 线性哈克深蹲",
+            tag: "下肢主力 · 股四头肌",
+            cue: "双脚与肩同宽，全程核心紧锁，下潜到底",
+            unit: "kg",
+            sets: [
+              { label: "热身 1", weight: 0, reps: 15, done: false },
+              { label: "热身 2", weight: 50, reps: 12, done: false },
+              { label: "组 1", weight: 75, reps: 15, done: false },
+              { label: "组 2", weight: 75, reps: 15, done: false },
+              { label: "组 3", weight: 75, reps: 15, done: false }
+            ]
+          },
+          {
+            name: "坐姿伸腿训练器",
+            tag: "股四头肌孤立 · 恒张力",
+            cue: "小腿垫卡在脚踝上方，离心慢速下放",
+            unit: "kg",
+            sets: [
+              { label: "组 1", weight: 41, reps: 12, done: false },
+              { label: "组 2", weight: 45, reps: 12, done: false },
+              { label: "组 3", weight: 45, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "坐姿腿弯举 (屈腿训练器)",
+            tag: "后侧链 · 腘绳肌",
+            cue: "压板压实大腿，骨盆中立，严防下背代偿",
+            unit: "kg",
+            sets: [
+              { label: "组 1", weight: 35, reps: 15, done: false },
+              { label: "组 2", weight: 40, reps: 12, done: false },
+              { label: "组 3", weight: 40, reps: 12, done: false }
+            ]
+          }
+        ]
+      },
+      3: {
+        title: "Day 3",
+        name: "恢复日 A (零有氧 · 深层筋膜拉伸)",
+        cue: "战略铁律：严禁跑步/椭圆机。执行 20 分钟深层静态拉伸 + 30 分钟温水浴，保护热量盈余与 mTOR 合成通路。",
+        exercises: [
+          {
+            name: "全身大肌群深度静态拉伸",
+            tag: "筋膜恢复 · 无器械",
+            cue: "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒，深呼吸",
+            unit: "分钟",
+            sets: [
+              { label: "拉伸", weight: 0, reps: 20, done: false },
+              { label: "温水浴", weight: 0, reps: 30, done: false }
+            ]
+          }
+        ]
+      },
+      4: {
+        title: "Day 4",
+        name: "Upper B (20kg 推胸扩容 + 悍马划船 + 矩阵卷腹)",
+        cue: "重点突进：单侧 20kg 哑铃推胸扩充至 3 组；悍马高位划船锁定 22.5kg/侧；Matrix 卷腹 68kg 孤立轰炸。",
+        exercises: [
+          {
+            name: "平卧哑铃推胸",
+            tag: "水平推力 · 20kg 核心扩容",
+            cue: "沉肩锁背，3 秒离心下沉，向心上推不超伸锁肘",
+            unit: "kg",
+            sets: [
+              { label: "热身", weight: 15, reps: 10, done: false },
+              { label: "过渡", weight: 17.5, reps: 6, done: false },
+              { label: "组 1", weight: 20, reps: 8, done: false },
+              { label: "组 2", weight: 20, reps: 8, done: false },
+              { label: "组 3", weight: 20, reps: 8, done: false }
+            ]
+          },
+          {
+            name: "Hammer Strength 胸垫高位划船",
+            tag: "对角线拉力 · 背阔中下束",
+            cue: "单边挂片净重。胸垫锁死躯干，手肘沿弧线向后下拽动",
+            unit: "kg/侧",
+            sets: [
+              { label: "激活", weight: 15, reps: 12, done: false },
+              { label: "过渡", weight: 20, reps: 12, done: false },
+              { label: "组 1", weight: 22.5, reps: 12, done: false },
+              { label: "组 2", weight: 22.5, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "Matrix 坐姿卷腹机",
+            tag: "双轴联动 · 腹直肌全段",
+            cue: "双轴联动卷动脊柱，顶峰等长停顿 1.5 秒，慢速回放",
+            unit: "kg",
+            sets: [
+              { label: "适应", weight: 50, reps: 12, done: false },
+              { label: "爬升", weight: 59, reps: 12, done: false },
+              { label: "组 1", weight: 68, reps: 12, done: false },
+              { label: "组 2", weight: 68, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "哑铃农夫行走",
+            tag: "功能性握力 · 核心抗侧屈",
+            cue: "单侧 20kg，沉肩微收下巴，保持身体垂直直行",
+            unit: "步/侧",
+            sets: [
+              { label: "组 1", weight: 20, reps: 60, done: false },
+              { label: "组 2", weight: 20, reps: 60, done: false },
+              { label: "组 3", weight: 20, reps: 60, done: false }
+            ]
+          }
+        ]
+      },
+      5: {
+        title: "Day 5",
+        name: "Lower B (伸腿恒张力 + 45° 倒蹬代谢)",
+        cue: "重点：伸腿训练器执行全程恒张力，底端不触碰铁块卸力；45° 倒蹬机大容量代谢轰炸。",
+        exercises: [
+          {
+            name: "伸腿训练器 (恒张力协议)",
+            tag: "单边解耦 + 全程恒张力",
+            cue: "单腿左右各 41kg 激活神经；双腿在触底前 2cm 即刻反向做工",
+            unit: "kg",
+            sets: [
+              { label: "单腿左", weight: 41, reps: 12, done: false },
+              { label: "单腿右", weight: 41, reps: 12, done: false },
+              { label: "双腿 1", weight: 45, reps: 12, done: false },
+              { label: "双腿 2", weight: 45, reps: 15, done: false }
+            ]
+          },
+          {
+            name: "45° 倒蹬机 (Leg Press)",
+            tag: "下肢大容量 · 代谢刺激",
+            cue: "膝角弯曲至 90°，推起至顶峰保留微屈，绝不膝超伸锁死",
+            unit: "kg",
+            sets: [
+              { label: "组 1", weight: 120, reps: 15, done: false },
+              { label: "组 2", weight: 140, reps: 15, done: false },
+              { label: "组 3", weight: 140, reps: 15, done: false }
+            ]
+          },
+          {
+            name: "坐姿腿弯举 (腘绳肌)",
+            tag: "后侧链做工",
+            cue: "动作末端收紧顶峰停顿 1 秒",
+            unit: "kg",
+            sets: [
+              { label: "组 1", weight: 40, reps: 12, done: false },
+              { label: "组 2", weight: 40, reps: 12, done: false },
+              { label: "组 3", weight: 40, reps: 12, done: false }
+            ]
+          }
+        ]
+      },
+      6: {
+        title: "Day 6",
+        name: "恢复日 B (神经卸载 · 静态拉伸)",
+        cue: "核心任务：消除全周两轮上肢推拉与两轮下肢做工的神经疲劳。静态拉伸 + 热水浴 + 晚间早睡调适。",
+        exercises: [
+          {
+            name: "全身体位深度静态拉伸",
+            tag: "神经修复",
+            cue: "针对下背竖脊肌、颈肩斜方肌深层放松，禁止有氧",
+            unit: "分钟",
+            sets: [
+              { label: "拉伸", weight: 0, reps: 20, done: false },
+              { label: "水浴", weight: 0, reps: 30, done: false }
+            ]
+          }
+        ]
+      },
+      7: {
+        title: "Day 7",
+        name: "全面休息 (数据汇总与复盘)",
+        cue: "身体彻底放空，总结全周各动作载荷数据与睡眠心率趋势，准备编制 Week 17 周期方案。",
+        exercises: [
+          {
+            name: "全天被动休息与饮食充能",
+            tag: "超量恢复",
+            cue: "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
+            unit: "日",
+            sets: [
+              { label: "休息", weight: 0, reps: 1, done: false }
+            ]
+          }
+        ]
+      }
+    };
+
+    // --- State Management ---
+    let currentDay = 4; // Default to Day 4 (Next big lifting day)
+    let workoutState = {};
+
+    function initData() {
+      const saved = localStorage.getItem('week16_workout_state');
+      if (saved) {
+        try {
+          workoutState = JSON.parse(saved);
+        } catch (e) {
+          workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
+        }
+      } else {
+        workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem('week16_workout_state', JSON.stringify(workoutState));
+    }
+
+    // --- Render Functions ---
+    function renderDayNav() {
+      const nav = document.getElementById('dayNav');
+      nav.innerHTML = '';
+      for (let d = 1; d <= 7; d++) {
+        const btn = document.createElement('div');
+        btn.className = `day-btn ${d === currentDay ? 'active' : ''}`;
+        btn.onclick = () => switchDay(d);
+        btn.innerHTML = `
+          <span>${workoutState[d].title}</span>
+          <span class="sub">${d % 3 === 0 ? '恢复' : d === 7 ? '休息' : '训练'}</span>
+        `;
+        nav.appendChild(btn);
+      }
+    }
+
+    function renderDayContent() {
+      const dayData = workoutState[currentDay];
+      const banner = document.getElementById('dayBanner');
+      banner.innerHTML = `<strong>${dayData.name}</strong><br>${dayData.cue}`;
+
+      const container = document.getElementById('exercisesContainer');
+      container.innerHTML = '';
+
+      dayData.exercises.forEach((ex, exIdx) => {
+        const card = document.createElement('div');
+        card.className = 'exercise-card';
+
+        let setsHtml = '';
+        ex.sets.forEach((s, sIdx) => {
+          const isDone = s.done;
+          setsHtml += `
+            <div class="set-row">
+              <span class="set-label">${s.label}</span>
+              <div class="num-stepper">
+                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -2.5)">-</button>
+                <input class="step-val" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
+                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, 2.5)">+</button>
+              </div>
+              <div class="num-stepper">
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -1)">-</button>
+                <input class="step-val" type="number" step="1" value="${s.reps}" onchange="changeReps(${exIdx}, ${sIdx}, this.value)">
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, 1)">+</button>
+              </div>
+              <button class="check-btn ${isDone ? 'done' : ''}" onclick="toggleSetDone(${exIdx}, ${sIdx})">
+                ${isDone ? '✓' : '○'}
+              </button>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="ex-header">
+            <div>
+              <div class="ex-title">${ex.name}</div>
+              <span class="ex-tag">${ex.tag} · 单位:${ex.unit}</span>
+              <div class="ex-cue">💡 ${ex.cue}</div>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 46px 1fr 1fr 48px; gap: 8px; font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid rgba(48,54,61,0.3);">
+            <span>组号</span>
+            <span style="text-align:center;">重量(${ex.unit})</span>
+            <span style="text-align:center;">次数</span>
+            <span style="text-align:center;">完成</span>
+          </div>
+          ${setsHtml}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function switchDay(d) {
+      currentDay = d;
+      renderDayNav();
+      renderDayContent();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- Stepper Controls ---
+    function stepWeight(exIdx, sIdx, delta) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.weight = Math.max(0, +(set.weight + delta).toFixed(1));
+      saveData();
+      renderDayContent();
+    }
+
+    function changeWeight(exIdx, sIdx, val) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.weight = Math.max(0, parseFloat(val) || 0);
+      saveData();
+    }
+
+    function stepReps(exIdx, sIdx, delta) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.reps = Math.max(0, set.reps + delta);
+      saveData();
+      renderDayContent();
+    }
+
+    function changeReps(exIdx, sIdx, val) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.reps = Math.max(0, parseInt(val, 10) || 0);
+      saveData();
+    }
+
+    function toggleSetDone(exIdx, sIdx) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.done = !set.done;
+      saveData();
+      renderDayContent();
+
+      // Trigger rest timer if set was marked as done
+      if (set.done) {
+        if ('vibrate' in navigator) {
+          navigator.vibrate(50);
+        }
+        startTimer(90);
+      }
+    }
+
+    function resetDayData() {
+      if (confirm(`确认重置 ${workoutState[currentDay].title} 的打卡状态与数据为初始预设吗？`)) {
+        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK16_PLAN[currentDay]));
+        saveData();
+        renderDayContent();
+        showToast("已重置为初始预设计划");
+      }
+    }
+
+    // --- Rest Timer Logic ---
+    let timerInterval = null;
+    let timerSecondsLeft = 0;
+    let timerTotalSeconds = 90;
+    let isTimerRunning = false;
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function updateTimerUI() {
+      const str = formatTime(timerSecondsLeft);
+      document.getElementById('modalTimeDisplay').innerText = str;
+      const badge = document.getElementById('timerBadge');
+      const badgeText = document.getElementById('badgeTimerText');
+
+      if (isTimerRunning && timerSecondsLeft > 0) {
+        badge.classList.add('running');
+        badgeText.innerText = str;
+      } else {
+        badge.classList.remove('running');
+        badgeText.innerText = '组歇';
+      }
+    }
+
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      timerTotalSeconds = seconds || timerTotalSeconds;
+      timerSecondsLeft = timerTotalSeconds;
+      isTimerRunning = true;
+      document.getElementById('timerToggleBtn').innerText = '暂停';
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        if (timerSecondsLeft > 0) {
+          timerSecondsLeft--;
+          updateTimerUI();
+        } else {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          updateTimerUI();
+          triggerTimerAlarm();
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        document.getElementById('timerToggleBtn').innerText = '继续';
+      } else {
+        if (timerSecondsLeft <= 0) timerSecondsLeft = timerTotalSeconds;
+        isTimerRunning = true;
+        document.getElementById('timerToggleBtn').innerText = '暂停';
+        timerInterval = setInterval(() => {
+          if (timerSecondsLeft > 0) {
+            timerSecondsLeft--;
+            updateTimerUI();
+          } else {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            updateTimerUI();
+            triggerTimerAlarm();
+          }
+        }, 1000);
+      }
+      updateTimerUI();
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerSecondsLeft = timerTotalSeconds;
+      document.getElementById('timerToggleBtn').innerText = '开始';
+      updateTimerUI();
+    }
+
+    function setTimerSeconds(sec) {
+      document.querySelectorAll('.quick-time-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === sec + 's');
+      });
+      timerTotalSeconds = sec;
+      startTimer(sec);
+    }
+
+    function triggerTimerAlarm() {
+      // Vibration
+      if ('vibrate' in navigator) {
+        navigator.vibrate([200, 100, 200, 100, 400]);
+      }
+      // Audio Beep
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+      } catch (e) {
+        console.log('Web Audio not allowed without user gesture');
+      }
+      showToast('⏰ 组间休息结束，请开始下一组！');
+    }
+
+    function openTimerModal() {
+      document.getElementById('timerModal').classList.add('show');
+    }
+
+    function closeTimerModal() {
+      document.getElementById('timerModal').classList.remove('show');
+    }
+
+    // --- Export Note Formatting (Matches user's mobile note style exactly) ---
+    function exportWorkoutLog() {
+      const dayData = workoutState[currentDay];
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
+      
+      let text = `week16day${currentDay}\n${dateStr} | 猩球健身\n\n`;
+
+      dayData.exercises.forEach(ex => {
+        text += `${ex.name}\n`;
+        const completedSets = ex.sets.filter(s => s.done);
+        const targetSets = completedSets.length > 0 ? completedSets : ex.sets;
+
+        targetSets.forEach((s, idx) => {
+          const numPrefix = ["第一组", "第二组", "第三组", "第四组", "第五组", "第六组"][idx] || `第${idx+1}组`;
+          if (ex.unit === '自重' || ex.unit === '日') {
+            text += `${numPrefix} ${s.reps}次\n`;
+          } else if (ex.unit === '分钟') {
+            text += `${numPrefix} ${s.reps}分钟\n`;
+          } else if (ex.unit === '步/侧') {
+            text += `${numPrefix} ${s.reps}步单侧 ${s.weight}kg\n`;
+          } else if (ex.unit === 'kg/侧') {
+            text += `${numPrefix}单边 ${s.weight}kg ${s.reps}次\n`;
+          } else {
+            text += `${numPrefix}单侧 ${s.weight}kg ${s.reps}次\n`;
+          }
+        });
+        text += `\n`;
+      });
+
+      // Copy to clipboard
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text.trim()).then(() => {
+          showToast('📋 已复制今日记录，可直接发给 AI 教练！');
+        }).catch(() => {
+          fallbackCopy(text.trim());
+        });
+      } else {
+        fallbackCopy(text.trim());
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('📋 已复制今日记录，可直接发给 AI 教练！');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // --- Init ---
+    initData();
+    renderDayNav();
+    renderDayContent();
+  </script>
+</body>
+</html>
