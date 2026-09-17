@@ -572,6 +572,7 @@
         title: "Day 1",
         name: "Upper A (垂直拉 + 侧平举 + 上胸)",
         cue: "重点：高位下拉 50kg 稳定平铺；侧平举顶峰停顿 1 秒；上斜推胸向心挤压。",
+        typeLabel: "训练",
         exercises: [
           {
             name: "坐姿高位下拉 (宽握)",
@@ -630,6 +631,7 @@
         title: "Day 2",
         name: "Lower A (哈克深蹲 + 伸腿 + 腿弯举)",
         cue: "重点：45° 哈克深蹲 75kg 满行程深潜；大腿深过水平面；严防骨盆翻转。",
+        typeLabel: "训练",
         exercises: [
           {
             name: "45° 线性哈克深蹲",
@@ -675,6 +677,7 @@
         title: "Day 3",
         name: "恢复日 A (零有氧 · 深层筋膜拉伸)",
         cue: "战略铁律：严禁跑步/椭圆机。执行 20 分钟深层静态拉伸 + 30 分钟温水浴，保护热量盈余与 mTOR 合成通路。",
+        typeLabel: "恢复",
         exercises: [
           {
             name: "全身大肌群深度静态拉伸",
@@ -693,6 +696,7 @@
         title: "Day 4",
         name: "Upper B (20kg 推胸扩容 + 悍马划船 + 矩阵卷腹)",
         cue: "重点突进：单侧 20kg 哑铃推胸扩充至 3 组；悍马高位划船锁定 22.5kg/侧；Matrix 卷腹 68kg 孤立轰炸。",
+        typeLabel: "训练",
         exercises: [
           {
             name: "平卧哑铃推胸",
@@ -750,8 +754,28 @@
       },
       5: {
         title: "Day 5",
+        name: "恢复日 B (主动恢复 · 神经卸载与深层拉伸)",
+        cue: "战略调整（方案1 均匀交替）：错开推胸与练腿两大难关，周五零有氧主动恢复。全身体位静态拉伸 20 分钟 + 温水浴，为周六 Lower B 充分积蓄肌糖原与副交感神经张力。",
+        typeLabel: "恢复",
+        exercises: [
+          {
+            name: "全身体位深度静态拉伸",
+            tag: "神经修复 · 结缔组织减压",
+            cue: "针对下背竖脊肌、胸小肌、颈肩斜方肌深层放松，严禁中高强度有氧",
+            unit: "分",
+            stepDelta: 5,
+            sets: [
+              { label: "拉伸", weight: 0, reps: 20, done: false },
+              { label: "水浴", weight: 0, reps: 30, done: false }
+            ]
+          }
+        ]
+      },
+      6: {
+        title: "Day 6",
         name: "Lower B (伸腿恒张力 + 45° 倒蹬代谢)",
-        cue: "重点：伸腿训练器执行全程恒张力，底端不触碰铁块卸力；45° 倒蹬机大容量代谢轰炸。",
+        cue: "重点：周五充分恢复后全力攻坚下肢！伸腿训练器执行全程恒张力，底端不触碰铁块卸力；45° 倒蹬机大容量代谢轰炸。",
+        typeLabel: "训练",
         exercises: [
           {
             name: "伸腿训练器 (恒张力协议)",
@@ -792,28 +816,11 @@
           }
         ]
       },
-      6: {
-        title: "Day 6",
-        name: "恢复日 B (神经卸载 · 静态拉伸)",
-        cue: "核心任务：消除全周两轮上肢推拉与两轮下肢做工的神经疲劳。静态拉伸 + 热水浴 + 晚间早睡调适。",
-        exercises: [
-          {
-            name: "全身体位深度静态拉伸",
-            tag: "神经修复",
-            cue: "针对下背竖脊肌、颈肩斜方肌深层放松，禁止有氧",
-            unit: "分",
-            stepDelta: 5,
-            sets: [
-              { label: "拉伸", weight: 0, reps: 20, done: false },
-              { label: "水浴", weight: 0, reps: 30, done: false }
-            ]
-          }
-        ]
-      },
       7: {
         title: "Day 7",
         name: "全面休息 (数据汇总与复盘)",
         cue: "身体彻底放空，总结全周各动作载荷数据与睡眠心率趋势，准备编制 Week 17 周期方案。",
+        typeLabel: "休息",
         exercises: [
           {
             name: "全天被动休息与饮食充能",
@@ -830,11 +837,12 @@
     };
 
     // --- State Management ---
-    let currentDay = 4;
+    const STORAGE_KEY = 'week16_workout_state_v3';
+    let currentDay = 1;
     let workoutState = {};
 
     function initData() {
-      const saved = localStorage.getItem('week16_workout_state_v2');
+      const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
           workoutState = JSON.parse(saved);
@@ -843,11 +851,21 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
+        const oldSaved = localStorage.getItem('week16_workout_state_v2');
+        if (oldSaved) {
+          try {
+            const oldState = JSON.parse(oldSaved);
+            for (let d = 1; d <= 4; d++) {
+              if (oldState[d]) workoutState[d] = oldState[d];
+            }
+          } catch (e) {}
+        }
+        saveData();
       }
     }
 
     function saveData() {
-      localStorage.setItem('week16_workout_state_v2', JSON.stringify(workoutState));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(workoutState));
     }
 
     // --- Render Functions ---
@@ -860,7 +878,7 @@
         btn.onclick = () => switchDay(d);
         btn.innerHTML = `
           <span>${workoutState[d].title}</span>
-          <span class="sub">${d % 3 === 0 ? '恢复' : d === 7 ? '休息' : '训练'}</span>
+          <span class="sub">${workoutState[d].typeLabel || ((d === 3 || d === 5) ? '恢复' : (d === 7 ? '休息' : '训练'))}</span>
         `;
         nav.appendChild(btn);
       }
