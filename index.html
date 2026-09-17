@@ -5,23 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0d1117">
+  <meta name="theme-color" content="#090d13">
   <title>猩球力量日志 · Week 16</title>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
-      --bg: #090d13;
-      --card-bg: #151b23;
-      --card-border: #30363d;
+      --bg: #070a0e;
+      --card-bg: #12171f;
+      --card-border: #232a35;
       --text-main: #f0f6fc;
-      --text-sub: #8b949e;
-      --accent: #2ea043;
+      --text-sub: #7d8590;
+      --accent: #238636;
+      --accent-active: #2ea043;
       --accent-glow: rgba(46, 160, 67, 0.35);
       --highlight: #58a6ff;
-      --warn: #d29922;
-      --danger: #f85149;
+      --warn: #e3b341;
+      --stepper-bg: #0a0e14;
+      --stepper-border: #262e3b;
+      --btn-bg: #1a212d;
       --radius: 12px;
-      --tap-highlight: transparent;
     }
 
     * {
@@ -32,12 +34,24 @@
       user-select: none;
     }
 
+    /* Remove number spin buttons on WebKit/Chrome/Android */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       background-color: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 90px;
+      padding-top: env(safe-area-inset-top, 0);
+      padding-bottom: calc(78px + env(safe-area-inset-bottom, 16px));
       overflow-x: hidden;
     }
 
@@ -46,17 +60,18 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(13, 17, 23, 0.9);
-      backdrop-filter: blur(12px);
+      background: rgba(7, 10, 14, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--card-border);
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .header-title {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
@@ -71,22 +86,22 @@
     }
 
     .timer-badge-btn {
-      background: #21262d;
+      background: #161b22;
       border: 1px solid var(--card-border);
       color: var(--highlight);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 0.82rem;
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       cursor: pointer;
     }
 
     .timer-badge-btn.running {
-      border-color: var(--accent);
-      color: var(--accent);
+      border-color: var(--accent-active);
+      color: var(--accent-active);
       background: rgba(46, 160, 67, 0.15);
       animation: pulse 1.5s infinite;
     }
@@ -100,7 +115,7 @@
     .day-nav {
       display: flex;
       gap: 8px;
-      padding: 12px 16px;
+      padding: 10px 12px;
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -114,14 +129,14 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-sub);
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 10px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -134,55 +149,59 @@
     }
 
     .day-btn .sub {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       opacity: 0.85;
       font-weight: 400;
     }
 
-    /* Day Info Banner */
+    /* Day Banner */
     .day-banner {
-      margin: 4px 16px 12px;
-      padding: 10px 14px;
-      background: rgba(33, 38, 45, 0.7);
+      margin: 2px 10px 12px;
+      padding: 10px 12px;
+      background: rgba(18, 23, 31, 0.8);
+      border: 1px solid var(--card-border);
       border-radius: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-sub);
-      line-height: 1.4;
+      line-height: 1.45;
       border-left: 3px solid var(--highlight);
     }
 
     .day-banner strong {
       color: var(--text-main);
+      font-size: 0.86rem;
     }
 
     /* Exercise Card */
     .exercise-card {
-      margin: 0 16px 16px;
+      margin: 0 10px 12px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 14px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      padding: 12px 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
     }
 
     .ex-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.4);
     }
 
     .ex-title {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 700;
       color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .ex-tag {
-      font-size: 0.7rem;
-      padding: 2px 7px;
+      font-size: 0.68rem;
+      padding: 2px 6px;
       border-radius: 4px;
-      background: rgba(88, 166, 255, 0.15);
+      background: rgba(88, 166, 255, 0.12);
       color: var(--highlight);
       font-weight: 600;
       margin-top: 3px;
@@ -190,19 +209,31 @@
     }
 
     .ex-cue {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--warn);
       margin-top: 4px;
+      line-height: 1.35;
     }
 
-    /* Sets Table */
+    /* Sets Table Header */
+    .set-table-head {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 38px;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      padding: 2px 0 6px;
+      text-align: center;
+    }
+
+    /* Sets Row */
     .set-row {
       display: grid;
-      grid-template-columns: 46px 1fr 1fr 48px;
-      gap: 8px;
+      grid-template-columns: 36px 1fr 1fr 38px;
+      gap: 6px;
       align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(48, 54, 61, 0.5);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(35, 42, 53, 0.6);
     }
 
     .set-row:last-child {
@@ -210,131 +241,174 @@
     }
 
     .set-label {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-sub);
       font-weight: 600;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .num-stepper {
+    .set-label.warmup {
+      color: var(--warn);
+    }
+
+    /* High Precision Stepper Box */
+    .stepper {
       display: flex;
       align-items: center;
-      background: #0d1117;
-      border: 1px solid var(--card-border);
+      justify-content: space-between;
+      background: var(--stepper-bg);
+      border: 1px solid var(--stepper-border);
       border-radius: 8px;
-      overflow: hidden;
-      height: 36px;
+      height: 38px;
+      padding: 0 2px;
+      min-width: 0;
     }
 
     .step-btn {
       width: 28px;
-      height: 100%;
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 1.1rem;
-      font-weight: 700;
+      height: 32px;
+      background: var(--btn-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 1.15rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      flex-shrink: 0;
     }
 
     .step-btn:active {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
     }
 
-    .step-val {
+    .step-input-wrap {
       flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      padding: 0 1px;
+    }
+
+    .step-input {
+      width: 100%;
+      min-width: 0;
+      max-width: 44px;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
-      outline: none;
       background: transparent;
       border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      font-family: inherit;
+      user-select: text;
     }
 
+    .step-unit {
+      font-size: 0.65rem;
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+
+    /* Checkmark Button */
     .check-btn {
       width: 38px;
       height: 36px;
       border-radius: 8px;
-      background: #21262d;
+      background: var(--btn-bg);
       border: 1px solid var(--card-border);
-      color: var(--text-sub);
+      color: #484f58;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s;
+      flex-shrink: 0;
     }
 
     .check-btn.done {
       background: var(--accent);
-      border-color: var(--accent);
+      border-color: var(--accent-active);
       color: #fff;
       box-shadow: 0 0 10px var(--accent-glow);
     }
 
-    /* Bottom Floating Bar */
+    /* Bottom Floating Action Bar */
     .bottom-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(13, 17, 23, 0.95);
-      backdrop-filter: blur(14px);
+      background: rgba(7, 10, 14, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid var(--card-border);
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
-      display: flex;
-      gap: 10px;
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 16px));
+      display: grid;
+      grid-template-columns: 68px 1fr 68px;
+      gap: 8px;
       z-index: 90;
     }
 
     .btn-main {
-      flex: 1;
-      background: #238636;
+      background: var(--accent);
       color: #fff;
       border: none;
       border-radius: 10px;
-      padding: 12px;
-      font-size: 0.92rem;
+      padding: 11px 8px;
+      font-size: 0.9rem;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       cursor: pointer;
-      box-shadow: 0 3px 12px rgba(35, 134, 54, 0.4);
+      box-shadow: 0 3px 12px rgba(35, 134, 54, 0.35);
+      white-space: nowrap;
     }
 
     .btn-main:active {
-      background: #2ea043;
+      background: var(--accent-active);
       transform: scale(0.98);
     }
 
     .btn-sec {
-      background: #21262d;
+      background: #161b22;
       color: var(--text-main);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 0.92rem;
+      padding: 11px 4px;
+      font-size: 0.85rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .btn-sec:active {
-      background: #30363d;
+      background: #21262d;
     }
 
     /* Rest Timer Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.78);
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: flex-end;
       z-index: 200;
@@ -350,10 +424,10 @@
 
     .modal-sheet {
       width: 100%;
-      background: #161b22;
+      background: #12171f;
       border-top: 1px solid var(--card-border);
       border-radius: 20px 20px 0 0;
-      padding: 20px 20px calc(24px + env(safe-area-inset-bottom));
+      padding: 20px 16px calc(24px + env(safe-area-inset-bottom, 16px));
       transform: translateY(100%);
       transition: transform 0.25s ease;
     }
@@ -364,31 +438,31 @@
 
     .timer-display {
       text-align: center;
-      margin: 15px 0 20px;
+      margin: 12px 0 16px;
     }
 
     .timer-big-num {
-      font-size: 4.5rem;
+      font-size: 4.2rem;
       font-weight: 900;
       font-variant-numeric: tabular-nums;
-      color: var(--accent);
+      color: var(--accent-active);
       text-shadow: 0 0 20px var(--accent-glow);
     }
 
     .timer-controls {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 16px;
     }
 
     .quick-time-btn {
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: #21262d;
+      padding: 7px 13px;
+      border-radius: 18px;
+      background: #161b22;
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -407,16 +481,16 @@
     /* Toast */
     .toast {
       position: fixed;
-      top: 70px;
+      top: 65px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: #238636;
       color: #fff;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 25px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
       opacity: 0;
       pointer-events: none;
       transition: all 0.25s;
@@ -424,6 +498,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .toast.show {
@@ -456,7 +531,7 @@
   <!-- Bottom Bar -->
   <div class="bottom-bar">
     <button class="btn-sec" onclick="openTimerModal()">⏱️ 计时</button>
-    <button class="btn-main" onclick="exportWorkoutLog()">📋 复制今日训练手记</button>
+    <button class="btn-main" onclick="exportWorkoutLog()">📋 复制今日手记</button>
     <button class="btn-sec" onclick="resetDayData()">🔄 重置</button>
   </div>
 
@@ -464,8 +539,8 @@
   <div class="modal-overlay" id="timerModal" onclick="closeTimerModal(event)">
     <div class="modal-sheet" onclick="event.stopPropagation()">
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 1rem; font-weight: 700;">⏱️ 组间休息计时器</span>
-        <button onclick="closeTimerModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer;">✕</button>
+        <span style="font-size: 0.95rem; font-weight: 700;">⏱️ 组间休息计时器</span>
+        <button onclick="closeTimerModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.3rem; padding: 4px; cursor: pointer;">✕</button>
       </div>
 
       <div class="timer-display">
@@ -503,6 +578,7 @@
             tag: "垂直拉 · 背阔肌",
             cue: "离心 3 秒，下拉至锁骨下沿，严禁耸肩",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "热身", weight: 45, reps: 12, done: false },
               { label: "组 1", weight: 50, reps: 12, done: false },
@@ -515,6 +591,7 @@
             tag: "肩部孤立 · 肘部驱动",
             cue: "顶峰等长停顿 1 秒，离心 3 秒下放",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "组 1", weight: 30, reps: 15, done: false },
               { label: "组 2", weight: 30, reps: 15, done: false },
@@ -527,6 +604,7 @@
             tag: "上胸 · 锁骨头",
             cue: "肩胛骨下沉内收，小臂垂直地面",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "热身", weight: 12.5, reps: 10, done: false },
               { label: "组 1", weight: 15, reps: 12, done: false },
@@ -539,6 +617,7 @@
             tag: "核心 · 腹直肌下段",
             cue: "骨盆主动后倾向上卷动，严禁用惯性甩腿",
             unit: "自重",
+            stepDelta: 0,
             sets: [
               { label: "组 1", weight: 0, reps: 15, done: false },
               { label: "组 2", weight: 0, reps: 15, done: false },
@@ -557,6 +636,7 @@
             tag: "下肢主力 · 股四头肌",
             cue: "双脚与肩同宽，全程核心紧锁，下潜到底",
             unit: "kg",
+            stepDelta: 5,
             sets: [
               { label: "热身 1", weight: 0, reps: 15, done: false },
               { label: "热身 2", weight: 50, reps: 12, done: false },
@@ -570,6 +650,7 @@
             tag: "股四头肌孤立 · 恒张力",
             cue: "小腿垫卡在脚踝上方，离心慢速下放",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "组 1", weight: 41, reps: 12, done: false },
               { label: "组 2", weight: 45, reps: 12, done: false },
@@ -581,6 +662,7 @@
             tag: "后侧链 · 腘绳肌",
             cue: "压板压实大腿，骨盆中立，严防下背代偿",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "组 1", weight: 35, reps: 15, done: false },
               { label: "组 2", weight: 40, reps: 12, done: false },
@@ -598,10 +680,11 @@
             name: "全身大肌群深度静态拉伸",
             tag: "筋膜恢复 · 无器械",
             cue: "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒，深呼吸",
-            unit: "分钟",
+            unit: "分",
+            stepDelta: 5,
             sets: [
               { label: "拉伸", weight: 0, reps: 20, done: false },
-              { label: "温水浴", weight: 0, reps: 30, done: false }
+              { label: "水浴", weight: 0, reps: 30, done: false }
             ]
           }
         ]
@@ -616,6 +699,7 @@
             tag: "水平推力 · 20kg 核心扩容",
             cue: "沉肩锁背，3 秒离心下沉，向心上推不超伸锁肘",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "热身", weight: 15, reps: 10, done: false },
               { label: "过渡", weight: 17.5, reps: 6, done: false },
@@ -628,7 +712,8 @@
             name: "Hammer Strength 胸垫高位划船",
             tag: "对角线拉力 · 背阔中下束",
             cue: "单边挂片净重。胸垫锁死躯干，手肘沿弧线向后下拽动",
-            unit: "kg/侧",
+            unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "激活", weight: 15, reps: 12, done: false },
               { label: "过渡", weight: 20, reps: 12, done: false },
@@ -641,6 +726,7 @@
             tag: "双轴联动 · 腹直肌全段",
             cue: "双轴联动卷动脊柱，顶峰等长停顿 1.5 秒，慢速回放",
             unit: "kg",
+            stepDelta: 4.5,
             sets: [
               { label: "适应", weight: 50, reps: 12, done: false },
               { label: "爬升", weight: 59, reps: 12, done: false },
@@ -652,7 +738,8 @@
             name: "哑铃农夫行走",
             tag: "功能性握力 · 核心抗侧屈",
             cue: "单侧 20kg，沉肩微收下巴，保持身体垂直直行",
-            unit: "步/侧",
+            unit: "步",
+            stepDelta: 10,
             sets: [
               { label: "组 1", weight: 20, reps: 60, done: false },
               { label: "组 2", weight: 20, reps: 60, done: false },
@@ -671,11 +758,12 @@
             tag: "单边解耦 + 全程恒张力",
             cue: "单腿左右各 41kg 激活神经；双腿在触底前 2cm 即刻反向做工",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
-              { label: "单腿左", weight: 41, reps: 12, done: false },
-              { label: "单腿右", weight: 41, reps: 12, done: false },
-              { label: "双腿 1", weight: 45, reps: 12, done: false },
-              { label: "双腿 2", weight: 45, reps: 15, done: false }
+              { label: "单左", weight: 41, reps: 12, done: false },
+              { label: "单右", weight: 41, reps: 12, done: false },
+              { label: "双腿1", weight: 45, reps: 12, done: false },
+              { label: "双腿2", weight: 45, reps: 15, done: false }
             ]
           },
           {
@@ -683,6 +771,7 @@
             tag: "下肢大容量 · 代谢刺激",
             cue: "膝角弯曲至 90°，推起至顶峰保留微屈，绝不膝超伸锁死",
             unit: "kg",
+            stepDelta: 10,
             sets: [
               { label: "组 1", weight: 120, reps: 15, done: false },
               { label: "组 2", weight: 140, reps: 15, done: false },
@@ -694,6 +783,7 @@
             tag: "后侧链做工",
             cue: "动作末端收紧顶峰停顿 1 秒",
             unit: "kg",
+            stepDelta: 2.5,
             sets: [
               { label: "组 1", weight: 40, reps: 12, done: false },
               { label: "组 2", weight: 40, reps: 12, done: false },
@@ -711,7 +801,8 @@
             name: "全身体位深度静态拉伸",
             tag: "神经修复",
             cue: "针对下背竖脊肌、颈肩斜方肌深层放松，禁止有氧",
-            unit: "分钟",
+            unit: "分",
+            stepDelta: 5,
             sets: [
               { label: "拉伸", weight: 0, reps: 20, done: false },
               { label: "水浴", weight: 0, reps: 30, done: false }
@@ -729,6 +820,7 @@
             tag: "超量恢复",
             cue: "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
             unit: "日",
+            stepDelta: 1,
             sets: [
               { label: "休息", weight: 0, reps: 1, done: false }
             ]
@@ -738,11 +830,11 @@
     };
 
     // --- State Management ---
-    let currentDay = 4; // Default to Day 4 (Next big lifting day)
+    let currentDay = 4;
     let workoutState = {};
 
     function initData() {
-      const saved = localStorage.getItem('week16_workout_state');
+      const saved = localStorage.getItem('week16_workout_state_v2');
       if (saved) {
         try {
           workoutState = JSON.parse(saved);
@@ -755,7 +847,7 @@
     }
 
     function saveData() {
-      localStorage.setItem('week16_workout_state', JSON.stringify(workoutState));
+      localStorage.setItem('week16_workout_state_v2', JSON.stringify(workoutState));
     }
 
     // --- Render Functions ---
@@ -789,19 +881,34 @@
         let setsHtml = '';
         ex.sets.forEach((s, sIdx) => {
           const isDone = s.done;
+          const isWarm = s.label.includes('热身') || s.label.includes('激活');
+          const delta = ex.stepDelta || 2.5;
+
           setsHtml += `
             <div class="set-row">
-              <span class="set-label">${s.label}</span>
-              <div class="num-stepper">
-                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -2.5)">-</button>
-                <input class="step-val" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
-                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, 2.5)">+</button>
+              <span class="set-label ${isWarm ? 'warmup' : ''}">${s.label}</span>
+              
+              <!-- Weight Stepper -->
+              <div class="stepper">
+                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -${delta})">−</button>
+                <div class="step-input-wrap">
+                  <input class="step-input" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
+                  <span class="step-unit">${ex.unit}</span>
+                </div>
+                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, ${delta})">+</button>
               </div>
-              <div class="num-stepper">
-                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -1)">-</button>
-                <input class="step-val" type="number" step="1" value="${s.reps}" onchange="changeReps(${exIdx}, ${sIdx}, this.value)">
+
+              <!-- Reps Stepper -->
+              <div class="stepper">
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -1)">−</button>
+                <div class="step-input-wrap">
+                  <input class="step-input" type="number" step="1" value="${s.reps}" onchange="changeReps(${exIdx}, ${sIdx}, this.value)">
+                  <span class="step-unit">次</span>
+                </div>
                 <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, 1)">+</button>
               </div>
+
+              <!-- Check Done -->
               <button class="check-btn ${isDone ? 'done' : ''}" onclick="toggleSetDone(${exIdx}, ${sIdx})">
                 ${isDone ? '✓' : '○'}
               </button>
@@ -811,17 +918,17 @@
 
         card.innerHTML = `
           <div class="ex-header">
-            <div>
-              <div class="ex-title">${ex.name}</div>
-              <span class="ex-tag">${ex.tag} · 单位:${ex.unit}</span>
-              <div class="ex-cue">💡 ${ex.cue}</div>
+            <div class="ex-title">
+              <span>${ex.name}</span>
             </div>
+            <span class="ex-tag">${ex.tag}</span>
+            <div class="ex-cue">💡 ${ex.cue}</div>
           </div>
-          <div style="display: grid; grid-template-columns: 46px 1fr 1fr 48px; gap: 8px; font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid rgba(48,54,61,0.3);">
-            <span>组号</span>
-            <span style="text-align:center;">重量(${ex.unit})</span>
-            <span style="text-align:center;">次数</span>
-            <span style="text-align:center;">完成</span>
+          <div class="set-table-head">
+            <span>组别</span>
+            <span>负荷</span>
+            <span>次数</span>
+            <span>打卡</span>
           </div>
           ${setsHtml}
         `;
@@ -836,7 +943,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- Stepper Controls ---
+    // --- Controls ---
     function stepWeight(exIdx, sIdx, delta) {
       const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
       set.weight = Math.max(0, +(set.weight + delta).toFixed(1));
@@ -869,7 +976,6 @@
       saveData();
       renderDayContent();
 
-      // Trigger rest timer if set was marked as done
       if (set.done) {
         if ('vibrate' in navigator) {
           navigator.vibrate(50);
@@ -879,15 +985,15 @@
     }
 
     function resetDayData() {
-      if (confirm(`确认重置 ${workoutState[currentDay].title} 的打卡状态与数据为初始预设吗？`)) {
+      if (confirm(`确认重置 ${workoutState[currentDay].title} 为初始预设计划吗？`)) {
         workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK16_PLAN[currentDay]));
         saveData();
         renderDayContent();
-        showToast("已重置为初始预设计划");
+        showToast("已重置今日预设计划");
       }
     }
 
-    // --- Rest Timer Logic ---
+    // --- Rest Timer ---
     let timerInterval = null;
     let timerSecondsLeft = 0;
     let timerTotalSeconds = 90;
@@ -976,11 +1082,9 @@
     }
 
     function triggerTimerAlarm() {
-      // Vibration
       if ('vibrate' in navigator) {
         navigator.vibrate([200, 100, 200, 100, 400]);
       }
-      // Audio Beep
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -988,15 +1092,13 @@
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.6);
-      } catch (e) {
-        console.log('Web Audio not allowed without user gesture');
-      }
-      showToast('⏰ 组间休息结束，请开始下一组！');
+      } catch (e) {}
+      showToast('⏰ 组歇结束，请开始下一组！');
     }
 
     function openTimerModal() {
@@ -1024,23 +1126,26 @@
           const numPrefix = ["第一组", "第二组", "第三组", "第四组", "第五组", "第六组"][idx] || `第${idx+1}组`;
           if (ex.unit === '自重' || ex.unit === '日') {
             text += `${numPrefix} ${s.reps}次\n`;
-          } else if (ex.unit === '分钟') {
+          } else if (ex.unit === '分') {
             text += `${numPrefix} ${s.reps}分钟\n`;
-          } else if (ex.unit === '步/侧') {
+          } else if (ex.unit === '步') {
             text += `${numPrefix} ${s.reps}步单侧 ${s.weight}kg\n`;
-          } else if (ex.unit === 'kg/侧') {
-            text += `${numPrefix}单边 ${s.weight}kg ${s.reps}次\n`;
-          } else {
-            text += `${numPrefix}单侧 ${s.weight}kg ${s.reps}次\n`;
+          } else if (ex.unit === 'kg') {
+            if (ex.name.includes('划船')) {
+              text += `${numPrefix}单边 ${s.weight}kg ${s.reps}次\n`;
+            } else if (ex.name.includes('哑铃') || ex.name.includes('推胸')) {
+              text += `${numPrefix}单侧 ${s.weight}kg ${s.reps}次\n`;
+            } else {
+              text += `${numPrefix} ${s.weight}kg ${s.reps}次\n`;
+            }
           }
         });
         text += `\n`;
       });
 
-      // Copy to clipboard
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text.trim()).then(() => {
-          showToast('📋 已复制今日记录，可直接发给 AI 教练！');
+          showToast('📋 已复制今日记录，可发给 AI 复盘！');
         }).catch(() => {
           fallbackCopy(text.trim());
         });
@@ -1056,7 +1161,7 @@
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-      showToast('📋 已复制今日记录，可直接发给 AI 教练！');
+      showToast('📋 已复制今日记录，可发给 AI 复盘！');
     }
 
     function showToast(msg) {
@@ -1066,7 +1171,6 @@
       setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
-    // --- Init ---
     initData();
     renderDayNav();
     renderDayContent();
