@@ -570,8 +570,8 @@
     const WEEK16_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (辅助引体 + 侧平举 + 上胸)",
-        cue: "重点：配重辅助引体向上替代高位下拉（宽握，沉肩肘向下引）；侧平举顶峰停顿 1 秒；上斜推胸向心挤压。",
+        name: "Upper A (辅助引体 + 侧平举 + 上胸 + 矩阵卷腹)",
+        cue: "重点：配重辅助引体替代高位下拉；侧平举顶峰停顿 1 秒；上斜推胸向心挤压；Matrix 卷腹定量高张力轰炸。",
         typeLabel: "训练",
         exercises: [
           {
@@ -614,15 +614,15 @@
             ]
           },
           {
-            name: "双杠支撑 / 悬垂提膝",
-            tag: "核心 · 腹直肌下段",
-            cue: "骨盆主动后倾向上卷动，严禁用惯性甩腿",
-            unit: "自重",
-            stepDelta: 0,
+            name: "Matrix 坐姿卷腹机",
+            tag: "双轴联动 · 腹直肌高机械张力",
+            cue: "胸骨贴合上垫，呼气卷曲脊柱，顶峰等长停顿 1.5 秒，离心慢放 3 秒",
+            unit: "kg",
+            stepDelta: 4.5,
             sets: [
-              { label: "组 1", weight: 0, reps: 15, done: false },
-              { label: "组 2", weight: 0, reps: 15, done: false },
-              { label: "组 3", weight: 0, reps: 12, done: false }
+              { label: "组 1", weight: 50, reps: 12, done: false },
+              { label: "组 2", weight: 68, reps: 12, done: false },
+              { label: "组 3", weight: 68, reps: 10, done: false }
             ]
           }
         ]
@@ -837,7 +837,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week16_workout_state_v4';
+    const STORAGE_KEY = 'week16_workout_state_v5';
     let currentDay = 1;
     let workoutState = {};
 
@@ -851,12 +851,22 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
-        const oldSaved = localStorage.getItem('week16_workout_state_v3') || localStorage.getItem('week16_workout_state_v2');
+        const oldSaved = localStorage.getItem('week16_workout_state_v4') || localStorage.getItem('week16_workout_state_v3') || localStorage.getItem('week16_workout_state_v2');
         if (oldSaved) {
           try {
             const oldState = JSON.parse(oldSaved);
-            for (let d = 2; d <= 7; d++) {
-              if (oldState[d]) workoutState[d] = oldState[d];
+            for (let d = 1; d <= 7; d++) {
+              if (oldState[d]) {
+                if (d === 1) {
+                  if (oldState[1].exercises) {
+                    for (let exIdx = 0; exIdx < Math.min(3, oldState[1].exercises.length); exIdx++) {
+                      workoutState[1].exercises[exIdx] = oldState[1].exercises[exIdx];
+                    }
+                  }
+                } else {
+                  workoutState[d] = oldState[d];
+                }
+              }
             }
           } catch (e) {}
         }
