@@ -570,21 +570,21 @@
     const WEEK16_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (垂直拉 + 侧平举 + 上胸)",
-        cue: "重点：高位下拉 50kg 稳定平铺；侧平举顶峰停顿 1 秒；上斜推胸向心挤压。",
+        name: "Upper A (辅助引体 + 侧平举 + 上胸)",
+        cue: "重点：配重辅助引体向上替代高位下拉（宽握，沉肩肘向下引）；侧平举顶峰停顿 1 秒；上斜推胸向心挤压。",
         typeLabel: "训练",
         exercises: [
           {
-            name: "坐姿高位下拉 (宽握)",
-            tag: "垂直拉 · 背阔肌",
-            cue: "离心 3 秒，下拉至锁骨下沿，严禁耸肩",
+            name: "配重辅助引体向上机 (宽握)",
+            tag: "垂直拉 · 闭链神经募集",
+            cue: "注：负荷填辅助减重量。宽握，沉肩启动，肘部垂直下砸，离心慢放 3 秒",
             unit: "kg",
-            stepDelta: 2.5,
+            stepDelta: 5,
             sets: [
-              { label: "热身", weight: 45, reps: 12, done: false },
-              { label: "组 1", weight: 50, reps: 12, done: false },
-              { label: "组 2", weight: 50, reps: 12, done: false },
-              { label: "组 3", weight: 50, reps: 12, done: false }
+              { label: "热身", weight: 30, reps: 8, done: false },
+              { label: "组 1", weight: 20, reps: 10, done: false },
+              { label: "组 2", weight: 20, reps: 8, done: false },
+              { label: "组 3", weight: 15, reps: 8, done: false }
             ]
           },
           {
@@ -837,7 +837,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week16_workout_state_v3';
+    const STORAGE_KEY = 'week16_workout_state_v4';
     let currentDay = 1;
     let workoutState = {};
 
@@ -851,11 +851,11 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
-        const oldSaved = localStorage.getItem('week16_workout_state_v2');
+        const oldSaved = localStorage.getItem('week16_workout_state_v3') || localStorage.getItem('week16_workout_state_v2');
         if (oldSaved) {
           try {
             const oldState = JSON.parse(oldSaved);
-            for (let d = 1; d <= 4; d++) {
+            for (let d = 2; d <= 7; d++) {
               if (oldState[d]) workoutState[d] = oldState[d];
             }
           } catch (e) {}
@@ -1149,7 +1149,9 @@
           } else if (ex.unit === '步') {
             text += `${numPrefix} ${s.reps}步单侧 ${s.weight}kg\n`;
           } else if (ex.unit === 'kg') {
-            if (ex.name.includes('划船')) {
+            if (ex.name.includes('辅助引体')) {
+              text += `${numPrefix}辅助减重 ${s.weight}kg ${s.reps}次\n`;
+            } else if (ex.name.includes('划船')) {
               text += `${numPrefix}单边 ${s.weight}kg ${s.reps}次\n`;
             } else if (ex.name.includes('哑铃') || ex.name.includes('推胸')) {
               text += `${numPrefix}单侧 ${s.weight}kg ${s.reps}次\n`;
