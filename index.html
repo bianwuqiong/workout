@@ -629,14 +629,14 @@
       },
       2: {
         title: "Day 2",
-        name: "Lower A (哈克深蹲 + 伸腿 + 腿弯举)",
-        cue: "重点：45° 哈克深蹲击穿 100kg 满行程深潜；伸腿与腿弯举 50kg 满额做工，构建坚实下肢动力链。",
+        name: "Lower A (45° 倒蹬机 + 伸腿 + 腿弯举)",
+        cue: "重点：45° 倒蹬机全行程代谢做工，100kg 满额推进；伸腿与腿弯举 50kg 突破。",
         typeLabel: "训练",
         exercises: [
           {
-            name: "45° 线性哈克深蹲",
-            tag: "下肢主力 · 股四头肌",
-            cue: "双脚与肩同宽，全程核心紧锁，下潜到底",
+            name: "45° 倒蹬机 (Leg Press)",
+            tag: "下肢主力 · 代谢做工",
+            cue: "双脚与肩同宽，慢速下放至膝角约 90°，推起保留微屈绝不锁死",
             unit: "kg",
             stepDelta: 5,
             sets: [
@@ -644,7 +644,7 @@
               { label: "热身 2", weight: 50, reps: 15, done: false },
               { label: "爬升 1", weight: 80, reps: 15, done: false },
               { label: "爬升 2", weight: 90, reps: 15, done: false },
-              { label: "百公斤", weight: 100, reps: 15, done: false }
+              { label: "做工组", weight: 100, reps: 15, done: false }
             ]
           },
           {
@@ -773,10 +773,23 @@
       },
       6: {
         title: "Day 6",
-        name: "Lower B (伸腿恒张力 + 45° 倒蹬代谢)",
-        cue: "重点：周五充分恢复后全力攻坚下肢！伸腿训练器执行全程恒张力，底端不触碰铁块卸力；45° 倒蹬机大容量代谢轰炸。",
+        name: "Lower B (哈克深蹲深潜 + 伸腿恒张力 + 腿弯举)",
+        cue: "重点：周六全力攻坚！45° 线性哈克深蹲大机械张力深潜；伸腿与腿弯举高容量做工。",
         typeLabel: "训练",
         exercises: [
+          {
+            name: "45° 线性哈克深蹲",
+            tag: "下肢主力 · 股四头肌深潜",
+            cue: "双脚与肩同宽微外展，下潜至大腿深过水平面，全程核心紧锁",
+            unit: "kg",
+            stepDelta: 5,
+            sets: [
+              { label: "热身", weight: 50, reps: 12, done: false },
+              { label: "组 1", weight: 75, reps: 15, done: false },
+              { label: "组 2", weight: 75, reps: 15, done: false },
+              { label: "组 3", weight: 80, reps: 15, done: false }
+            ]
+          },
           {
             name: "伸腿训练器 (恒张力协议)",
             tag: "单边解耦 + 全程恒张力",
@@ -787,19 +800,7 @@
               { label: "单左", weight: 41, reps: 12, done: false },
               { label: "单右", weight: 41, reps: 12, done: false },
               { label: "双腿1", weight: 45, reps: 12, done: false },
-              { label: "双腿2", weight: 45, reps: 15, done: false }
-            ]
-          },
-          {
-            name: "45° 倒蹬机 (Leg Press)",
-            tag: "下肢大容量 · 代谢刺激",
-            cue: "膝角弯曲至 90°，推起至顶峰保留微屈，绝不膝超伸锁死",
-            unit: "kg",
-            stepDelta: 10,
-            sets: [
-              { label: "组 1", weight: 120, reps: 15, done: false },
-              { label: "组 2", weight: 140, reps: 15, done: false },
-              { label: "组 3", weight: 140, reps: 15, done: false }
+              { label: "双腿2", weight: 50, reps: 15, done: false }
             ]
           },
           {
@@ -809,9 +810,9 @@
             unit: "kg",
             stepDelta: 2.5,
             sets: [
-              { label: "组 1", weight: 40, reps: 12, done: false },
-              { label: "组 2", weight: 40, reps: 12, done: false },
-              { label: "组 3", weight: 40, reps: 12, done: false }
+              { label: "组 1", weight: 45, reps: 12, done: false },
+              { label: "组 2", weight: 50, reps: 12, done: false },
+              { label: "组 3", weight: 50, reps: 12, done: false }
             ]
           }
         ]
@@ -837,8 +838,8 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week16_workout_state_v5';
-    let currentDay = 1;
+    const STORAGE_KEY = 'week16_workout_state_v6';
+    let currentDay = 2;
     let workoutState = {};
 
     function initData() {
@@ -851,7 +852,7 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
-        const oldSaved = localStorage.getItem('week16_workout_state_v4') || localStorage.getItem('week16_workout_state_v3') || localStorage.getItem('week16_workout_state_v2');
+        const oldSaved = localStorage.getItem('week16_workout_state_v5') || localStorage.getItem('week16_workout_state_v4') || localStorage.getItem('week16_workout_state_v3') || localStorage.getItem('week16_workout_state_v2');
         if (oldSaved) {
           try {
             const oldState = JSON.parse(oldSaved);
@@ -861,6 +862,14 @@
                   if (oldState[1].exercises) {
                     for (let exIdx = 0; exIdx < Math.min(3, oldState[1].exercises.length); exIdx++) {
                       workoutState[1].exercises[exIdx] = oldState[1].exercises[exIdx];
+                    }
+                  }
+                } else if (d === 2) {
+                  if (oldState[2].exercises) {
+                    workoutState[2] = JSON.parse(JSON.stringify(oldState[2]));
+                    if (workoutState[2].exercises && workoutState[2].exercises[0]) {
+                      workoutState[2].exercises[0].name = "45° 倒蹬机 (Leg Press)";
+                      workoutState[2].exercises[0].tag = "下肢主力 · 代谢做工";
                     }
                   }
                 } else {
