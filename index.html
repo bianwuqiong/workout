@@ -793,12 +793,12 @@
           {
             name: "伸腿训练器 (恒张力协议)",
             tag: "单边解耦 + 全程恒张力",
-            cue: "单腿左右各 41kg 激活神经；双腿在触底前 2cm 即刻反向做工",
+            cue: "单腿左右各 20-22.5kg 激活神经；双腿 45-50kg 全程恒张力做工",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
-              { label: "单左", weight: 41, reps: 12, done: false },
-              { label: "单右", weight: 41, reps: 12, done: false },
+              { label: "单左", weight: 22.5, reps: 12, done: false },
+              { label: "单右", weight: 22.5, reps: 12, done: false },
               { label: "双腿1", weight: 45, reps: 12, done: false },
               { label: "双腿2", weight: 50, reps: 15, done: false }
             ]
@@ -838,8 +838,8 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week16_workout_state_v7';
-    let currentDay = 2;
+    const STORAGE_KEY = 'week16_workout_state_v8';
+    let currentDay = 6;
     let workoutState = {};
 
     function initData() {
@@ -872,7 +872,8 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
-        const oldSaved = localStorage.getItem('week16_workout_state_v6') || 
+        const oldSaved = localStorage.getItem('week16_workout_state_v7') || 
+                         localStorage.getItem('week16_workout_state_v6') || 
                          localStorage.getItem('week16_workout_state_v5') || 
                          localStorage.getItem('week16_workout_state_v4') || 
                          localStorage.getItem('week16_workout_state_v3') || 
@@ -886,11 +887,15 @@
                   if (workoutState[d].exercises[exIdx] && oldEx.sets) {
                     oldEx.sets.forEach((oldSet, sIdx) => {
                       if (workoutState[d].exercises[exIdx].sets[sIdx]) {
-                        workoutState[d].exercises[exIdx].sets[sIdx].weight = oldSet.weight;
-                        workoutState[d].exercises[exIdx].sets[sIdx].reps = oldSet.reps;
-                        workoutState[d].exercises[exIdx].sets[sIdx].done = oldSet.done;
+                        if (oldSet.done) {
+                          workoutState[d].exercises[exIdx].sets[sIdx].weight = oldSet.weight;
+                          workoutState[d].exercises[exIdx].sets[sIdx].reps = oldSet.reps;
+                          workoutState[d].exercises[exIdx].sets[sIdx].done = true;
+                        }
                       } else {
-                        workoutState[d].exercises[exIdx].sets.push(JSON.parse(JSON.stringify(oldSet)));
+                        if (oldSet.done) {
+                          workoutState[d].exercises[exIdx].sets.push(JSON.parse(JSON.stringify(oldSet)));
+                        }
                       }
                     });
                   }
