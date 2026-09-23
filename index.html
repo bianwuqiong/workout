@@ -785,9 +785,9 @@
             stepDelta: 5,
             sets: [
               { label: "热身", weight: 50, reps: 12, done: false },
-              { label: "组 1", weight: 75, reps: 15, done: false },
-              { label: "组 2", weight: 75, reps: 15, done: false },
-              { label: "组 3", weight: 80, reps: 15, done: false }
+              { label: "组 1", weight: 75, reps: 12, done: false },
+              { label: "组 2", weight: 75, reps: 8, done: false },
+              { label: "组 3", weight: 75, reps: 8, done: false }
             ]
           },
           {
@@ -839,7 +839,7 @@
 
     // --- State Management ---
     const STORAGE_KEY = 'week16_workout_state_v8';
-    let currentDay = 6;
+    let currentDay = 7;
     let workoutState = {};
 
     function initData() {
