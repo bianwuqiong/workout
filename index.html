@@ -512,7 +512,7 @@
   <!-- Header -->
   <header>
     <div class="header-title">
-      🦍 <span>猩球力量日志</span> · Week 16
+      🦍 <span>猩球力量日志</span> · Week 17
     </div>
     <button class="timer-badge-btn" id="timerBadge" onclick="openTimerModal()">
       ⏱️ <span id="badgeTimerText">组歇</span>
@@ -566,22 +566,22 @@
   <div class="toast" id="toast">已成功复制今日训练文本！</div>
 
   <script>
-    // --- Data Definition for Week 16 ---
-    const WEEK16_PLAN = {
+        // --- Data Definition for Week 17 ---
+    const WEEK17_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (辅助引体 + 侧平举 + 上胸 + 矩阵卷腹)",
-        cue: "重点：配重辅助引体替代高位下拉；侧平举顶峰停顿 1 秒；上斜推胸向心挤压；Matrix 卷腹定量高张力轰炸。",
+        name: "Upper A (辅助引体进阶 + 侧平举 + 上胸 + 矩阵卷腹)",
+        cue: "重点：辅助引体进阶减重 15-20kg；侧平举 36kg 强化 1.5 秒停顿；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
         typeLabel: "训练",
         exercises: [
           {
             name: "配重辅助引体向上机 (宽握)",
             tag: "垂直拉 · 闭链神经募集",
-            cue: "注：负荷填辅助减重量。宽握，沉肩启动，肘部垂直下砸，离心慢放 3 秒",
+            cue: "注：负荷填减重量。宽握，沉肩启动，肘部垂直下砸，离心慢放 3 秒",
             unit: "kg",
             stepDelta: 5,
             sets: [
-              { label: "热身", weight: 30, reps: 8, done: false },
+              { label: "唤醒", weight: 25, reps: 8, done: false },
               { label: "组 1", weight: 20, reps: 10, done: false },
               { label: "组 2", weight: 20, reps: 8, done: false },
               { label: "组 3", weight: 15, reps: 8, done: false }
@@ -590,7 +590,7 @@
           {
             name: "Nautilus Nitro 侧平举机",
             tag: "肩部孤立 · 肘部驱动",
-            cue: "顶峰等长停顿 1 秒，离心 3 秒下放",
+            cue: "顶峰等长停顿 1.5 秒，离心 3 秒匀速下放",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
@@ -602,35 +602,36 @@
           },
           {
             name: "上斜哑铃卧推 (30°)",
-            tag: "上胸 · 锁骨头",
-            cue: "肩胛骨下沉内收，小臂垂直地面",
+            tag: "上胸 · 锁骨头挤压",
+            cue: "肩胛骨下沉内收，小臂垂直地面，顶峰向心挤压",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
               { label: "热身", weight: 12.5, reps: 10, done: false },
               { label: "组 1", weight: 15, reps: 12, done: false },
               { label: "组 2", weight: 15, reps: 10, done: false },
-              { label: "组 3", weight: 15, reps: 10, done: false }
+              { label: "组 3", weight: 17.5, reps: 8, done: false }
             ]
           },
           {
             name: "Matrix 坐姿卷腹机",
-            tag: "双轴联动 · 腹直肌高机械张力",
+            tag: "双轴联动 · 核心高张力",
             cue: "胸骨贴合上垫，呼气卷曲脊柱，顶峰等长停顿 1.5 秒，离心慢放 3 秒",
             unit: "kg",
             stepDelta: 4.5,
             sets: [
-              { label: "组 1", weight: 50, reps: 12, done: false },
-              { label: "组 2", weight: 68, reps: 12, done: false },
-              { label: "组 3", weight: 68, reps: 10, done: false }
+              { label: "适应", weight: 59, reps: 12, done: false },
+              { label: "组 1", weight: 68, reps: 12, done: false },
+              { label: "组 2", weight: 72.5, reps: 12, done: false },
+              { label: "组 3", weight: 72.5, reps: 10, done: false }
             ]
           }
         ]
       },
       2: {
         title: "Day 2",
-        name: "Lower A (45° 倒蹬机 + 伸腿 + 腿弯举)",
-        cue: "重点：45° 倒蹬机全行程代谢做工，100kg 满额推进；伸腿与腿弯举 50kg 突破。",
+        name: "Lower A (45° 倒蹬机代谢扩容 + 伸腿恒张力 + 腿弯举)",
+        cue: "重点：45° 倒蹬机 100kg 基线稳固，冲击 110-120kg；伸腿机 50kg 恒张力做工；坐姿腿弯举 50kg 稳固。",
         typeLabel: "训练",
         exercises: [
           {
@@ -643,30 +644,30 @@
               { label: "热身 1", weight: 50, reps: 15, done: false },
               { label: "热身 2", weight: 50, reps: 15, done: false },
               { label: "爬升 1", weight: 80, reps: 15, done: false },
-              { label: "爬升 2", weight: 90, reps: 15, done: false },
-              { label: "做工组", weight: 100, reps: 15, done: false }
+              { label: "爬升 2", weight: 100, reps: 15, done: false },
+              { label: "做工组", weight: 110, reps: 15, done: false }
             ]
           },
           {
-            name: "坐姿伸腿训练器",
+            name: "坐姿伸腿训练器 (恒张力协议)",
             tag: "股四头肌孤立 · 恒张力",
-            cue: "小腿垫卡在脚踝上方，离心慢速下放",
+            cue: "小腿垫卡在脚踝上方，离心慢速下放，触底前 2cm 即刻反向做工",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
-              { label: "组 1", weight: 41, reps: 12, done: false },
-              { label: "组 2", weight: 45, reps: 12, done: false },
-              { label: "组 3", weight: 50, reps: 12, done: false }
+              { label: "组 1", weight: 45, reps: 12, done: false },
+              { label: "组 2", weight: 50, reps: 12, done: false },
+              { label: "组 3", weight: 50, reps: 15, done: false }
             ]
           },
           {
             name: "坐姿腿弯举 (屈腿训练器)",
             tag: "后侧链 · 腘绳肌",
-            cue: "压板压实大腿，骨盆中立，严防下背代偿",
+            cue: "压板压实大腿，骨盆中立，严防下背代偿，顶峰停顿 1 秒",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
-              { label: "组 1", weight: 41, reps: 12, done: false },
+              { label: "组 1", weight: 45, reps: 12, done: false },
               { label: "组 2", weight: 50, reps: 12, done: false },
               { label: "组 3", weight: 50, reps: 12, done: false }
             ]
@@ -694,20 +695,20 @@
       },
       4: {
         title: "Day 4",
-        name: "Upper B (20kg 推胸扩容 + 悍马划船 + 矩阵卷腹)",
-        cue: "重点突进：单侧 20kg 哑铃推胸扩充至 3 组；悍马高位划船锁定 22.5kg/侧；Matrix 卷腹 72.5kg 破局轰炸。",
+        name: "Upper B (20kg 推胸突破 + 悍马高位划船 + 矩阵卷腹 + 农夫行走)",
+        cue: "重点突进：单侧 20kg 哑铃推胸向 10次/组迈进；悍马高位划船锁定 22.5kg/侧；Matrix 卷腹 72.5kg 轰炸；农夫行走 70 步。",
         typeLabel: "训练",
         exercises: [
           {
             name: "平卧哑铃推胸",
-            tag: "水平推力 · 20kg 核心扩容",
-            cue: "沉肩锁背，3 秒离心下沉，向心上推不超伸锁肘",
+            tag: "水平推力 · 20kg 突破",
+            cue: "沉肩锁背，3 秒慢速离心下沉，向心上推不超伸锁肘，力争首组 10 次",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
               { label: "热身", weight: 15, reps: 10, done: false },
-              { label: "过渡", weight: 17.5, reps: 6, done: false },
-              { label: "组 1", weight: 20, reps: 8, done: false },
+              { label: "激活", weight: 17.5, reps: 6, done: false },
+              { label: "组 1", weight: 20, reps: 10, done: false },
               { label: "组 2", weight: 20, reps: 8, done: false },
               { label: "组 3", weight: 20, reps: 8, done: false }
             ]
@@ -732,22 +733,22 @@
             unit: "kg",
             stepDelta: 4.5,
             sets: [
-              { label: "适应", weight: 50, reps: 12, done: false },
               { label: "爬升", weight: 59, reps: 12, done: false },
               { label: "组 1", weight: 68, reps: 12, done: false },
-              { label: "组 2", weight: 72.5, reps: 12, done: false }
+              { label: "组 2", weight: 72.5, reps: 12, done: false },
+              { label: "组 3", weight: 72.5, reps: 12, done: false }
             ]
           },
           {
             name: "哑铃农夫行走",
             tag: "功能性握力 · 核心抗侧屈",
-            cue: "单侧 20kg，沉肩微收下巴，保持身体垂直直行",
+            cue: "单侧 20kg，沉肩微收下巴，步数扩充至 70 步，保持身体垂直直行",
             unit: "步",
             stepDelta: 10,
             sets: [
-              { label: "组 1", weight: 20, reps: 60, done: false },
-              { label: "组 2", weight: 20, reps: 60, done: false },
-              { label: "组 3", weight: 20, reps: 60, done: false }
+              { label: "组 1", weight: 20, reps: 70, done: false },
+              { label: "组 2", weight: 20, reps: 70, done: false },
+              { label: "组 3", weight: 20, reps: 70, done: false }
             ]
           }
         ]
@@ -755,7 +756,7 @@
       5: {
         title: "Day 5",
         name: "恢复日 B (主动恢复 · 神经卸载与深层拉伸)",
-        cue: "战略调整（方案1 均匀交替）：错开推胸与练腿两大难关，周五零有氧主动恢复。全身体位静态拉伸 20 分钟 + 温水浴，为周六 Lower B 充分积蓄肌糖原与副交感神经张力。",
+        cue: "战略调整（方案1 均匀交替）：错开推胸与哈克深蹲两大难关，周五零有氧主动恢复。全身体位静态拉伸 20 分钟 + 温水浴，为周六 Lower B 充分积蓄肌糖原与副交感神经张力。",
         typeLabel: "恢复",
         exercises: [
           {
@@ -773,27 +774,28 @@
       },
       6: {
         title: "Day 6",
-        name: "Lower B (哈克深蹲深潜 + 伸腿恒张力 + 腿弯举)",
-        cue: "重点：周六全力攻坚！45° 线性哈克深蹲大机械张力深潜；伸腿与腿弯举高容量做工。",
+        name: "Lower B (哈克深蹲 75kg 满额攻坚 + 伸腿恒张力 + 腿弯举)",
+        cue: "重点：周六全力攻坚！45° 线性哈克深蹲 75kg 满额 15 次做工；伸腿与腿弯举 50kg 高容量做工。",
         typeLabel: "训练",
         exercises: [
           {
             name: "45° 线性哈克深蹲",
             tag: "下肢主力 · 股四头肌深潜",
-            cue: "双脚与肩同宽微外展，下潜至大腿深过水平面，全程核心紧锁",
+            cue: "双脚与肩同宽微外展，下潜至大腿深过水平面，全程核心紧锁，冲击 15 次",
             unit: "kg",
             stepDelta: 5,
             sets: [
-              { label: "热身", weight: 50, reps: 12, done: false },
-              { label: "组 1", weight: 75, reps: 12, done: false },
-              { label: "组 2", weight: 75, reps: 8, done: false },
-              { label: "组 3", weight: 75, reps: 8, done: false }
+              { label: "热身 1", weight: 0, reps: 15, done: false },
+              { label: "热身 2", weight: 50, reps: 12, done: false },
+              { label: "组 1", weight: 75, reps: 15, done: false },
+              { label: "组 2", weight: 75, reps: 12, done: false },
+              { label: "组 3", weight: 75, reps: 12, done: false }
             ]
           },
           {
             name: "伸腿训练器 (恒张力协议)",
             tag: "单边解耦 + 全程恒张力",
-            cue: "单腿左右各 20-22.5kg 激活神经；双腿 45-50kg 全程恒张力做工",
+            cue: "单腿左右各 22.5kg 激活神经；双腿 45-50kg 全程恒张力做工",
             unit: "kg",
             stepDelta: 2.5,
             sets: [
@@ -819,18 +821,18 @@
       },
       7: {
         title: "Day 7",
-        name: "中秋启东度假 · 战略超量恢复 (Deload)",
-        cue: "9/24晚启程至9/27晚返沪。远离器械被动休整，享受启东优质海鲜蛋白，平复疫苗反应与中枢神经，9/28 (周一) 巅峰开启 Week 17！",
-        typeLabel: "度假",
+        name: "全面休息 (数据汇总与复盘)",
+        cue: "身体彻底放空，总结全周各动作载荷数据与睡眠心率趋势，准备编制 Week 18 周期方案。",
+        typeLabel: "休息",
         exercises: [
           {
-            name: "中秋假期被动超量恢复 (启东度假)",
-            tag: "中枢神经卸载 · 结缔组织修复",
-            cue: "彻底远离大重量，尽享海鲜高蛋白与充足碳水，保证深度睡眠，严禁长时间剧烈有氧消耗",
+            name: "全天被动休息与饮食充能",
+            tag: "超量恢复",
+            cue: "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
             unit: "日",
             stepDelta: 1,
             sets: [
-              { label: "休整", weight: 0, reps: 1, done: false }
+              { label: "休息", weight: 0, reps: 1, done: false }
             ]
           }
         ]
@@ -838,8 +840,8 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week16_workout_state_v8';
-    let currentDay = 7;
+    const STORAGE_KEY = 'week17_workout_state_v1';
+    let currentDay = 1;
     let workoutState = {};
 
     function initData() {
@@ -847,31 +849,31 @@
       if (saved) {
         try {
           workoutState = JSON.parse(saved);
-          // Sync metadata from WEEK16_PLAN
+          // Sync metadata from WEEK17_PLAN
           for (let d = 1; d <= 7; d++) {
-            if (WEEK16_PLAN[d] && workoutState[d]) {
-              workoutState[d].title = WEEK16_PLAN[d].title;
-              workoutState[d].name = WEEK16_PLAN[d].name;
-              workoutState[d].cue = WEEK16_PLAN[d].cue;
-              workoutState[d].typeLabel = WEEK16_PLAN[d].typeLabel;
-              if (workoutState[d].exercises && WEEK16_PLAN[d].exercises) {
+            if (WEEK17_PLAN[d] && workoutState[d]) {
+              workoutState[d].title = WEEK17_PLAN[d].title;
+              workoutState[d].name = WEEK17_PLAN[d].name;
+              workoutState[d].cue = WEEK17_PLAN[d].cue;
+              workoutState[d].typeLabel = WEEK17_PLAN[d].typeLabel;
+              if (workoutState[d].exercises && WEEK17_PLAN[d].exercises) {
                 workoutState[d].exercises.forEach((ex, idx) => {
-                  if (WEEK16_PLAN[d].exercises[idx]) {
-                    ex.name = WEEK16_PLAN[d].exercises[idx].name;
-                    ex.tag = WEEK16_PLAN[d].exercises[idx].tag;
-                    ex.cue = WEEK16_PLAN[d].exercises[idx].cue;
-                    ex.unit = WEEK16_PLAN[d].exercises[idx].unit;
-                    ex.stepDelta = WEEK16_PLAN[d].exercises[idx].stepDelta;
+                  if (WEEK17_PLAN[d].exercises[idx]) {
+                    ex.name = WEEK17_PLAN[d].exercises[idx].name;
+                    ex.tag = WEEK17_PLAN[d].exercises[idx].tag;
+                    ex.cue = WEEK17_PLAN[d].exercises[idx].cue;
+                    ex.unit = WEEK17_PLAN[d].exercises[idx].unit;
+                    ex.stepDelta = WEEK17_PLAN[d].exercises[idx].stepDelta;
                   }
                 });
               }
             }
           }
         } catch (e) {
-          workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
+          workoutState = JSON.parse(JSON.stringify(WEEK17_PLAN));
         }
       } else {
-        workoutState = JSON.parse(JSON.stringify(WEEK16_PLAN));
+        workoutState = JSON.parse(JSON.stringify(WEEK17_PLAN));
         const oldSaved = localStorage.getItem('week16_workout_state_v7') || 
                          localStorage.getItem('week16_workout_state_v6') || 
                          localStorage.getItem('week16_workout_state_v5') || 
@@ -1048,7 +1050,7 @@
 
     function resetDayData() {
       if (confirm(`确认重置 ${workoutState[currentDay].title} 为初始预设计划吗？`)) {
-        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK16_PLAN[currentDay]));
+        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK17_PLAN[currentDay]));
         saveData();
         renderDayContent();
         showToast("已重置今日预设计划");
