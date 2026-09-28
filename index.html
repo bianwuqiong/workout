@@ -570,21 +570,21 @@
     const WEEK17_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (辅助引体进阶 + 侧平举 + 上胸 + 矩阵卷腹)",
-        cue: "重点：辅助引体进阶减重 15-20kg；侧平举 36kg 强化 1.5 秒停顿；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
+        name: "Upper A (高位下拉回归 + 侧平举 + 上胸 + 矩阵卷腹)",
+        cue: "重点：高位下拉修复回归（50kg对位做工）；侧平举 36kg 强化 1.5 秒停顿；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
         typeLabel: "训练",
         exercises: [
           {
-            name: "配重辅助引体向上机 (宽握)",
-            tag: "垂直拉 · 闭链神经募集",
-            cue: "注：负荷填减重量。宽握，沉肩启动，肘部垂直下砸，离心慢放 3 秒",
+            name: "高位下拉机 (宽握对位拉力)",
+            tag: "垂直拉力 · 背阔大圆肌孤立",
+            cue: "大腿压板压实，宽握微挺胸，手肘垂直下拉向锁骨下方，离心 3 秒慢放被动拉伸",
             unit: "kg",
             stepDelta: 5,
             sets: [
-              { label: "唤醒", weight: 25, reps: 8, done: false },
-              { label: "组 1", weight: 20, reps: 10, done: false },
-              { label: "组 2", weight: 20, reps: 8, done: false },
-              { label: "组 3", weight: 15, reps: 8, done: false }
+              { label: "唤醒", weight: 40, reps: 12, done: false },
+              { label: "过渡", weight: 45, reps: 10, done: false },
+              { label: "组 1", weight: 50, reps: 12, done: false },
+              { label: "组 2", weight: 50, reps: 10, done: false }
             ]
           },
           {
@@ -840,7 +840,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week17_workout_state_v1';
+    const STORAGE_KEY = 'week17_workout_state_v2';
     let currentDay = 1;
     let workoutState = {};
 
