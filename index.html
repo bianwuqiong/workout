@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#090d13">
-  <title>猩球力量日志 · Week 16</title>
+  <title>猩球力量日志 · Week 17</title>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
@@ -566,7 +566,8 @@
   <div class="toast" id="toast">已成功复制今日训练文本！</div>
 
   <script>
-        // --- Data Definition for Week 17 ---
+    // --- Data Definition for Week 17 ---
+    const CURRENT_WEEK_NUM = 17;
     const WEEK17_PLAN = {
       1: {
         title: "Day 1",
@@ -1184,7 +1185,7 @@
       const now = new Date();
       const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
       
-      let text = `week16day${currentDay}\n${dateStr} | 猩球健身\n\n`;
+      let text = `week${CURRENT_WEEK_NUM}day${currentDay}\n${dateStr} | 猩球健身\n\n`;
 
       dayData.exercises.forEach(ex => {
         text += `${ex.name}\n`;
