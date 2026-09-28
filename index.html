@@ -570,8 +570,8 @@
     const WEEK17_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (高位下拉 + 哑铃侧平举 + 上胸 + 矩阵卷腹)",
-        cue: "重点：高位下拉修复回归（50kg做工）；侧平举机维护转用哑铃侧平举（单侧 5-7.5kg 肘领先防耸肩）；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
+        name: "Upper A (高位下拉 + 哑铃侧平举 + 上胸 + 力健卷腹)",
+        cue: "重点：高位下拉对位做工；哑铃侧平举 7.5kg 肘领先防耸肩；上斜哑铃推胸向心挤压；Life Fitness 卷腹机转轴对齐肚脐，顶峰停顿 1.5 秒轰炸。",
         typeLabel: "训练",
         exercises: [
           {
@@ -614,16 +614,16 @@
             ]
           },
           {
-            name: "Matrix 坐姿卷腹机",
-            tag: "双轴联动 · 核心高张力",
-            cue: "胸骨贴合上垫，呼气卷曲脊柱，顶峰等长停顿 1.5 秒，离心慢放 3 秒",
+            name: "Life Fitness 坐姿卷腹机",
+            tag: "胸垫阻力 · 腹直肌深层卷曲",
+            cue: "胸垫贴紧，转轴对齐肚脐上方。呼气胸骨向骨盆卷曲，严禁手臂下拽，顶峰停顿 1.5 秒，慢放 3 秒",
             unit: "kg",
-            stepDelta: 4.5,
+            stepDelta: 5,
             sets: [
-              { label: "适应", weight: 59, reps: 12, done: false },
-              { label: "组 1", weight: 68, reps: 12, done: false },
-              { label: "组 2", weight: 72.5, reps: 12, done: false },
-              { label: "组 3", weight: 72.5, reps: 10, done: false }
+              { label: "适应", weight: 40, reps: 12, done: false },
+              { label: "组 1", weight: 50, reps: 12, done: false },
+              { label: "组 2", weight: 55, reps: 12, done: false },
+              { label: "组 3", weight: 60, reps: 12, done: false }
             ]
           }
         ]
@@ -840,7 +840,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week17_workout_state_v3';
+    const STORAGE_KEY = 'week17_workout_state_v4';
     let currentDay = 1;
     let workoutState = {};
 
@@ -874,7 +874,8 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK17_PLAN));
-        const oldSaved = localStorage.getItem('week17_workout_state_v2') || 
+        const oldSaved = localStorage.getItem('week17_workout_state_v3') || 
+                         localStorage.getItem('week17_workout_state_v2') || 
                          localStorage.getItem('week17_workout_state_v1') || 
                          localStorage.getItem('week16_workout_state_v8') || 
                          localStorage.getItem('week16_workout_state_v7') || 
