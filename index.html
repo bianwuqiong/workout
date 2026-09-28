@@ -570,8 +570,8 @@
     const WEEK17_PLAN = {
       1: {
         title: "Day 1",
-        name: "Upper A (高位下拉回归 + 侧平举 + 上胸 + 矩阵卷腹)",
-        cue: "重点：高位下拉修复回归（50kg对位做工）；侧平举 36kg 强化 1.5 秒停顿；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
+        name: "Upper A (高位下拉 + 哑铃侧平举 + 上胸 + 矩阵卷腹)",
+        cue: "重点：高位下拉修复回归（50kg做工）；侧平举机维护转用哑铃侧平举（单侧 5-7.5kg 肘领先防耸肩）；上斜哑铃推胸冲击 17.5kg / 稳固 15kg；Matrix 卷腹 68-72.5kg 轰炸。",
         typeLabel: "训练",
         exercises: [
           {
@@ -588,16 +588,16 @@
             ]
           },
           {
-            name: "Nautilus Nitro 侧平举机",
-            tag: "肩部孤立 · 肘部驱动",
-            cue: "顶峰等长停顿 1.5 秒，离心 3 秒匀速下放",
+            name: "哑铃侧平举 (自由重量替代)",
+            tag: "肩部中束 · 自由重量孤立",
+            cue: "单侧哑铃重量。躯干微前倾，微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
             unit: "kg",
-            stepDelta: 2.5,
+            stepDelta: 1,
             sets: [
-              { label: "组 1", weight: 36, reps: 15, done: false },
-              { label: "组 2", weight: 36, reps: 15, done: false },
-              { label: "组 3", weight: 36, reps: 15, done: false },
-              { label: "组 4", weight: 36, reps: 15, done: false }
+              { label: "激活", weight: 5, reps: 15, done: false },
+              { label: "组 1", weight: 7.5, reps: 15, done: false },
+              { label: "组 2", weight: 7.5, reps: 15, done: false },
+              { label: "组 3", weight: 7.5, reps: 15, done: false }
             ]
           },
           {
@@ -840,7 +840,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week17_workout_state_v2';
+    const STORAGE_KEY = 'week17_workout_state_v3';
     let currentDay = 1;
     let workoutState = {};
 
@@ -874,7 +874,10 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK17_PLAN));
-        const oldSaved = localStorage.getItem('week16_workout_state_v7') || 
+        const oldSaved = localStorage.getItem('week17_workout_state_v2') || 
+                         localStorage.getItem('week17_workout_state_v1') || 
+                         localStorage.getItem('week16_workout_state_v8') || 
+                         localStorage.getItem('week16_workout_state_v7') || 
                          localStorage.getItem('week16_workout_state_v6') || 
                          localStorage.getItem('week16_workout_state_v5') || 
                          localStorage.getItem('week16_workout_state_v4') || 
