@@ -578,14 +578,15 @@
           {
             name: "高位下拉机 (宽握对位拉力)",
             tag: "垂直拉力 · 背阔大圆肌孤立",
-            cue: "大腿压板压实，宽握微挺胸，手肘垂直下拉向锁骨下方，离心 3 秒慢放被动拉伸",
+            cue: "大腿压板压实，宽握微挺胸，手肘垂直下拉向锁骨下方，底端停顿 1 秒，离心 3 秒慢放被动拉伸",
             unit: "kg",
             stepDelta: 5,
             sets: [
               { label: "唤醒", weight: 40, reps: 12, done: false },
               { label: "过渡", weight: 45, reps: 10, done: false },
               { label: "组 1", weight: 50, reps: 12, done: false },
-              { label: "组 2", weight: 55, reps: 10, done: false }
+              { label: "组 2", weight: 55, reps: 10, done: false },
+              { label: "组 3", weight: 55, reps: 10, done: false }
             ]
           },
           {
@@ -593,7 +594,7 @@
             tag: "肩部中束 · 顶峰等长停顿",
             cue: "器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1-1.5 秒",
             unit: "kg",
-            stepDelta: 1,
+            stepDelta: 2.5,
             sets: [
               { label: "激活", weight: 5, reps: 15, done: false },
               { label: "组 1", weight: 7.5, reps: 15, done: false },
@@ -689,6 +690,8 @@
             cue: "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒，深呼吸",
             unit: "分",
             stepDelta: 5,
+            repsUnit: "分钟",
+            repsStepDelta: 5,
             sets: [
               { label: "拉伸", weight: 0, reps: 20, done: false },
               { label: "水浴", weight: 0, reps: 30, done: false }
@@ -747,8 +750,10 @@
             name: "哑铃农夫行走",
             tag: "功能性握力 · 核心抗侧屈",
             cue: "单侧 20kg，沉肩微收下巴，稳步迈进 70-80 步，保持身体垂直直行",
-            unit: "步",
-            stepDelta: 10,
+            unit: "kg",
+            stepDelta: 2.5,
+            repsUnit: "步",
+            repsStepDelta: 5,
             sets: [
               { label: "组 1", weight: 20, reps: 70, done: false },
               { label: "组 2", weight: 20, reps: 70, done: false },
@@ -760,7 +765,7 @@
       5: {
         title: "Day 5",
         name: "恢复日 B (主动恢复 · 神经卸载与深层拉伸)",
-        cue: "战略调整（方案1 均匀交替）：错开推胸与哈克深蹲两大难关，周日零有氧主动恢复。全身体位静态拉伸 20 分钟 + 温水浴，为周一 Lower B 充分积蓄肌糖原与副交感神经张力。",
+        cue: "战略调整（方案1 均匀交替）：错开推胸与哈克深蹲两大高神经负荷动作，零有氧主动恢复。全身体位静态拉伸 20 分钟 + 温水浴，为 Lower B 充分积蓄肌糖原与副交感神经张力。",
         typeLabel: "恢复",
         exercises: [
           {
@@ -769,6 +774,8 @@
             cue: "针对下背竖脊肌、胸小肌、颈肩斜方肌深层放松，严禁中高强度有氧",
             unit: "分",
             stepDelta: 5,
+            repsUnit: "分钟",
+            repsStepDelta: 5,
             sets: [
               { label: "拉伸", weight: 0, reps: 20, done: false },
               { label: "水浴", weight: 0, reps: 30, done: false }
@@ -835,6 +842,7 @@
             cue: "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
             unit: "日",
             stepDelta: 1,
+            repsUnit: "天",
             sets: [
               { label: "休息", weight: 0, reps: 1, done: false }
             ]
@@ -844,7 +852,7 @@
     };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week18_workout_state_v1';
+    const STORAGE_KEY = 'week18_workout_state_v2';
     let currentDay = 1;
     let workoutState = {};
 
@@ -868,6 +876,8 @@
                     ex.cue = WEEK18_PLAN[d].exercises[idx].cue;
                     ex.unit = WEEK18_PLAN[d].exercises[idx].unit;
                     ex.stepDelta = WEEK18_PLAN[d].exercises[idx].stepDelta;
+                    ex.repsUnit = WEEK18_PLAN[d].exercises[idx].repsUnit;
+                    ex.repsStepDelta = WEEK18_PLAN[d].exercises[idx].repsStepDelta;
                   }
                 });
               }
@@ -878,43 +888,6 @@
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK18_PLAN));
-        const oldSaved = localStorage.getItem('week17_workout_state_v4') || 
-                         localStorage.getItem('week17_workout_state_v3') || 
-                         localStorage.getItem('week17_workout_state_v2') || 
-                         localStorage.getItem('week17_workout_state_v1') || 
-                         localStorage.getItem('week16_workout_state_v8') || 
-                         localStorage.getItem('week16_workout_state_v7') || 
-                         localStorage.getItem('week16_workout_state_v6') || 
-                         localStorage.getItem('week16_workout_state_v5') || 
-                         localStorage.getItem('week16_workout_state_v4') || 
-                         localStorage.getItem('week16_workout_state_v3') || 
-                         localStorage.getItem('week16_workout_state_v2');
-        if (oldSaved) {
-          try {
-            const oldState = JSON.parse(oldSaved);
-            for (let d = 1; d <= 7; d++) {
-              if (oldState[d] && oldState[d].exercises && workoutState[d] && workoutState[d].exercises) {
-                oldState[d].exercises.forEach((oldEx, exIdx) => {
-                  if (workoutState[d].exercises[exIdx] && oldEx.sets) {
-                    oldEx.sets.forEach((oldSet, sIdx) => {
-                      if (workoutState[d].exercises[exIdx].sets[sIdx]) {
-                        if (oldSet.done) {
-                          workoutState[d].exercises[exIdx].sets[sIdx].weight = oldSet.weight;
-                          workoutState[d].exercises[exIdx].sets[sIdx].reps = oldSet.reps;
-                          workoutState[d].exercises[exIdx].sets[sIdx].done = true;
-                        }
-                      } else {
-                        if (oldSet.done) {
-                          workoutState[d].exercises[exIdx].sets.push(JSON.parse(JSON.stringify(oldSet)));
-                        }
-                      }
-                    });
-                  }
-                });
-              }
-            }
-          } catch (e) {}
-        }
         saveData();
       }
     }
@@ -956,29 +929,36 @@
           const isDone = s.done;
           const isWarm = s.label.includes('热身') || s.label.includes('激活');
           const delta = ex.stepDelta || 2.5;
+          const repsDelta = ex.repsStepDelta || 1;
+          const rUnit = ex.repsUnit || '次';
+          const isRecovery = ex.unit === '分' || ex.unit === '日';
 
           setsHtml += `
             <div class="set-row">
               <span class="set-label ${isWarm ? 'warmup' : ''}">${s.label}</span>
               
               <!-- Weight Stepper -->
-              <div class="stepper">
-                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -${delta})">−</button>
-                <div class="step-input-wrap">
-                  <input class="step-input" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
-                  <span class="step-unit">${ex.unit}</span>
+              ${isRecovery ? `
+                <div class="stepper" style="visibility: hidden; pointer-events: none;"></div>
+              ` : `
+                <div class="stepper">
+                  <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -${delta})">−</button>
+                  <div class="step-input-wrap">
+                    <input class="step-input" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
+                    <span class="step-unit">${ex.unit}</span>
+                  </div>
+                  <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, ${delta})">+</button>
                 </div>
-                <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, ${delta})">+</button>
-              </div>
+              `}
 
               <!-- Reps Stepper -->
               <div class="stepper">
-                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -1)">−</button>
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -${repsDelta})">−</button>
                 <div class="step-input-wrap">
                   <input class="step-input" type="number" step="1" value="${s.reps}" onchange="changeReps(${exIdx}, ${sIdx}, this.value)">
-                  <span class="step-unit">次</span>
+                  <span class="step-unit">${rUnit}</span>
                 </div>
-                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, 1)">+</button>
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, ${repsDelta})">+</button>
               </div>
 
               <!-- Check Done -->
@@ -999,8 +979,8 @@
           </div>
           <div class="set-table-head">
             <span>组别</span>
-            <span>负荷</span>
-            <span>次数</span>
+            <span>${(ex.unit === '分' || ex.unit === '日') ? '' : '负荷'}</span>
+            <span>${ex.repsUnit === '步' ? '步数' : (ex.unit === '分' ? '时长' : (ex.unit === '日' ? '天数' : '次数'))}</span>
             <span>打卡</span>
           </div>
           ${setsHtml}
@@ -1199,9 +1179,9 @@
           const numPrefix = ["第一组", "第二组", "第三组", "第四组", "第五组", "第六组"][idx] || `第${idx+1}组`;
           if (ex.unit === '自重' || ex.unit === '日') {
             text += `${numPrefix} ${s.reps}次\n`;
-          } else if (ex.unit === '分') {
+          } else if (ex.unit === '分' || ex.repsUnit === '分钟') {
             text += `${numPrefix} ${s.reps}分钟\n`;
-          } else if (ex.unit === '步') {
+          } else if (ex.name.includes('农夫行走') || ex.unit === '步' || ex.repsUnit === '步') {
             text += `${numPrefix} ${s.reps}步单侧 ${s.weight}kg\n`;
           } else if (ex.unit === 'kg') {
             if (ex.name.includes('辅助引体')) {
