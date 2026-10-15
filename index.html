@@ -701,8 +701,8 @@
       },
       4: {
         title: "Day 4",
-        name: "Upper B (推胸 20kg 冲击 10次×2组 + 悍马高位划船 3组 + 矩阵卷腹 + 农夫行走)",
-        cue: "重点突进：单侧 20kg 哑铃推胸冲击 10次×2组；悍马划船 22.5kg 扩充至 3 组；Matrix 卷腹 72.5kg；农夫行走 70-80 步。",
+        name: "Upper B (推胸 20kg + 悍马划船 + 矩阵卷腹 + 后束飞鸟 + 中束高频 + 农夫行走)",
+        cue: "重点：单侧 20kg 哑铃推胸稳固做工；悍马划船 22.5kg 3 组；Matrix 卷腹 72.5kg；新增后束飞鸟平衡力偶 + 中束高频刺激；农夫行走 70-80 步。",
         typeLabel: "训练",
         exercises: [
           {
@@ -747,6 +747,30 @@
             ]
           },
           {
+            name: "反向蝴蝶机飞鸟 (三角肌后束孤立)",
+            tag: "肩部后侧链 · 肩关节力偶平衡",
+            cue: "胸贴胸垫，手肘微屈锁死，沿水平面朝向外后侧展开，顶峰等长收缩 1.5 秒排空气体，严防耸肩代偿",
+            unit: "kg",
+            stepDelta: 2.5,
+            sets: [
+              { label: "激活", weight: 25, reps: 15, done: false },
+              { label: "组 1", weight: 30, reps: 15, done: false },
+              { label: "组 2", weight: 35, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
+            tag: "肩部中束 · 每周2练高频刺激",
+            cue: "器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
+            unit: "kg",
+            stepDelta: 2.5,
+            sets: [
+              { label: "组 1", weight: 7.5, reps: 15, done: false },
+              { label: "组 2", weight: 7.5, reps: 15, done: false },
+              { label: "组 3", weight: 7.5, reps: 15, done: false }
+            ]
+          },
+          {
             name: "哑铃农夫行走",
             tag: "功能性握力 · 核心抗侧屈",
             cue: "单侧 20kg，沉肩微收下巴，稳步迈进 70-80 步，保持身体垂直直行",
@@ -785,8 +809,8 @@
       },
       6: {
         title: "Day 6",
-        name: "Lower B (哈克深蹲 75kg 满额统治/试探80kg + 伸腿恒张力 + 腿弯举)",
-        cue: "重点：45° 线性哈克深蹲 75kg 满额做工统治，冲击 80kg 试探；伸腿与腿弯举 50kg 稳固。",
+        name: "Lower B (哈克深蹲 75kg + 固定器械臀推 + 伸腿恒张力 + 腿弯举)",
+        cue: "重点：45° 哈克深蹲 75kg 满额统治/试探 80kg；【新增】固定器械臀推 3 组顶峰伸髋挤压；伸腿与腿弯举 50kg 稳固。",
         typeLabel: "训练",
         exercises: [
           {
@@ -801,6 +825,18 @@
               { label: "组 1", weight: 75, reps: 15, done: false },
               { label: "组 2", weight: 75, reps: 15, done: false },
               { label: "组 3", weight: 75, reps: 12, done: false }
+            ]
+          },
+          {
+            name: "固定器械臀推 (Hip Thrust / 臀桥)",
+            tag: "后侧链伸髋 · 臀大肌顶峰缩短孤立",
+            cue: "安全带/软垫压在骨盆髂前上棘下方，下巴微收眼睛看骨盆，推起至躯干与大腿水平，顶峰等长夹紧臀大肌 1.5-2 秒",
+            unit: "kg",
+            stepDelta: 5,
+            sets: [
+              { label: "激活", weight: 20, reps: 15, done: false },
+              { label: "组 1", weight: 35, reps: 12, done: false },
+              { label: "组 2", weight: 45, reps: 12, done: false }
             ]
           },
           {
@@ -868,7 +904,13 @@
               workoutState[d].name = WEEK18_PLAN[d].name;
               workoutState[d].cue = WEEK18_PLAN[d].cue;
               workoutState[d].typeLabel = WEEK18_PLAN[d].typeLabel;
-              if (workoutState[d].exercises && WEEK18_PLAN[d].exercises) {
+
+              const hasCompletedSets = workoutState[d].exercises &&
+                workoutState[d].exercises.some(ex => ex.sets && ex.sets.some(s => s.done));
+
+              if (!hasCompletedSets) {
+                workoutState[d] = JSON.parse(JSON.stringify(WEEK18_PLAN[d]));
+              } else if (workoutState[d].exercises && WEEK18_PLAN[d].exercises) {
                 workoutState[d].exercises.forEach((ex, idx) => {
                   if (WEEK18_PLAN[d].exercises[idx]) {
                     ex.name = WEEK18_PLAN[d].exercises[idx].name;
@@ -883,8 +925,10 @@
               }
             }
           }
+          saveData();
         } catch (e) {
           workoutState = JSON.parse(JSON.stringify(WEEK18_PLAN));
+          saveData();
         }
       } else {
         workoutState = JSON.parse(JSON.stringify(WEEK18_PLAN));
