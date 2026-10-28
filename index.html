@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#090d13">
-  <title>猩球力量日志 · Week 19</title>
+  <title>猩球力量日志 · Week 20</title>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
@@ -512,7 +512,7 @@
   <!-- Header -->
   <header>
     <div class="header-title">
-      🦍 <span>猩球力量日志</span> · Week 19
+      🦍 <span>猩球力量日志</span> · Week 20
     </div>
     <button class="timer-badge-btn" id="timerBadge" onclick="openTimerModal()">
       ⏱️ <span id="badgeTimerText">组歇</span>
@@ -566,332 +566,718 @@
   <div class="toast" id="toast">已成功复制今日训练文本！</div>
 
   <script>
-    // --- Data Definition for Week 19 ---
-    const CURRENT_WEEK_NUM = 19;
-    const WEEK19_PLAN = {
-      1: {
-        title: "Day 1",
-        name: "Upper A (高位下拉55kg满额 + 侧平举高频 + 上胸17.5kg扩容 + 矩阵卷腹77kg)",
-        cue: "重点：高位下拉 55kg 冲刺 10 次满额；侧平举 36kg/7.5kg 沉肩防耸肩；上斜哑铃卧推 17.5kg 冲刺 3 组 10 次；Matrix 卷腹 77kg 满负荷轰炸。",
-        typeLabel: "训练",
-        exercises: [
-          {
-            name: "高位下拉机 (宽握对位拉力)",
-            tag: "垂直拉力 · 背阔大圆肌孤立",
-            cue: "大腿压板压实，宽握微挺胸，手肘垂直下拉向锁骨下方，底端停顿 1 秒，离心 3 秒慢放被动拉伸",
-            unit: "kg",
-            stepDelta: 5,
-            sets: [
-              { label: "唤醒", weight: 40, reps: 12, done: false },
-              { label: "过渡", weight: 45, reps: 10, done: false },
-              { label: "基准", weight: 50, reps: 10, done: false },
-              { label: "组 1", weight: 55, reps: 10, done: false },
-              { label: "组 2", weight: 55, reps: 10, done: false }
+    // --- Data Definition for Week 20 ---
+    const CURRENT_WEEK_NUM = 20;
+    const WEEK20_PLAN = {
+      "1": {
+            "title": "Day 1",
+            "name": "Upper A · 周三 (高位下拉55kg满额冲12次 + 侧平举高频 + 上胸17.5kg统治/试探20kg + 矩阵卷腹81.5kg)",
+            "cue": "重点（目标70-75分钟，热身组歇45-60s）：高位下拉 55kg 稳固冲击 12 次；侧平举 36kg/7.5kg 沉肩防耸肩；上斜卧推 17.5kg 稳态统治（末组可冲12次或试探20kg）；Matrix 卷腹登顶 81.5kg。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "高位下拉机 (宽握对位拉力)",
+                        "tag": "垂直拉力 · 背阔大圆肌孤立",
+                        "cue": "大腿压板压实，宽握微挺胸，手肘垂直下拉向锁骨下方，底端停顿 1 秒，离心 3 秒慢放被动拉伸（热身组歇 45-60s）",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "唤醒",
+                                    "weight": 40,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 45,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "基准",
+                                    "weight": 50,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 55,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 55,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
+                        "tag": "肩部中束 · 顶峰等长停顿",
+                        "cue": "器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1-1.5 秒",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "上斜哑铃卧推 (30°)",
+                        "tag": "上胸 · 17.5kg统治 / 试探20kg",
+                        "cue": "肩胛骨下沉内收，小臂垂直地面，前两组稳固 17.5kg×10，末组可冲 17.5kg×12 或试探 20kg×6-8",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 12.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 15,
+                                    "reps": 8,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 17.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 17.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 17.5,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Matrix 坐姿卷腹机",
+                        "tag": "双轴联动 · 81.5kg 超体重统治",
+                        "cue": "双轴联动卷动脊柱，彻底剥离髂腰肌，顶峰等长停顿 1.5 秒排空肺内空气，慢速回放 3 秒",
+                        "unit": "kg",
+                        "stepDelta": 4.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 68,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 72.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 77,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 81.5,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          },
-          {
-            name: "三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
-            tag: "肩部中束 · 顶峰等长停顿",
-            cue: "器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1-1.5 秒",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "激活", weight: 5, reps: 15, done: false },
-              { label: "组 1", weight: 7.5, reps: 15, done: false },
-              { label: "组 2", weight: 7.5, reps: 15, done: false },
-              { label: "组 3", weight: 7.5, reps: 15, done: false }
-            ]
-          },
-          {
-            name: "上斜哑铃卧推 (30°)",
-            tag: "上胸 · 锁骨头向心挤压",
-            cue: "肩胛骨下沉内收，小臂垂直地面，17.5kg 冲击 3 组各 10 次满额做工，顶峰向心挤压",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "热身", weight: 12.5, reps: 10, done: false },
-              { label: "过渡", weight: 15, reps: 8, done: false },
-              { label: "组 1", weight: 17.5, reps: 10, done: false },
-              { label: "组 2", weight: 17.5, reps: 10, done: false },
-              { label: "组 3", weight: 17.5, reps: 10, done: false }
-            ]
-          },
-          {
-            name: "Matrix 坐姿卷腹机",
-            tag: "双轴联动 · 77kg 核心轰炸",
-            cue: "双轴联动卷动脊柱，彻底剥离髂腰肌，顶峰等长停顿 1.5 秒排空肺内空气，慢速回放 3 秒",
-            unit: "kg",
-            stepDelta: 4.5,
-            sets: [
-              { label: "激活", weight: 68, reps: 12, done: false },
-              { label: "过渡", weight: 72.5, reps: 12, done: false },
-              { label: "组 1", weight: 77, reps: 12, done: false },
-              { label: "组 2", weight: 77, reps: 12, done: false }
-            ]
-          }
-        ]
       },
-      2: {
-        title: "Day 2",
-        name: "Lower A (45° 倒蹬机冲击 115-120kg + 伸腿恒张力 + 腿弯举)",
-        cue: "重点：45° 倒蹬机 115kg 稳固冲击 120kg；伸腿机 50kg 恒张力做工；坐姿腿弯举 50kg 稳固零代偿。",
-        typeLabel: "训练",
-        exercises: [
-          {
-            name: "45° 倒蹬机 (Leg Press)",
-            tag: "下肢主力 · 代谢做工冲刺",
-            cue: "双脚与肩同宽微外展，慢速下放至膝角约 90°，推起保留微屈绝不锁死",
-            unit: "kg",
-            stepDelta: 5,
-            sets: [
-              { label: "热身 1", weight: 50, reps: 15, done: false },
-              { label: "热身 2", weight: 50, reps: 15, done: false },
-              { label: "爬升", weight: 80, reps: 15, done: false },
-              { label: "稳固", weight: 100, reps: 15, done: false },
-              { label: "做工 1", weight: 110, reps: 15, done: false },
-              { label: "冲刺 2", weight: 115, reps: 15, done: false },
-              { label: "冲刺 3", weight: 120, reps: 12, done: false }
+      "2": {
+            "title": "Day 2",
+            "name": "Lower A 极速版 · 周四 (45° 倒蹬机 120kg 双组冲刺 + 单双腿恒张力伸腿 + 坐姿腿弯举)",
+            "cue": "重点（目标50-60分钟）：精简1组50kg冗余热身，倒蹬机冲击 120kg 双组（或试探125kg）；伸腿机标配单左/单右 22.5kg 解耦 + 50kg 恒张力；腿弯举 50kg 零代偿。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "45° 倒蹬机 (Leg Press)",
+                        "tag": "下肢主力 · 120kg 双组代谢冲刺",
+                        "cue": "双脚与肩同宽微外展，慢速下放至膝角约 90°，推起保留微屈绝不锁死（热身组歇 45-60s）",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 50,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升 1",
+                                    "weight": 80,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升 2",
+                                    "weight": 100,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "做工 1",
+                                    "weight": 110,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "做工 2",
+                                    "weight": 115,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "冲刺 1",
+                                    "weight": 120,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "冲刺 2",
+                                    "weight": 120,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿伸腿训练器 (单边解耦 + 恒张力协议)",
+                        "tag": "单双腿解耦 · 股四头肌恒张力",
+                        "cue": "先单左、单右各 22.5kg×12 消除双侧募集差；再双腿 45-50kg 触底前 2cm 即刻反向做工",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "单左",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "单右",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿2",
+                                    "weight": 50,
+                                    "reps": 16,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿腿弯举 (屈腿训练器)",
+                        "tag": "后侧链 · 腘绳肌孤立 (可机动前置)",
+                        "cue": "压板压实大腿，骨盆绝对中立，严防竖脊肌代偿，顶峰停顿 1 秒（若倒蹬机排队可机动前置）",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          },
-          {
-            name: "坐姿伸腿训练器 (恒张力协议)",
-            tag: "股四头肌孤立 · 恒张力",
-            cue: "小腿垫卡在脚踝上方，离心慢速下放，触底前 2cm 即刻反向做工",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "组 1", weight: 45, reps: 12, done: false },
-              { label: "组 2", weight: 50, reps: 15, done: false },
-              { label: "组 3", weight: 50, reps: 16, done: false }
-            ]
-          },
-          {
-            name: "坐姿腿弯举 (屈腿训练器)",
-            tag: "后侧链 · 腘绳肌孤立",
-            cue: "压板压实大腿，骨盆绝对中立，严防竖脊肌代偿，顶峰停顿 1 秒",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "组 1", weight: 45, reps: 12, done: false },
-              { label: "组 2", weight: 50, reps: 12, done: false },
-              { label: "组 3", weight: 50, reps: 12, done: false }
-            ]
-          }
-        ]
       },
-      3: {
-        title: "Day 3",
-        name: "恢复日 A (零有氧 · 深层筋膜拉伸)",
-        cue: "战略铁律：严禁跑步/椭圆机。执行 20 分钟深层静态拉伸 + 30 分钟温水浴，保护热量盈余与 mTOR 合成通路。",
-        typeLabel: "恢复",
-        exercises: [
-          {
-            name: "全身大肌群深度静态拉伸",
-            tag: "筋膜恢复 · 无器械",
-            cue: "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒，深呼吸",
-            unit: "分",
-            stepDelta: 5,
-            repsUnit: "分钟",
-            repsStepDelta: 5,
-            sets: [
-              { label: "拉伸", weight: 0, reps: 20, done: false },
-              { label: "水浴", weight: 0, reps: 30, done: false }
+      "3": {
+            "title": "Day 3",
+            "name": "恢复日 A · 周五 (零有氧 · 深层筋膜拉伸)",
+            "cue": "战略铁律：严禁跑步/椭圆机。执行 20 分钟深层静态拉伸 + 30 分钟温水浴，保护热量盈余与 mTOR 合成通路。",
+            "typeLabel": "恢复",
+            "exercises": [
+                  {
+                        "name": "全身大肌群深度静态拉伸",
+                        "tag": "筋膜恢复 · 无器械",
+                        "cue": "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒，深呼吸",
+                        "unit": "分",
+                        "stepDelta": 5,
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "拉伸",
+                                    "weight": 0,
+                                    "reps": 20,
+                                    "done": false
+                              },
+                              {
+                                    "label": "水浴",
+                                    "weight": 0,
+                                    "reps": 30,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          }
-        ]
       },
-      4: {
-        title: "Day 4",
-        name: "Upper B (推胸20kg统治/试探22.5kg + 悍马划船 + 矩阵卷腹77kg + 后束飞鸟 + 中束高频 + 农夫行走)",
-        cue: "重点：单侧 20kg 哑铃推胸稳态统治/试探 22.5kg；悍马划船 22.5kg-25kg；Matrix 卷腹 77kg；后束飞鸟 35kg 扩容；农夫行走 75-80 步。",
-        typeLabel: "训练",
-        exercises: [
-          {
-            name: "平卧哑铃推胸",
-            tag: "水平推力 · 20kg 统治 / 试探 22.5kg",
-            cue: "沉肩锁背，3 秒慢速离心下沉，向心上推不超伸锁肘，前两组稳固 20kg 满额，第三组可试探 22.5kg",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "热身", weight: 15, reps: 10, done: false },
-              { label: "激活", weight: 17.5, reps: 6, done: false },
-              { label: "组 1", weight: 20, reps: 10, done: false },
-              { label: "组 2", weight: 20, reps: 10, done: false },
-              { label: "组 3", weight: 20, reps: 10, done: false }
+      "4": {
+            "title": "Day 4",
+            "name": "Upper B 提速版 · 周六黄金窗口 (推胸22.5kg双组 + 悍马划船25kg双组 + 【后束/中束超级组】 + 农夫行走240步)",
+            "cue": "提速架构（目标75-80分钟，Matrix卷腹已移至周日）：平卧推胸 22.5kg 扩容双组；悍马划船 25kg 扩容双组；【后束飞鸟 + 侧平举】无干扰交替超级组；农夫行走 3×80 步。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "平卧哑铃推胸",
+                        "tag": "水平推力 · 22.5kg 双组核心扩容",
+                        "cue": "沉肩锁背，3 秒慢速离心下沉，向心上推不超伸锁肘，组 1 稳固 20kg，组 2、3 冲击 22.5kg 双组（热身组歇 45-60s）",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 15,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "激活",
+                                    "weight": 17.5,
+                                    "reps": 6,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 20,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 22.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 22.5,
+                                    "reps": 10,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Hammer Strength 胸垫高位划船",
+                        "tag": "对角线拉力 · 单边 25kg 双组扩容",
+                        "cue": "单边挂片净重。胸垫锁死躯干，手肘沿弧线向后下拽动，组 1 稳固 22.5kg，组 2、3 冲击单边 25kg 双组",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 15,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 20,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 25,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 25,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "【超级组 A】反向蝴蝶机飞鸟 (三角肌后束孤立)",
+                        "tag": "交替超级组 · 组后歇30-45s接侧平举",
+                        "cue": "胸贴胸垫，手肘微屈锁死，顶峰等长收缩 1.5 秒；每组完成后休息 30-45 秒即刻穿插一组下方侧平举",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 25,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 30,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 35,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 35,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "【超级组 B】三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
+                        "tag": "交替超级组 · 每周2练高频刺激",
+                        "cue": "与上方后束飞鸟交替执行，器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "哑铃农夫行走",
+                        "tag": "功能性握力 · 冲击 240 步里程碑",
+                        "cue": "单侧 20kg，沉肩微收下巴，三组全满 80 步（累计 240 步），保持身体绝对垂直直行",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "repsUnit": "步",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          },
-          {
-            name: "Hammer Strength 胸垫高位划船",
-            tag: "对角线拉力 · 背阔中下束",
-            cue: "单边挂片净重。胸垫锁死躯干，手肘沿弧线向后下拽动，22.5kg 稳固满做工，末组可试探 25kg",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "激活", weight: 15, reps: 12, done: false },
-              { label: "过渡", weight: 20, reps: 12, done: false },
-              { label: "组 1", weight: 22.5, reps: 12, done: false },
-              { label: "组 2", weight: 22.5, reps: 12, done: false },
-              { label: "组 3", weight: 22.5, reps: 12, done: false }
-            ]
-          },
-          {
-            name: "Matrix 坐姿卷腹机",
-            tag: "双轴联动 · 77kg 核心轰炸",
-            cue: "双轴联动卷动脊柱，顶峰等长停顿 1.5 秒，慢速回放",
-            unit: "kg",
-            stepDelta: 4.5,
-            sets: [
-              { label: "激活", weight: 68, reps: 12, done: false },
-              { label: "过渡", weight: 72.5, reps: 12, done: false },
-              { label: "组 1", weight: 77, reps: 12, done: false },
-              { label: "组 2", weight: 77, reps: 12, done: false }
-            ]
-          },
-          {
-            name: "反向蝴蝶机飞鸟 (三角肌后束孤立)",
-            tag: "肩部后侧链 · 肩关节力偶平衡",
-            cue: "胸贴胸垫，手肘微屈锁死，沿水平面朝向外后侧展开，顶峰等长收缩 1.5 秒排空气体，严防耸肩代偿",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "激活", weight: 25, reps: 15, done: false },
-              { label: "组 1", weight: 30, reps: 15, done: false },
-              { label: "组 2", weight: 35, reps: 12, done: false },
-              { label: "组 3", weight: 35, reps: 12, done: false }
-            ]
-          },
-          {
-            name: "三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
-            tag: "肩部中束 · 每周2练高频刺激",
-            cue: "器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "组 1", weight: 7.5, reps: 15, done: false },
-              { label: "组 2", weight: 7.5, reps: 15, done: false },
-              { label: "组 3", weight: 7.5, reps: 15, done: false }
-            ]
-          },
-          {
-            name: "哑铃农夫行走",
-            tag: "功能性握力 · 核心抗侧屈",
-            cue: "单侧 20kg，沉肩微收下巴，稳步迈进 75-80 步，保持身体垂直直行",
-            unit: "kg",
-            stepDelta: 2.5,
-            repsUnit: "步",
-            repsStepDelta: 5,
-            sets: [
-              { label: "组 1", weight: 20, reps: 75, done: false },
-              { label: "组 2", weight: 20, reps: 75, done: false },
-              { label: "组 3", weight: 20, reps: 80, done: false }
-            ]
-          }
-        ]
       },
-      5: {
-        title: "Day 5",
-        name: "Lower B · 周日黄金窗口 (哈克深蹲 80kg 双组扩容 + 固定器械臀推冲击 50kg + 伸腿恒张力 + 腿弯举)",
-        cue: "排期重构（周末背靠背上下肢分离）：趁周日充裕时间从容攻坚 45° 哈克深蹲 80kg 双组扩容 + 固定器械臀推冲击 50kg；伸腿与腿弯举 50kg 稳固零代偿（热身组歇压缩至 45-60s，预计 75 分钟高效完成）。",
-        typeLabel: "训练",
-        exercises: [
-          {
-            name: "45° 线性哈克深蹲",
-            tag: "下肢主力 · 股四头肌深潜",
-            cue: "双脚与肩同宽微外展，下潜至大腿深过水平面，全程核心紧锁，80kg 扩充为双组做工（热身组歇 45-60s）",
-            unit: "kg",
-            stepDelta: 5,
-            sets: [
-              { label: "热身 1", weight: 0, reps: 15, done: false },
-              { label: "热身 2", weight: 50, reps: 12, done: false },
-              { label: "稳态", weight: 75, reps: 15, done: false },
-              { label: "组 1", weight: 80, reps: 8, done: false },
-              { label: "组 2", weight: 80, reps: 8, done: false }
+      "5": {
+            "title": "Day 5",
+            "name": "Lower B · 周日黄金窗口 (哈克80kg双组10次 + 腿弯举解耦 + 臀推50-55kg + 伸腿恒张力 + 矩阵卷腹81.5kg)",
+            "cue": "周末背靠背下肢主项（目标80-85分钟）：哈克深蹲冲击 80kg×10×2 组；紧接坐姿腿弯举创造 10 分钟伸髋恢复窗；臀推稳固 50kg×12×2（或试探55kg）；最后补足跨日移峰的 Matrix 卷腹 81.5kg。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "45° 线性哈克深蹲",
+                        "tag": "下肢主力 · 80kg 双组 10 次统治",
+                        "cue": "双脚与肩同宽微外展，下潜至大腿深过水平面，全程核心紧锁，冲击 80kg×10×2 组满额（热身组歇 45-60s）",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "热身 1",
+                                    "weight": 0,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "热身 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "稳态",
+                                    "weight": 75,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 80,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 80,
+                                    "reps": 10,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿腿弯举 (腘绳肌 · 拮抗肌解耦窗口)",
+                        "tag": "后侧链做工 · 创造10分钟伸髋恢复窗",
+                        "cue": "紧接哈克深蹲执行！压板压实大腿，骨盆绝对中立，顶峰停顿 1 秒，同时让臀大肌与股四头肌满血恢复 ATP-CP",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "固定器械臀推 (Hip Thrust / 臀桥)",
+                        "tag": "后侧链伸髋 · 50kg 双组 / 试探 55kg",
+                        "cue": "安全带/软垫压在骨盆髂前上棘下方，下巴微收，推起至躯干与大腿水平，顶峰等长夹紧臀大肌 1.5-2 秒",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 25,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升",
+                                    "weight": 40,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "伸腿训练器 (恒张力协议)",
+                        "tag": "单边解耦 + 全程恒张力",
+                        "cue": "单腿左右各 22.5kg 激活神经；双腿 45-50kg 全程恒张力做工，榨干股四头肌储备",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "单左",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "单右",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿2",
+                                    "weight": 50,
+                                    "reps": 16,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Matrix 坐姿卷腹机 (跨日移峰收尾)",
+                        "tag": "双轴联动 · 81.5kg 核心收尾",
+                        "cue": "自周六移峰至此（与周三间隔96小时），双轴联动卷动脊柱，顶峰等长停顿 1.5 秒，慢速回放 3 秒",
+                        "unit": "kg",
+                        "stepDelta": 4.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 68,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 72.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 77,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 81.5,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          },
-          {
-            name: "固定器械臀推 (Hip Thrust / 臀桥)",
-            tag: "后侧链伸髋 · 臀大肌顶峰缩短孤立",
-            cue: "安全带/软垫压在骨盆髂前上棘下方，下巴微收眼睛看骨盆，推起至躯干与大腿水平，顶峰等长夹紧臀大肌 1.5-2 秒",
-            unit: "kg",
-            stepDelta: 5,
-            sets: [
-              { label: "激活", weight: 20, reps: 15, done: false },
-              { label: "爬升", weight: 35, reps: 12, done: false },
-              { label: "组 1", weight: 45, reps: 12, done: false },
-              { label: "组 2", weight: 50, reps: 10, done: false }
-            ]
-          },
-          {
-            name: "伸腿训练器 (恒张力协议)",
-            tag: "单边解耦 + 全程恒张力",
-            cue: "单腿左右各 22.5kg 激活神经；双腿 45-50kg 全程恒张力做工",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "单左", weight: 22.5, reps: 12, done: false },
-              { label: "单右", weight: 22.5, reps: 12, done: false },
-              { label: "双腿1", weight: 45, reps: 12, done: false },
-              { label: "双腿2", weight: 50, reps: 16, done: false }
-            ]
-          },
-          {
-            name: "坐姿腿弯举 (腘绳肌)",
-            tag: "后侧链做工 · 骨盆中立",
-            cue: "压板压实大腿，骨盆绝对中立，动作末端收紧顶峰停顿 1 秒",
-            unit: "kg",
-            stepDelta: 2.5,
-            sets: [
-              { label: "组 1", weight: 45, reps: 12, done: false },
-              { label: "组 2", weight: 50, reps: 12, done: false },
-              { label: "组 3", weight: 50, reps: 12, done: false }
-            ]
-          }
-        ]
       },
-      6: {
-        title: "Day 6",
-        name: "恢复日 B · 周一会议课程日 (主动恢复 · 神经卸载与深层拉伸)",
-        cue: "排期重构（解放忙碌周一）：周末已完成 Upper B + Lower B 双核攻坚，周一全身零训练负荷，安心投入科研会议与课程；晚间执行 20 分钟静态拉伸 + 温水浴促进超量恢复。",
-        typeLabel: "恢复",
-        exercises: [
-          {
-            name: "全身体位深度静态拉伸",
-            tag: "神经修复 · 结缔组织减压",
-            cue: "针对股四头肌、臀大肌、胸大肌、背阔肌深层放松，严禁中高强度有氧",
-            unit: "分",
-            stepDelta: 5,
-            repsUnit: "分钟",
-            repsStepDelta: 5,
-            sets: [
-              { label: "拉伸", weight: 0, reps: 20, done: false },
-              { label: "水浴", weight: 0, reps: 30, done: false }
+      "6": {
+            "title": "Day 6",
+            "name": "恢复日 B · 周一会议课程日 (主动恢复 · 神经卸载与深层拉伸)",
+            "cue": "排期重构（解放忙碌周一）：周末已完成 Upper B + Lower B 双核攻坚，周一全身零训练负荷，安心投入科研会议与课程；晚间执行 20 分钟静态拉伸 + 温水浴促进超量恢复。",
+            "typeLabel": "恢复",
+            "exercises": [
+                  {
+                        "name": "全身体位深度静态拉伸",
+                        "tag": "神经修复 · 结缔组织减压",
+                        "cue": "针对股四头肌、臀大肌、胸大肌、背阔肌深层放松，严禁中高强度有氧",
+                        "unit": "分",
+                        "stepDelta": 5,
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "拉伸",
+                                    "weight": 0,
+                                    "reps": 20,
+                                    "done": false
+                              },
+                              {
+                                    "label": "水浴",
+                                    "weight": 0,
+                                    "reps": 30,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          }
-        ]
       },
-      7: {
-        title: "Day 7",
-        name: "全面休息 (数据汇总与复盘)",
-        cue: "身体彻底放空，总结全周各动作载荷数据与睡眠心率趋势，准备编制 Week 20 周期方案。",
-        typeLabel: "休息",
-        exercises: [
-          {
-            name: "全天被动休息与饮食充能",
-            tag: "超量恢复",
-            cue: "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
-            unit: "日",
-            stepDelta: 1,
-            repsUnit: "天",
-            sets: [
-              { label: "休息", weight: 0, reps: 1, done: false }
+      "7": {
+            "title": "Day 7",
+            "name": "全面休息 · 周二 (数据汇总与复盘)",
+            "cue": "身体彻底放空，总结 Week 20 里程碑周期各动作载荷数据与睡眠心率趋势，准备编制 Week 21 周期方案。",
+            "typeLabel": "休息",
+            "exercises": [
+                  {
+                        "name": "全天被动休息与饮食充能",
+                        "tag": "超量恢复",
+                        "cue": "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
+                        "unit": "日",
+                        "stepDelta": 1,
+                        "repsUnit": "天",
+                        "sets": [
+                              {
+                                    "label": "休息",
+                                    "weight": 0,
+                                    "reps": 1,
+                                    "done": false
+                              }
+                        ]
+                  }
             ]
-          }
-        ]
       }
-    };
+};
 
     // --- State Management ---
-    const STORAGE_KEY = 'week19_workout_state_v1';
+    const STORAGE_KEY = 'week20_workout_state_v1';
     let currentDay = 1;
     let workoutState = {};
 
@@ -900,29 +1286,29 @@
       if (saved) {
         try {
           workoutState = JSON.parse(saved);
-          // Sync metadata from WEEK19_PLAN
+          // Sync metadata from WEEK20_PLAN
           for (let d = 1; d <= 7; d++) {
-            if (WEEK19_PLAN[d] && workoutState[d]) {
-              workoutState[d].title = WEEK19_PLAN[d].title;
-              workoutState[d].name = WEEK19_PLAN[d].name;
-              workoutState[d].cue = WEEK19_PLAN[d].cue;
-              workoutState[d].typeLabel = WEEK19_PLAN[d].typeLabel;
+            if (WEEK20_PLAN[d] && workoutState[d]) {
+              workoutState[d].title = WEEK20_PLAN[d].title;
+              workoutState[d].name = WEEK20_PLAN[d].name;
+              workoutState[d].cue = WEEK20_PLAN[d].cue;
+              workoutState[d].typeLabel = WEEK20_PLAN[d].typeLabel;
 
               const hasCompletedSets = workoutState[d].exercises &&
                 workoutState[d].exercises.some(ex => ex.sets && ex.sets.some(s => s.done));
 
               if (!hasCompletedSets) {
-                workoutState[d] = JSON.parse(JSON.stringify(WEEK19_PLAN[d]));
-              } else if (workoutState[d].exercises && WEEK19_PLAN[d].exercises) {
+                workoutState[d] = JSON.parse(JSON.stringify(WEEK20_PLAN[d]));
+              } else if (workoutState[d].exercises && WEEK20_PLAN[d].exercises) {
                 workoutState[d].exercises.forEach((ex, idx) => {
-                  if (WEEK19_PLAN[d].exercises[idx]) {
-                    ex.name = WEEK19_PLAN[d].exercises[idx].name;
-                    ex.tag = WEEK19_PLAN[d].exercises[idx].tag;
-                    ex.cue = WEEK19_PLAN[d].exercises[idx].cue;
-                    ex.unit = WEEK19_PLAN[d].exercises[idx].unit;
-                    ex.stepDelta = WEEK19_PLAN[d].exercises[idx].stepDelta;
-                    ex.repsUnit = WEEK19_PLAN[d].exercises[idx].repsUnit;
-                    ex.repsStepDelta = WEEK19_PLAN[d].exercises[idx].repsStepDelta;
+                  if (WEEK20_PLAN[d].exercises[idx]) {
+                    ex.name = WEEK20_PLAN[d].exercises[idx].name;
+                    ex.tag = WEEK20_PLAN[d].exercises[idx].tag;
+                    ex.cue = WEEK20_PLAN[d].exercises[idx].cue;
+                    ex.unit = WEEK20_PLAN[d].exercises[idx].unit;
+                    ex.stepDelta = WEEK20_PLAN[d].exercises[idx].stepDelta;
+                    ex.repsUnit = WEEK20_PLAN[d].exercises[idx].repsUnit;
+                    ex.repsStepDelta = WEEK20_PLAN[d].exercises[idx].repsStepDelta;
                   }
                 });
               }
@@ -930,11 +1316,11 @@
           }
           saveData();
         } catch (e) {
-          workoutState = JSON.parse(JSON.stringify(WEEK19_PLAN));
+          workoutState = JSON.parse(JSON.stringify(WEEK20_PLAN));
           saveData();
         }
       } else {
-        workoutState = JSON.parse(JSON.stringify(WEEK19_PLAN));
+        workoutState = JSON.parse(JSON.stringify(WEEK20_PLAN));
         saveData();
       }
     }
@@ -1086,7 +1472,7 @@
 
     function resetDayData() {
       if (confirm(`确认重置 ${workoutState[currentDay].title} 为初始预设计划吗？`)) {
-        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK19_PLAN[currentDay]));
+        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK20_PLAN[currentDay]));
         saveData();
         renderDayContent();
         showToast("已重置今日预设计划");
