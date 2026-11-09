@@ -519,7 +519,7 @@
     </button>
   </header>
 
-  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/11–11/17 · 巩固与恢复观察</span><a href="archives/week21.html" style="color:#58a6ff">查看Week 21记录</a></div>
+  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/10–11/16 · 周二/四/六/日四训</span><a href="archives/week21.html" style="color:#58a6ff">查看Week 21记录</a></div>
 
   <!-- Day Navigation -->
   <div class="day-nav" id="dayNav"></div>
@@ -573,7 +573,7 @@
     const WEEK22_PLAN = {
       "1": {
             "title": "Day 1",
-            "name": "Upper A · 周三 11/11",
+            "name": "Upper A · 周二 11/10",
             "cue": "参考80–100分钟。巩固下拉55kg与上斜每只20kg，不加组；热身减少重复次数，正式组保留约2次余力。器械占用可调整顺序并在日志注明。",
             "typeLabel": "训练",
             "exercises": [
@@ -736,10 +736,39 @@
                         ],
                         "restSeconds": 90
                   }
-            ]
+            ],
+            "sessionId": "upper_a"
       },
       "2": {
             "title": "Day 2",
+            "name": "恢复日 · 周三 11/11",
+            "cue": "11月11日。不安排力量训练或长时间中高强度有氧。保持舒适日常活动，按需轻松活动度或温水浴；不强拉痛点。睡眠、饮食和主观精神与训练同等关注。",
+            "typeLabel": "恢复",
+            "exercises": [
+                  {
+                        "name": "舒适活动或放松 (按需)",
+                        "tag": "不要求打卡完成恢复配额",
+                        "cue": "轻松步行、活动度或放松任选；不适时不勉强。维持日常进食和饮水，晚上规律休息。",
+                        "unit": "分",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "可选活动",
+                                    "weight": 0,
+                                    "reps": 15,
+                                    "done": false,
+                                    "restSeconds": 0
+                              }
+                        ],
+                        "restSeconds": 0,
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5
+                  }
+            ],
+            "sessionId": "recovery_wed"
+      },
+      "3": {
+            "title": "Day 3",
             "name": "Lower A · 周四 11/12",
             "cue": "参考65–85分钟。倒蹬维持120/125kg，减少爬升组的重复次数；不把上周125kg×17自动换成130kg。伸腿按11/5同台机器配重参考。",
             "typeLabel": "训练",
@@ -865,10 +894,11 @@
                         ],
                         "restSeconds": 120
                   }
-            ]
+            ],
+            "sessionId": "lower_a"
       },
-      "3": {
-            "title": "Day 3",
+      "4": {
+            "title": "Day 4",
             "name": "恢复日 A · 周五 11/13",
             "cue": "11月13日。不安排力量训练或长时间中高强度有氧。保持舒适日常活动，按需轻松活动度或温水浴；不强拉痛点。睡眠、饮食和主观精神与训练同等关注。",
             "typeLabel": "恢复",
@@ -892,10 +922,11 @@
                         "repsUnit": "分钟",
                         "repsStepDelta": 5
                   }
-            ]
+            ],
+            "sessionId": "recovery_fri"
       },
-      "4": {
-            "title": "Day 4",
+      "5": {
+            "title": "Day 5",
             "name": "Upper B · 周六 11/14",
             "cue": "参考95–115分钟，保留卧推约3分钟正式组组歇；减少疲劳性过渡组，不用硬压休息赶时。农夫先巩固一趟22.5kg×60步。",
             "typeLabel": "训练",
@@ -1078,10 +1109,11 @@
                         "repsUnit": "步",
                         "repsStepDelta": 5
                   }
-            ]
+            ],
+            "sessionId": "upper_b"
       },
-      "5": {
-            "title": "Day 5",
+      "6": {
+            "title": "Day 6",
             "name": "Lower B · 周日 11/15",
             "cue": "参考100–120分钟。哈克85kg、臀推55kg以巩固为主，不自动升级90/60kg。热身低次数，正式组留余力；卷腹减少一组过渡。",
             "typeLabel": "训练",
@@ -1269,10 +1301,11 @@
                         ],
                         "restSeconds": 90
                   }
-            ]
+            ],
+            "sessionId": "lower_b"
       },
-      "6": {
-            "title": "Day 6",
+      "7": {
+            "title": "Day 7",
             "name": "恢复日 B · 周一 11/16",
             "cue": "11月16日，配合科研安排。不安排力量训练或长时间中高强度有氧。保持舒适日常活动，按需轻松活动度或温水浴；不强拉痛点。睡眠、饮食和主观精神与训练同等关注。",
             "typeLabel": "恢复",
@@ -1296,89 +1329,64 @@
                         "repsUnit": "分钟",
                         "repsStepDelta": 5
                   }
-            ]
-      },
-      "7": {
-            "title": "Day 7",
-            "name": "休息与复盘 · 周二 11/17",
-            "cue": "休息，汇总实际组数、余力、组歇、睡眠和身体反馈，再编制下一周期。不以设备恢复倒计时决定必须训练。",
-            "typeLabel": "休息",
-            "exercises": [
-                  {
-                        "name": "休息与简短复盘",
-                        "tag": "训练和日常健康一起回顾",
-                        "cue": "按方便记录睡眠、主观精力和不适；不要求补齐每天所有字段。",
-                        "unit": "日",
-                        "stepDelta": 1,
-                        "sets": [
-                              {
-                                    "label": "休息",
-                                    "weight": 0,
-                                    "reps": 1,
-                                    "done": false,
-                                    "restSeconds": 0
-                              }
-                        ],
-                        "restSeconds": 0
-                  }
-            ]
+            ],
+            "sessionId": "recovery_mon"
       }
 };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week22_workout_state_v1';
+    const STORAGE_KEY = 'week22_workout_state_v2_tue';
+    const LEGACY_STORAGE_KEY = 'week22_workout_state_v1';
+    const LEGACY_DAY_MAP = { 1: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6 };
     let currentDay = 1;
     let workoutState = {};
 
-    function initData() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          workoutState = JSON.parse(saved);
-          // Sync metadata from WEEK22_PLAN
-          for (let d = 1; d <= 7; d++) {
-            if (WEEK22_PLAN[d] && workoutState[d]) {
-              workoutState[d].title = WEEK22_PLAN[d].title;
-              workoutState[d].name = WEEK22_PLAN[d].name;
-              workoutState[d].cue = WEEK22_PLAN[d].cue;
-              workoutState[d].typeLabel = WEEK22_PLAN[d].typeLabel;
-
-              const hasCompletedSets = workoutState[d].exercises &&
-                workoutState[d].exercises.some(ex => ex.sets && ex.sets.some(s => s.done));
-
-              if (!hasCompletedSets) {
-                workoutState[d] = JSON.parse(JSON.stringify(WEEK22_PLAN[d]));
-              } else if (workoutState[d].exercises && WEEK22_PLAN[d].exercises) {
-                workoutState[d].exercises.forEach((ex, idx) => {
-                  if (WEEK22_PLAN[d].exercises[idx]) {
-                    ex.name = WEEK22_PLAN[d].exercises[idx].name;
-                    ex.tag = WEEK22_PLAN[d].exercises[idx].tag;
-                    ex.cue = WEEK22_PLAN[d].exercises[idx].cue;
-                    ex.unit = WEEK22_PLAN[d].exercises[idx].unit;
-                    ex.stepDelta = WEEK22_PLAN[d].exercises[idx].stepDelta;
-                    ex.repsUnit = WEEK22_PLAN[d].exercises[idx].repsUnit;
-                    ex.repsStepDelta = WEEK22_PLAN[d].exercises[idx].repsStepDelta;
-                    ex.restSeconds = WEEK22_PLAN[d].exercises[idx].restSeconds;
-                    (ex.sets || []).forEach((savedSet, setIndex) => {
-                      const templateSet = WEEK22_PLAN[d].exercises[idx].sets[setIndex];
-                      if (templateSet && Number.isFinite(templateSet.restSeconds)) {
-                        savedSet.restSeconds = templateSet.restSeconds;
-                      }
-                    });
-                  }
-                });
-              }
-            }
-          }
-          saveData();
-        } catch (e) {
-          workoutState = JSON.parse(JSON.stringify(WEEK22_PLAN));
-          saveData();
-        }
-      } else {
-        workoutState = JSON.parse(JSON.stringify(WEEK22_PLAN));
-        saveData();
+    function readStoredState(key) {
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+      } catch (error) {
+        // Preserve unreadable data before loading a usable plan.
       }
+      if (key === STORAGE_KEY) {
+        localStorage.setItem(STORAGE_KEY + '_unreadable_backup', raw);
+      }
+      return null;
+    }
+
+    function mergeStoredDay(template, stored) {
+      const result = JSON.parse(JSON.stringify(template));
+      if (!stored || !Array.isArray(stored.exercises)) return result;
+      if (stored.sessionId && stored.sessionId !== template.sessionId) return result;
+      result.exercises.forEach((exercise, exerciseIndex) => {
+        const previous = stored.exercises.find(item => item && item.name === exercise.name)
+          || stored.exercises[exerciseIndex];
+        if (!previous || !Array.isArray(previous.sets)) return;
+        exercise.sets.forEach((set, setIndex) => {
+          const priorSet = previous.sets[setIndex];
+          if (!priorSet || typeof priorSet !== 'object') return;
+          if (Number.isFinite(priorSet.weight) && priorSet.weight >= 0) set.weight = priorSet.weight;
+          if (Number.isFinite(priorSet.reps) && priorSet.reps >= 0) set.reps = priorSet.reps;
+          if (typeof priorSet.done === 'boolean') set.done = priorSet.done;
+          if (typeof priorSet.label === 'string') set.label = priorSet.label;
+        });
+      });
+      return result;
+    }
+
+    function initData() {
+      const saved = readStoredState(STORAGE_KEY);
+      const legacy = saved ? null : readStoredState(LEGACY_STORAGE_KEY);
+      workoutState = {};
+      for (let day = 1; day <= 7; day++) {
+        const previous = saved ? saved[day] : legacy && LEGACY_DAY_MAP[day]
+          ? legacy[LEGACY_DAY_MAP[day]] : null;
+        workoutState[day] = mergeStoredDay(WEEK22_PLAN[day], previous);
+      }
+      // Legacy Week 22 and Week 21 keys remain untouched.
+      saveData();
     }
 
     function saveData() {
@@ -1395,7 +1403,7 @@
         btn.onclick = () => switchDay(d);
         btn.innerHTML = `
           <span>${workoutState[d].title}</span>
-          <span class="sub">${workoutState[d].typeLabel || ((d === 3 || d === 5) ? '恢复' : (d === 7 ? '休息' : '训练'))}</span>
+          <span class="sub">${workoutState[d].typeLabel || WEEK22_PLAN[d].typeLabel}</span>
         `;
         nav.appendChild(btn);
       }
