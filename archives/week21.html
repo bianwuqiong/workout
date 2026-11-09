@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#090d13">
+  <title>猩球力量日志 · Week 21</title>
+  <link rel="manifest" href="../manifest.json">
+  <style>
+    :root {
+      --bg: #070a0e;
+      --card-bg: #12171f;
+      --card-border: #232a35;
+      --text-main: #f0f6fc;
+      --text-sub: #7d8590;
+      --accent: #238636;
+      --accent-active: #2ea043;
+      --accent-glow: rgba(46, 160, 67, 0.35);
+      --highlight: #58a6ff;
+      --warn: #e3b341;
+      --stepper-bg: #0a0e14;
+      --stepper-border: #262e3b;
+      --btn-bg: #1a212d;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Remove number spin buttons on WebKit/Chrome/Android */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-top: env(safe-area-inset-top, 0);
+      padding-bottom: calc(78px + env(safe-area-inset-bottom, 16px));
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 14, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-title span {
+      background: linear-gradient(135deg, #58a6ff, #bc8cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .timer-badge-btn {
+      background: #161b22;
+      border: 1px solid var(--card-border);
+      color: var(--highlight);
+      padding: 5px 12px;
+      border-radius: 18px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .timer-badge-btn.running {
+      border-color: var(--accent-active);
+      color: var(--accent-active);
+      background: rgba(46, 160, 67, 0.15);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 6px var(--accent-glow); }
+    }
+
+    /* Day Navigation */
+    .day-nav {
+      display: flex;
+      gap: 8px;
+      padding: 10px 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .day-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .day-btn {
+      flex: 0 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .day-btn.active {
+      background: #1f6feb;
+      color: #fff;
+      border-color: #388bfd;
+      box-shadow: 0 3px 12px rgba(31, 111, 235, 0.4);
+    }
+
+    .day-btn .sub {
+      font-size: 0.68rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    /* Day Banner */
+    .day-banner {
+      margin: 2px 10px 12px;
+      padding: 10px 12px;
+      background: rgba(18, 23, 31, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.45;
+      border-left: 3px solid var(--highlight);
+    }
+
+    .day-banner strong {
+      color: var(--text-main);
+      font-size: 0.86rem;
+    }
+
+    /* Exercise Card */
+    .exercise-card {
+      margin: 0 10px 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 12px 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .ex-header {
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.4);
+    }
+
+    .ex-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ex-tag {
+      font-size: 0.68rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(88, 166, 255, 0.12);
+      color: var(--highlight);
+      font-weight: 600;
+      margin-top: 3px;
+      display: inline-block;
+    }
+
+    .ex-cue {
+      font-size: 0.74rem;
+      color: var(--warn);
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    /* Sets Table Header */
+    .set-table-head {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 38px;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      padding: 2px 0 6px;
+      text-align: center;
+    }
+
+    /* Sets Row */
+    .set-row {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 38px;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(35, 42, 53, 0.6);
+    }
+
+    .set-row:last-child {
+      border-bottom: none;
+    }
+
+    .set-label {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      font-weight: 600;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .set-label.warmup {
+      color: var(--warn);
+    }
+
+    /* High Precision Stepper Box */
+    .stepper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--stepper-bg);
+      border: 1px solid var(--stepper-border);
+      border-radius: 8px;
+      height: 38px;
+      padding: 0 2px;
+      min-width: 0;
+    }
+
+    .step-btn {
+      width: 28px;
+      height: 32px;
+      background: var(--btn-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      color: #c9d1d9;
+      font-size: 1.15rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .step-btn:active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .step-input-wrap {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      padding: 0 1px;
+    }
+
+    .step-input {
+      width: 100%;
+      min-width: 0;
+      max-width: 44px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      font-family: inherit;
+      user-select: text;
+    }
+
+    .step-unit {
+      font-size: 0.65rem;
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+
+    /* Checkmark Button */
+    .check-btn {
+      width: 38px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--btn-bg);
+      border: 1px solid var(--card-border);
+      color: #484f58;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .check-btn.done {
+      background: var(--accent);
+      border-color: var(--accent-active);
+      color: #fff;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Bottom Floating Action Bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(7, 10, 14, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--card-border);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 16px));
+      display: grid;
+      grid-template-columns: 68px 1fr 68px;
+      gap: 8px;
+      z-index: 90;
+    }
+
+    .btn-main {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(35, 134, 54, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn-main:active {
+      background: var(--accent-active);
+      transform: scale(0.98);
+    }
+
+    .btn-sec {
+      background: #161b22;
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 11px 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-sec:active {
+      background: #21262d;
+    }
+
+    /* Rest Timer Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: flex-end;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      background: #12171f;
+      border-top: 1px solid var(--card-border);
+      border-radius: 20px 20px 0 0;
+      padding: 20px 16px calc(24px + env(safe-area-inset-bottom, 16px));
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.show .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .timer-display {
+      text-align: center;
+      margin: 12px 0 16px;
+    }
+
+    .timer-big-num {
+      font-size: 4.2rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-active);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .quick-time-btn {
+      padding: 7px 13px;
+      border-radius: 18px;
+      background: #161b22;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .quick-time-btn.active {
+      background: var(--highlight);
+      color: #fff;
+      border-color: var(--highlight);
+    }
+
+    .timer-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 65px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #238636;
+      color: #fff;
+      padding: 9px 18px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-title">
+      🦍 <span>猩球力量日志</span> · Week 21
+    </div>
+    <button class="timer-badge-btn" id="timerBadge" onclick="openTimerModal()">
+      ⏱️ <span id="badgeTimerText">组歇</span>
+    </button>
+  </header>
+
+  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0">Week 21历史记录 · 11/4–11/10 · <a href="../index.html" style="color:#58a6ff">返回Week 22</a></div>
+
+  <!-- Day Navigation -->
+  <div class="day-nav" id="dayNav"></div>
+
+  <!-- Day Banner Info -->
+  <div class="day-banner" id="dayBanner"></div>
+
+  <!-- Exercises Container -->
+  <main id="exercisesContainer"></main>
+
+  <!-- Bottom Bar -->
+  <div class="bottom-bar">
+    <button class="btn-sec" onclick="openTimerModal()">⏱️ 计时</button>
+    <button class="btn-main" onclick="exportWorkoutLog()">📋 复制今日手记</button>
+    <button class="btn-sec" onclick="resetDayData()">🔄 重置</button>
+  </div>
+
+  <!-- Rest Timer Modal -->
+  <div class="modal-overlay" id="timerModal" onclick="closeTimerModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.95rem; font-weight: 700;">⏱️ 组间休息计时器</span>
+        <button onclick="closeTimerModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.3rem; padding: 4px; cursor: pointer;">✕</button>
+      </div>
+
+      <div class="timer-display">
+        <div class="timer-big-num" id="modalTimeDisplay">01:30</div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="quick-time-btn" onclick="setTimerSeconds(60)">60s</button>
+        <button class="quick-time-btn active" onclick="setTimerSeconds(90)">90s</button>
+        <button class="quick-time-btn" onclick="setTimerSeconds(120)">120s</button>
+        <button class="quick-time-btn" onclick="setTimerSeconds(180)">180s</button>
+      </div>
+
+      <div class="timer-actions">
+        <button class="btn-sec" style="flex: 1;" onclick="toggleTimer()" id="timerToggleBtn">暂停</button>
+        <button class="btn-sec" style="flex: 1;" onclick="resetTimer()">重置</button>
+        <button class="btn-main" style="flex: 1;" onclick="closeTimerModal()">完成</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">已成功复制今日训练文本！</div>
+
+  <script>
+    // --- Data Definition for Week 21 ---
+    const CURRENT_WEEK_NUM = 21;
+    const WEEK21_PLAN = {
+      "1": {
+            "title": "Day 1",
+            "name": "Upper A · 周三 (高位下拉55kg零后仰双组 + 侧平举高频 + 上斜卧推20kg破冰 + 矩阵卷腹81.5kg)",
+            "cue": "重点（目标75-85分钟）：高位下拉严守“直立微收腹零仰腰”冲击双组 55kg×10；侧平举 7.5kg/36kg（可机动前置）；30°上斜卧推平贴腰下末组首探 20kg×6-8（或17.5kg×12）；Matrix 卷腹 81.5kg 只卷不仰。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "高位下拉机 (宽握对位拉力)",
+                        "tag": "垂直拉力 · 零后仰纯背阔孤立",
+                        "cue": "大腿压板压实，坐实坐骨避开尾椎，收紧腹肌压住下肋骨，严禁末端仰腰借力，冲击双组 55kg×10",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "唤醒",
+                                    "weight": 40,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 45,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "基准",
+                                    "weight": 50,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 55,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 55,
+                                    "reps": 10,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
+                        "tag": "肩部中束 · 顶峰等长停顿 (可机动前置)",
+                        "cue": "站姿微屈膝微前倾 5°（零腰骶压迫），微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "上斜哑铃卧推 (30°)",
+                        "tag": "上胸破冰 · 17.5kg统治 + 20kg首探",
+                        "cue": "平贴腰零起桥技术！前两组稳固 17.5kg×10，第三组正式冲击 20kg×6-8 破冰（或求稳 17.5kg×12）",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 12.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 15,
+                                    "reps": 8,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 17.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 17.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "破冰3",
+                                    "weight": 20,
+                                    "reps": 8,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Matrix 坐姿卷腹机",
+                        "tag": "双轴联动 · 81.5kg 只卷不仰统治",
+                        "cue": "坐实坐骨避开尾椎，离心回放至上半身垂直地面即停（绝不后仰），顶峰等长停顿 1.5 秒排空肺内气体",
+                        "unit": "kg",
+                        "stepDelta": 4.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 68,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 72.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 77,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 81.5,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "2": {
+            "title": "Day 2",
+            "name": "Lower A · 周四 (倒蹬机125kg + 单双腿伸腿 + 坐姿腿弯举)",
+            "cue": "11/5已完成：因占用先伸腿，再倒蹬、腿弯举；倒蹬125kg×17，伸腿双腿54/59kg各12次，腿弯举50kg×12×3。本周不追加负重或组数；以动作质量和身体反馈为准。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "45° 倒蹬机 (Leg Press)",
+                        "tag": "下肢主力 · 125kg目标组",
+                        "cue": "原目标120kg×15×2、125kg×12-15。保持骨盆稳定，在可控无痛范围完成，不追求统一膝角或累计吨数。11/5实际末组125kg×17已归档。",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升 1",
+                                    "weight": 80,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升 2",
+                                    "weight": 100,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 110,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "冲刺 1",
+                                    "weight": 120,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "冲刺 2",
+                                    "weight": 120,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "破冰 3",
+                                    "weight": 125,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿伸腿训练器 (单边解耦 + 恒张力协议)",
+                        "tag": "单双腿解耦 · 股四头肌恒张力 (可机动前置)",
+                        "cue": "原目标单腿各22.5kg×12，双腿45kg×12、50kg×16。11/5双腿实际54kg×12、59kg×12；保持动作可控，记录实际配重与次数。",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "单左",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "单右",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿2",
+                                    "weight": 50,
+                                    "reps": 16,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿腿弯举 (屈腿训练器)",
+                        "tag": "后侧链 · 腘绳肌孤立 (零反弓协议)",
+                        "cue": "压板压实大腿，双手抓握把手将后腰平推贴死靠垫，顶峰停顿 1 秒（若感觉第 3 组有反弓苗头可 2 组收官）",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "3": {
+            "title": "Day 3",
+            "name": "恢复日 A · 周五 (零有氧 · 深层筋膜拉伸 + 婴儿式腰骶解压)",
+            "cue": "战略铁律：严禁跑步/椭圆机。执行 20 分钟深层静态拉伸 + 90 秒婴儿式后柱拉开 + 30 分钟温水浴，保护 mTOR 合成通路。",
+            "typeLabel": "恢复",
+            "exercises": [
+                  {
+                        "name": "全身大肌群深度静态拉伸",
+                        "tag": "筋膜恢复 · 无器械",
+                        "cue": "单侧胸肌、背阔肌、股四头肌、腘绳肌每侧保持 45 秒 + 跪姿婴儿式 90 秒",
+                        "unit": "分",
+                        "stepDelta": 5,
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "拉伸",
+                                    "weight": 0,
+                                    "reps": 20,
+                                    "done": false
+                              },
+                              {
+                                    "label": "水浴",
+                                    "weight": 0,
+                                    "reps": 30,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "4": {
+            "title": "Day 4",
+            "name": "Upper B · 周六 (卧推22.5kg双组10次 + 划船25kg + 肩部超级组 + 农夫22.5kg试重)",
+            "cue": "11/7已完成：卧推每只22.5kg×10×2，划船和肩部维持；农夫实绩每只20kg×80步、22.5kg×60步、20kg×80步，共220步。试重后不用补足240步，也不追加组数。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "平卧哑铃推胸",
+                        "tag": "水平推力 · 22.5kg×10×2已完成",
+                        "cue": "11/7两组每只22.5kg均完成10次；保持动作可控和适当余力，不因一次达标直接升到25kg。出现不适时停止相应动作评估。",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "热身",
+                                    "weight": 15,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 17.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 20,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 22.5,
+                                    "reps": 10,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 22.5,
+                                    "reps": 10,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Hammer Strength 胸垫高位划船",
+                        "tag": "对角线拉力 · 单边 25kg 双组满额统治",
+                        "cue": "单边挂片净重，胸垫支撑躯干，避免后仰借力。11/7单边25kg×12×2维持完成；先观察动作质量及余力，再考虑加次数。",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 15,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 20,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 25,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 25,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "【超级组 A】反向蝴蝶机飞鸟 (三角肌后束孤立)",
+                        "tag": "交替超级组 · 35kg×15×2 满额统治",
+                        "cue": "胸贴胸垫，手肘微屈锁死，顶峰等长收缩 1.5 秒；每组完成后休息 30-45 秒即刻穿插一组下方侧平举",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 25,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 30,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 35,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 35,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "【超级组 B】三角肌中束孤立 (侧平举机 36kg / 哑铃 7.5kg)",
+                        "tag": "交替超级组 · 每周2练高频刺激",
+                        "cue": "与上方后束飞鸟交替执行，器械 36kg 或哑铃 7.5kg。微屈肘以肘领先向两侧平举，沉肩防耸肩，顶峰停顿 1 秒",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 7.5,
+                                    "reps": 15,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "哑铃农夫行走",
+                        "tag": "握持与携行 · 22.5kg单趟试重已记录",
+                        "cue": "原预设为每只20kg×80步×3。11/7实际为20kg×80步、22.5kg×60步、20kg×80步；中间一趟试重，不要求补走20步。保持握持、步态和取放稳定。",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "repsUnit": "步",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 20,
+                                    "reps": 80,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "5": {
+            "title": "Day 5",
+            "name": "Lower B · 周日黄金窗口 (哈克85kg破冰 + 腿弯举解耦 + 臀推55kg破冰 + 伸腿恒张力 + 矩阵卷腹81.5kg)",
+            "cue": "周末下肢主项破冰战（目标85-95分钟）：哈克深蹲在 80kg×15 统治后末组首探 85kg×8-10；紧接坐姿腿弯举创造 10 分钟伸髋恢复窗；臀推首探 55kg×10-12；最后补足跨日移峰的 Matrix 卷腹 81.5kg。",
+            "typeLabel": "训练",
+            "exercises": [
+                  {
+                        "name": "45° 线性哈克深蹲",
+                        "tag": "下肢主力 · 80kg统治 + 85kg破冰之战",
+                        "cue": "切除底部骨盆翻转死区（膝角约 90° 贴稳背垫即刻推起），组 1 稳固 80kg×15，组 2 正式首探 85kg×8-10（或求稳 80kg×15）",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "热身 1",
+                                    "weight": 0,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "热身 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "稳态",
+                                    "weight": 75,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "统治1",
+                                    "weight": 80,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "破冰2",
+                                    "weight": 85,
+                                    "reps": 10,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "坐姿腿弯举 (腘绳肌 · 拮抗肌解耦窗口)",
+                        "tag": "后侧链做工 · 创造10分钟伸髋恢复窗",
+                        "cue": "紧接哈克深蹲执行！后腰死贴靠垫零反弓，顶峰停顿 1 秒，同时让臀大肌与股四头肌满血恢复 ATP-CP",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "组 1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 3",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "固定器械臀推 (Hip Thrust / 臀桥)",
+                        "tag": "后侧链伸髋 · 50kg统治 + 55kg破冰",
+                        "cue": "收住下肋骨、下巴微收，推至躯干与大腿水平即止，顶峰做骨盆后倾卷尾骨夹臀 1.5-2 秒（严禁拱腰超伸），末组首探 55kg",
+                        "unit": "kg",
+                        "stepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 25,
+                                    "reps": 15,
+                                    "done": false
+                              },
+                              {
+                                    "label": "爬升",
+                                    "weight": 40,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "统治1",
+                                    "weight": 50,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "破冰2",
+                                    "weight": 55,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "伸腿训练器 (恒张力协议)",
+                        "tag": "单边解耦 + 全程恒张力",
+                        "cue": "单腿左右各 22.5kg 激活神经；双腿 45-50kg 全程恒张力做工，榨干股四头肌储备",
+                        "unit": "kg",
+                        "stepDelta": 2.5,
+                        "sets": [
+                              {
+                                    "label": "单左",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "单右",
+                                    "weight": 22.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿1",
+                                    "weight": 45,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "双腿2",
+                                    "weight": 50,
+                                    "reps": 16,
+                                    "done": false
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Matrix 坐姿卷腹机 (跨日移峰收尾)",
+                        "tag": "双轴联动 · 81.5kg 核心收尾",
+                        "cue": "自周六移峰至此（与周三间隔96小时），坐骨承重、只卷不仰，顶峰等长停顿 1.5 秒，慢速回放 3 秒",
+                        "unit": "kg",
+                        "stepDelta": 4.5,
+                        "sets": [
+                              {
+                                    "label": "激活",
+                                    "weight": 68,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "过渡",
+                                    "weight": 72.5,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 1",
+                                    "weight": 77,
+                                    "reps": 12,
+                                    "done": false
+                              },
+                              {
+                                    "label": "组 2",
+                                    "weight": 81.5,
+                                    "reps": 12,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "6": {
+            "title": "Day 6",
+            "name": "恢复日 B · 周一会议课程日 (主动恢复 · 神经卸载与深层拉伸)",
+            "cue": "排期重构（解放忙碌周一）：周末已完成 Upper B + Lower B 双核破冰，周一全身零训练负荷，安心投入科研会议与课程；晚间执行 20 分钟静态拉伸 + 温水浴促进超量恢复。",
+            "typeLabel": "恢复",
+            "exercises": [
+                  {
+                        "name": "全身体位深度静态拉伸",
+                        "tag": "神经修复 · 结缔组织减压",
+                        "cue": "针对股四头肌、臀大肌、胸大肌、背阔肌深层放松，严禁中高强度有氧",
+                        "unit": "分",
+                        "stepDelta": 5,
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5,
+                        "sets": [
+                              {
+                                    "label": "拉伸",
+                                    "weight": 0,
+                                    "reps": 20,
+                                    "done": false
+                              },
+                              {
+                                    "label": "水浴",
+                                    "weight": 0,
+                                    "reps": 30,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      },
+      "7": {
+            "title": "Day 7",
+            "name": "全面休息 · 周二 (数据汇总与复盘)",
+            "cue": "身体彻底放空，总结 Week 21 四大破冰战役数据与睡眠心率趋势，准备编制 Week 22 周期方案。",
+            "typeLabel": "休息",
+            "exercises": [
+                  {
+                        "name": "全天被动休息与饮食充能",
+                        "tag": "超量恢复",
+                        "cue": "保证充足碳水化合物储备，提前补水（睡前 90 分钟停水防起夜）",
+                        "unit": "日",
+                        "stepDelta": 1,
+                        "repsUnit": "天",
+                        "sets": [
+                              {
+                                    "label": "休息",
+                                    "weight": 0,
+                                    "reps": 1,
+                                    "done": false
+                              }
+                        ]
+                  }
+            ]
+      }
+};
+
+    // --- State Management ---
+    const STORAGE_KEY = 'week21_workout_state_v1';
+    let currentDay = 1;
+    let workoutState = {};
+
+    function initData() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          workoutState = JSON.parse(saved);
+          // Sync metadata from WEEK21_PLAN
+          for (let d = 1; d <= 7; d++) {
+            if (WEEK21_PLAN[d] && workoutState[d]) {
+              workoutState[d].title = WEEK21_PLAN[d].title;
+              workoutState[d].name = WEEK21_PLAN[d].name;
+              workoutState[d].cue = WEEK21_PLAN[d].cue;
+              workoutState[d].typeLabel = WEEK21_PLAN[d].typeLabel;
+
+              const hasCompletedSets = workoutState[d].exercises &&
+                workoutState[d].exercises.some(ex => ex.sets && ex.sets.some(s => s.done));
+
+              if (!hasCompletedSets) {
+                workoutState[d] = JSON.parse(JSON.stringify(WEEK21_PLAN[d]));
+              } else if (workoutState[d].exercises && WEEK21_PLAN[d].exercises) {
+                workoutState[d].exercises.forEach((ex, idx) => {
+                  if (WEEK21_PLAN[d].exercises[idx]) {
+                    ex.name = WEEK21_PLAN[d].exercises[idx].name;
+                    ex.tag = WEEK21_PLAN[d].exercises[idx].tag;
+                    ex.cue = WEEK21_PLAN[d].exercises[idx].cue;
+                    ex.unit = WEEK21_PLAN[d].exercises[idx].unit;
+                    ex.stepDelta = WEEK21_PLAN[d].exercises[idx].stepDelta;
+                    ex.repsUnit = WEEK21_PLAN[d].exercises[idx].repsUnit;
+                    ex.repsStepDelta = WEEK21_PLAN[d].exercises[idx].repsStepDelta;
+                  }
+                });
+              }
+            }
+          }
+          saveData();
+        } catch (e) {
+          workoutState = JSON.parse(JSON.stringify(WEEK21_PLAN));
+          saveData();
+        }
+      } else {
+        workoutState = JSON.parse(JSON.stringify(WEEK21_PLAN));
+        saveData();
+      }
+    }
+
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(workoutState));
+    }
+
+    // --- Render Functions ---
+    function renderDayNav() {
+      const nav = document.getElementById('dayNav');
+      nav.innerHTML = '';
+      for (let d = 1; d <= 7; d++) {
+        const btn = document.createElement('div');
+        btn.className = `day-btn ${d === currentDay ? 'active' : ''}`;
+        btn.onclick = () => switchDay(d);
+        btn.innerHTML = `
+          <span>${workoutState[d].title}</span>
+          <span class="sub">${workoutState[d].typeLabel || ((d === 3 || d === 5) ? '恢复' : (d === 7 ? '休息' : '训练'))}</span>
+        `;
+        nav.appendChild(btn);
+      }
+    }
+
+    function renderDayContent() {
+      const dayData = workoutState[currentDay];
+      const banner = document.getElementById('dayBanner');
+      banner.innerHTML = `<strong>${dayData.name}</strong><br>${dayData.cue}`;
+
+      const container = document.getElementById('exercisesContainer');
+      container.innerHTML = '';
+
+      dayData.exercises.forEach((ex, exIdx) => {
+        const card = document.createElement('div');
+        card.className = 'exercise-card';
+
+        let setsHtml = '';
+        ex.sets.forEach((s, sIdx) => {
+          const isDone = s.done;
+          const isWarm = s.label.includes('热身') || s.label.includes('激活');
+          const delta = ex.stepDelta || 2.5;
+          const repsDelta = ex.repsStepDelta || 1;
+          const rUnit = ex.repsUnit || '次';
+          const isRecovery = ex.unit === '分' || ex.unit === '日';
+
+          setsHtml += `
+            <div class="set-row">
+              <span class="set-label ${isWarm ? 'warmup' : ''}">${s.label}</span>
+
+              <!-- Weight Stepper -->
+              ${isRecovery ? `
+                <div class="stepper" style="visibility: hidden; pointer-events: none;"></div>
+              ` : `
+                <div class="stepper">
+                  <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, -${delta})">−</button>
+                  <div class="step-input-wrap">
+                    <input class="step-input" type="number" step="0.5" value="${s.weight}" onchange="changeWeight(${exIdx}, ${sIdx}, this.value)">
+                    <span class="step-unit">${ex.unit}</span>
+                  </div>
+                  <button class="step-btn" onclick="stepWeight(${exIdx}, ${sIdx}, ${delta})">+</button>
+                </div>
+              `}
+
+              <!-- Reps Stepper -->
+              <div class="stepper">
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, -${repsDelta})">−</button>
+                <div class="step-input-wrap">
+                  <input class="step-input" type="number" step="1" value="${s.reps}" onchange="changeReps(${exIdx}, ${sIdx}, this.value)">
+                  <span class="step-unit">${rUnit}</span>
+                </div>
+                <button class="step-btn" onclick="stepReps(${exIdx}, ${sIdx}, ${repsDelta})">+</button>
+              </div>
+
+              <!-- Check Done -->
+              <button class="check-btn ${isDone ? 'done' : ''}" onclick="toggleSetDone(${exIdx}, ${sIdx})">
+                ${isDone ? '✓' : '○'}
+              </button>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="ex-header">
+            <div class="ex-title">
+              <span>${ex.name}</span>
+            </div>
+            <span class="ex-tag">${ex.tag}</span>
+            <div class="ex-cue">💡 ${ex.cue}</div>
+          </div>
+          <div class="set-table-head">
+            <span>组别</span>
+            <span>${(ex.unit === '分' || ex.unit === '日') ? '' : '负荷'}</span>
+            <span>${ex.repsUnit === '步' ? '步数' : (ex.unit === '分' ? '时长' : (ex.unit === '日' ? '天数' : '次数'))}</span>
+            <span>打卡</span>
+          </div>
+          ${setsHtml}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function switchDay(d) {
+      currentDay = d;
+      renderDayNav();
+      renderDayContent();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- Controls ---
+    function stepWeight(exIdx, sIdx, delta) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.weight = Math.max(0, +(set.weight + delta).toFixed(1));
+      saveData();
+      renderDayContent();
+    }
+
+    function changeWeight(exIdx, sIdx, val) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.weight = Math.max(0, parseFloat(val) || 0);
+      saveData();
+    }
+
+    function stepReps(exIdx, sIdx, delta) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.reps = Math.max(0, set.reps + delta);
+      saveData();
+      renderDayContent();
+    }
+
+    function changeReps(exIdx, sIdx, val) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.reps = Math.max(0, parseInt(val, 10) || 0);
+      saveData();
+    }
+
+    function toggleSetDone(exIdx, sIdx) {
+      const set = workoutState[currentDay].exercises[exIdx].sets[sIdx];
+      set.done = !set.done;
+      saveData();
+      renderDayContent();
+
+      if (set.done) {
+        if ('vibrate' in navigator) {
+          navigator.vibrate(50);
+        }
+        startTimer(90);
+      }
+    }
+
+    function resetDayData() {
+      if (confirm(`确认重置 ${workoutState[currentDay].title} 为初始预设计划吗？`)) {
+        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK21_PLAN[currentDay]));
+        saveData();
+        renderDayContent();
+        showToast("已重置今日预设计划");
+      }
+    }
+
+    // --- Rest Timer ---
+    let timerInterval = null;
+    let timerSecondsLeft = 0;
+    let timerTotalSeconds = 90;
+    let isTimerRunning = false;
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function updateTimerUI() {
+      const str = formatTime(timerSecondsLeft);
+      document.getElementById('modalTimeDisplay').innerText = str;
+      const badge = document.getElementById('timerBadge');
+      const badgeText = document.getElementById('badgeTimerText');
+
+      if (isTimerRunning && timerSecondsLeft > 0) {
+        badge.classList.add('running');
+        badgeText.innerText = str;
+      } else {
+        badge.classList.remove('running');
+        badgeText.innerText = '组歇';
+      }
+    }
+
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      timerTotalSeconds = seconds || timerTotalSeconds;
+      timerSecondsLeft = timerTotalSeconds;
+      isTimerRunning = true;
+      document.getElementById('timerToggleBtn').innerText = '暂停';
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        if (timerSecondsLeft > 0) {
+          timerSecondsLeft--;
+          updateTimerUI();
+        } else {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          updateTimerUI();
+          triggerTimerAlarm();
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        document.getElementById('timerToggleBtn').innerText = '继续';
+      } else {
+        if (timerSecondsLeft <= 0) timerSecondsLeft = timerTotalSeconds;
+        isTimerRunning = true;
+        document.getElementById('timerToggleBtn').innerText = '暂停';
+        timerInterval = setInterval(() => {
+          if (timerSecondsLeft > 0) {
+            timerSecondsLeft--;
+            updateTimerUI();
+          } else {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            updateTimerUI();
+            triggerTimerAlarm();
+          }
+        }, 1000);
+      }
+      updateTimerUI();
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerSecondsLeft = timerTotalSeconds;
+      document.getElementById('timerToggleBtn').innerText = '开始';
+      updateTimerUI();
+    }
+
+    function setTimerSeconds(sec) {
+      document.querySelectorAll('.quick-time-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === sec + 's');
+      });
+      timerTotalSeconds = sec;
+      startTimer(sec);
+    }
+
+    function triggerTimerAlarm() {
+      if ('vibrate' in navigator) {
+        navigator.vibrate([200, 100, 200, 100, 400]);
+      }
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+      } catch (e) {}
+      showToast('⏰ 组歇结束，请开始下一组！');
+    }
+
+    function openTimerModal() {
+      document.getElementById('timerModal').classList.add('show');
+    }
+
+    function closeTimerModal() {
+      document.getElementById('timerModal').classList.remove('show');
+    }
+
+    // --- Export Note Formatting (Matches user's mobile note style exactly) ---
+    function exportWorkoutLog() {
+      const dayData = workoutState[currentDay];
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
+
+      let text = `week${CURRENT_WEEK_NUM}day${currentDay}\n${dateStr} | 猩球健身\n\n`;
+
+      dayData.exercises.forEach(ex => {
+        text += `${ex.name}\n`;
+        const completedSets = ex.sets.filter(s => s.done);
+        const targetSets = completedSets.length > 0 ? completedSets : ex.sets;
+
+        targetSets.forEach((s, idx) => {
+          const numPrefix = ["第一组", "第二组", "第三组", "第四组", "第五组", "第六组"][idx] || `第${idx+1}组`;
+          if (ex.unit === '自重' || ex.unit === '日') {
+            text += `${numPrefix} ${s.reps}次\n`;
+          } else if (ex.unit === '分' || ex.repsUnit === '分钟') {
+            text += `${numPrefix} ${s.reps}分钟\n`;
+          } else if (ex.name.includes('农夫行走') || ex.unit === '步' || ex.repsUnit === '步') {
+            text += `${numPrefix} ${s.reps}步单侧 ${s.weight}kg\n`;
+          } else if (ex.unit === 'kg') {
+            if (ex.name.includes('辅助引体')) {
+              text += `${numPrefix}辅助减重 ${s.weight}kg ${s.reps}次\n`;
+            } else if (ex.name.includes('划船')) {
+              text += `${numPrefix}单边 ${s.weight}kg ${s.reps}次\n`;
+            } else if (ex.name.includes('哑铃') || ex.name.includes('推胸')) {
+              text += `${numPrefix}单侧 ${s.weight}kg ${s.reps}次\n`;
+            } else {
+              text += `${numPrefix} ${s.weight}kg ${s.reps}次\n`;
+            }
+          }
+        });
+        text += `\n`;
+      });
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text.trim()).then(() => {
+          showToast('📋 已复制今日记录，可发给 AI 复盘！');
+        }).catch(() => {
+          fallbackCopy(text.trim());
+        });
+      } else {
+        fallbackCopy(text.trim());
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('📋 已复制今日记录，可发给 AI 复盘！');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    initData();
+    renderDayNav();
+    renderDayContent();
+  </script>
+</body>
+</html>

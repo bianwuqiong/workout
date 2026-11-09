@@ -1,7 +1,7 @@
 {
   "name": "猩球力量日志",
   "short_name": "力量日志",
-  "description": "Week 21 健身房训练计划与逐组打卡应用",
+  "description": "Week 22 训练计划与逐组记录，11月11日至17日",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#090d13",
