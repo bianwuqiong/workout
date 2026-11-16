@@ -1502,14 +1502,22 @@
       const now = new Date();
       const dateStr = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
       
-      let text = `week${CURRENT_WEEK_NUM}day${currentDay}\n${dateStr} | 猩球健身\n\n`;
+        const hasCompleted = dayData.exercises.some(ex => ex.sets.some(set => set.done));
+        const unrecorded = [];
+        const copyMessage = hasCompleted ? '📋 已复制勾选完成的组' : '📋 已复制计划预设，不是完成记录';
+        let text = hasCompleted ? '' : '计划预设（尚未勾选完成，非实绩）\n';
+        text += `week${CURRENT_WEEK_NUM}day${currentDay}\n${dateStr} | 猩球健身\n\n`;
 
       dayData.exercises.forEach(ex => {
-        text += `${ex.name}\n`;
-        const completedSets = ex.sets.filter(s => s.done);
-        const targetSets = completedSets.length > 0 ? completedSets : ex.sets;
+          const targetSets = ex.sets.map((set, setIndex) => ({ set, setIndex }))
+            .filter(item => !hasCompleted || item.set.done);
+          if (hasCompleted && targetSets.length === 0) {
+            unrecorded.push(ex.name);
+            return;
+          }
+          text += `${ex.name}\n`;
 
-        targetSets.forEach((s, idx) => {
+          targetSets.forEach(({ set: s, setIndex: idx }) => {
           const numPrefix = ["第一组", "第二组", "第三组", "第四组", "第五组", "第六组"][idx] || `第${idx+1}组`;
           if (ex.unit === '自重' || ex.unit === '日') {
             text += `${numPrefix} ${s.reps}次\n`;
@@ -1532,25 +1540,29 @@
         text += `\n`;
       });
 
+        if (hasCompleted && unrecorded.length) {
+          text += `未勾选完成（未计入实绩）：${unrecorded.join('、')}\n`;
+        }
+
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text.trim()).then(() => {
-          showToast('📋 已复制今日记录，可发给 AI 复盘！');
+            showToast(copyMessage);
         }).catch(() => {
-          fallbackCopy(text.trim());
+            fallbackCopy(text.trim(), copyMessage);
         });
       } else {
-        fallbackCopy(text.trim());
+          fallbackCopy(text.trim(), copyMessage);
       }
     }
 
-    function fallbackCopy(text) {
+      function fallbackCopy(text, message = '📋 已复制文本') {
       const ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-      showToast('📋 已复制今日记录，可发给 AI 复盘！');
+        showToast(message);
     }
 
     function showToast(msg) {
