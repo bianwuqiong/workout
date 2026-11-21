@@ -519,7 +519,7 @@
     </button>
   </header>
 
-  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/24–11/30 · 逐步恢复训练量</span><a href="archives/week23.html" style="color:#58a6ff">查看 Week 23 记录</a></div>
+  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/23–11/29 · 逐步恢复训练量</span><a href="archives/week23.html" style="color:#58a6ff">查看 Week 23 记录</a></div>
 
   <!-- Day Navigation -->
   <div class="day-nav" id="dayNav"></div>
@@ -573,9 +573,36 @@
     const WEEK24_PLAN = {
       "1": {
             "title": "Day 1",
+            "name": "有氧 · 周一 11/23",
+            "sessionId": "cardio_mon",
+            "cue": "20分钟，平地快走或低阻力固定自行车选一种。先轻松5分钟，再以能说完整句子的速度活动10分钟，最后轻松5分钟。若当天腿部仍明显疲劳，可缩短为10–15分钟轻松走，或改为休息。",
+            "typeLabel": "有氧",
+            "exercises": [
+                  {
+                        "name": "平地快走或固定自行车",
+                        "tag": "轻至中等强度 · 20分钟",
+                        "cue": "按实际分钟打卡。先保持节奏和呼吸舒适，观察运动后及次日感受。",
+                        "unit": "分",
+                        "repsUnit": "分钟",
+                        "repsStepDelta": 5,
+                        "restSeconds": 0,
+                        "sets": [
+                              {
+                                    "label": "有氧",
+                                    "weight": 0,
+                                    "reps": 20,
+                                    "done": false,
+                                    "restSeconds": 0
+                              }
+                        ]
+                  }
+            ]
+      },
+      "2": {
+            "title": "Day 2",
             "name": "Upper A · 周二 11/24",
             "sessionId": "upper_a",
-            "cue": "35–55分钟。沿用熟悉动作，工作组留约3–4次余力。周二不便时，周三打开本页完成同一节，再按周四状态决定下肢A。",
+            "cue": "35–55分钟。沿用熟悉动作，工作组留约3–4次余力。周二不便时，周三打开 Day 2完成同一节，再按周四状态决定下肢A。",
             "typeLabel": "训练",
             "exercises": [
                   {
@@ -697,16 +724,16 @@
                   }
             ]
       },
-      "2": {
-            "title": "Day 2",
+      "3": {
+            "title": "Day 3",
             "name": "机动日 · 周三 11/25",
             "sessionId": "flex_wed",
-            "cue": "周二已训练时安排恢复。周二错过且周三状态正常，可前往Day 1完成同一节上肢A。",
+            "cue": "周二已训练时安排恢复。周二错过且周三状态正常，可前往 Day 2完成同一节上肢A。",
             "typeLabel": "恢复",
             "exercises": []
       },
-      "3": {
-            "title": "Day 3",
+      "4": {
+            "title": "Day 4",
             "name": "Lower A · 周四 11/26",
             "sessionId": "lower_a",
             "cue": "35–55分钟。复用11/21验证过的工作重量和组数，留约3–4次余力。若上肢A改到周三，先看周四恢复情况再决定是否进行。",
@@ -807,16 +834,16 @@
                   }
             ]
       },
-      "4": {
-            "title": "Day 4",
+      "5": {
+            "title": "Day 5",
             "name": "恢复日 · 周五 11/27",
             "sessionId": "recovery_fri",
             "cue": "照常生活，按舒适程度活动。回顾前两节训练和次日反应，决定周末安排。",
             "typeLabel": "恢复",
             "exercises": []
       },
-      "5": {
-            "title": "Day 5",
+      "6": {
+            "title": "Day 6",
             "name": "Upper B · 周六 11/28",
             "sessionId": "upper_b",
             "cue": "45–60分钟。若本周已练场次及次日反应良好，当天状态也正常，可安排上肢B。工作组留约3–4次余力。推胸和划船优先，农夫行走按状态选做。",
@@ -960,8 +987,8 @@
                   }
             ]
       },
-      "6": {
-            "title": "Day 6",
+      "7": {
+            "title": "Day 7",
             "name": "Lower B · 周日 11/29",
             "sessionId": "lower_b",
             "cue": "45–65分钟。周四练后及次日耐受良好，并且周六若训练也恢复正常时再做。工作组留约3–4次余力。周末只能练一天时，只选一节，另一节留到后续。",
@@ -1102,38 +1129,12 @@
                         ]
                   }
             ]
-      },
-      "7": {
-            "title": "Day 7",
-            "name": "有氧与复盘 · 周一 11/30",
-            "sessionId": "cardio_mon",
-            "cue": "20分钟，平地快走或低阻力固定自行车选一种。先轻松5分钟，再以能说完整句子的速度活动10分钟，最后轻松5分钟。若11月29日（Week 24周日）做了下肢B，且11月30日腿部仍明显疲劳，有氧可缩短为10–15分钟轻松走，或改为休息。",
-            "typeLabel": "有氧",
-            "exercises": [
-                  {
-                        "name": "平地快走或固定自行车",
-                        "tag": "轻至中等强度 · 20分钟",
-                        "cue": "按实际分钟打卡。先保持节奏和呼吸舒适，观察运动后及次日感受。",
-                        "unit": "分",
-                        "repsUnit": "分钟",
-                        "repsStepDelta": 5,
-                        "restSeconds": 0,
-                        "sets": [
-                              {
-                                    "label": "有氧",
-                                    "weight": 0,
-                                    "reps": 20,
-                                    "done": false,
-                                    "restSeconds": 0
-                              }
-                        ]
-                  }
-            ]
       }
 };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week24_workout_state_v1';
+    const STORAGE_KEY = 'week24_workout_state_v2_monday';
+    const LEGACY_STORAGE_KEY = 'week24_workout_state_v1';
     let currentDay = 1;
     let workoutState = {};
 
@@ -1174,11 +1175,14 @@
 
     function initData() {
       const saved = readStoredState(STORAGE_KEY);
+      const legacy = saved ? null : readStoredState(LEGACY_STORAGE_KEY);
       workoutState = {};
       for (let day = 1; day <= 7; day++) {
-        workoutState[day] = mergeStoredDay(WEEK24_PLAN[day], saved ? saved[day] : null);
+        const template = WEEK24_PLAN[day];
+        // Move the former Monday slot to Day 1, then shift the other slots by one.
+        const previous = saved ? saved[day] : legacy?.[day === 1 ? 7 : day - 1];
+        workoutState[day] = mergeStoredDay(template, previous);
       }
-      // A new cycle never imports completed sets from a previous week.
       saveData();
     }
 
