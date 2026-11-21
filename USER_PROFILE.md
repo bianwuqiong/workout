@@ -38,7 +38,7 @@
 
 下拉45kg×10×2、侧平举每只5kg×12×2、上斜每只15kg×8×2工作组完成，另有4个准备组，共10组。手表记录33分42秒。下拉和上斜准备组次数比预设略多，但工作组负重、次数和组数与本节目标一致；不把本次减量负重覆盖上表历史已完成参考，也不把下一阶段预设计作已完成。个人症状与恢复观察在本机综合健康资料中记录。
 
-当前过渡安排见 [Week23计划](C:/aiproject/健康/TRAINING_PLAN_WEEK23.md)，起始日期11月17日；新周预设不计为已完成成绩。
+11月24日至30日的计划见 [Week 24 训练计划](C:/aiproject/健康/TRAINING_PLAN_WEEK24.md)。[Week 23 预设](C:/aiproject/健康/TRAINING_PLAN_WEEK23.md)供回顾。
 
 上述成绩不自动触发下一档重量。完整逐组记录见 [训练历史](C:/aiproject/健康/TRAINING_PROGRESSION_HISTORY.md)。
 

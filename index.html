@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#090d13">
-  <title>猩球力量日志 · Week 23</title>
+  <title>猩球力量日志 · Week 24</title>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
@@ -512,14 +512,14 @@
   <!-- Header -->
   <header>
     <div class="header-title">
-      🦍 <span>猩球力量日志</span> · Week 23
+      🦍 <span>猩球力量日志</span> · Week 24
     </div>
     <button class="timer-badge-btn" id="timerBadge" onclick="openTimerModal()">
       ⏱️ <span id="badgeTimerText">组歇</span>
     </button>
   </header>
 
-  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/17–11/23 · 过渡适应</span><a href="archives/week22.html" style="color:#58a6ff">查看Week22记录</a></div>
+  <div style="padding:8px 14px;font-size:.8rem;color:#aab4c0;display:flex;gap:8px;flex-wrap:wrap"><span>11/24–11/30 · 逐步恢复训练量</span><a href="archives/week23.html" style="color:#58a6ff">查看 Week 23 记录</a></div>
 
   <!-- Day Navigation -->
   <div class="day-nav" id="dayNav"></div>
@@ -568,23 +568,23 @@
   <div class="toast" id="toast">已成功复制今日训练文本！</div>
 
   <script>
-    // --- Data Definition for Week 23 ---
-    const CURRENT_WEEK_NUM = 23;
-    const WEEK23_PLAN = {
+    // --- Data Definition for Week 24 ---
+    const CURRENT_WEEK_NUM = 24;
+    const WEEK24_PLAN = {
       "1": {
             "title": "Day 1",
-            "name": "Upper A · 周二 11/17",
+            "name": "Upper A · 周二 11/24",
             "sessionId": "upper_a",
-            "cue": "11/17已完成10组：下拉工作45kg×10×2、侧平举每只5kg×12×2、上斜每只15kg×8×2。准备次数略多已归档，不转成额外要求；当天及次日反应正常再推进后续轻量计划，不补组或自动加重。",
+            "cue": "35–55分钟。沿用熟悉动作，工作组留约3–4次余力。周二不便时，周三打开本页完成同一节，再按周四状态决定下肢A。",
             "typeLabel": "训练",
             "exercises": [
                   {
                         "name": "高位下拉机 (宽握)",
-                        "tag": "轻量适应 · 不追55kg",
-                        "cue": "30/40kg低次数准备，45kg×10×2；躯干稳定、呼吸可控。如果比平常明显费力或出现不适，停止本节评估。",
+                        "tag": "工作组45kg和可选50kg",
+                        "cue": "两组预设都是45kg×10。第一组动作稳定、无不适且约有4次余力时，第二组可手动调为50kg×8–10。",
                         "unit": "kg",
                         "stepDelta": 5,
-                        "restSeconds": 120,
+                        "restSeconds": 150,
                         "sets": [
                               {
                                     "label": "热身",
@@ -601,38 +601,38 @@
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
-                                    "restSeconds": 120
+                                    "restSeconds": 150
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
-                                    "restSeconds": 120
+                                    "restSeconds": 150
                               }
                         ]
                   },
                   {
                         "name": "哑铃侧平举",
-                        "tag": "每只重量 · 轻量两组",
-                        "cue": "每只5kg×12×2，不额外加组或为了泵感追到力竭。",
+                        "tag": "每只5kg，两组",
+                        "cue": "每只5kg×12–15×2，动作顺畅时在原重量内增加次数。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 5,
                                     "reps": 12,
                                     "done": false,
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 5,
                                     "reps": 12,
                                     "done": false,
@@ -642,11 +642,11 @@
                   },
                   {
                         "name": "上斜哑铃卧推 (30°)",
-                        "tag": "每只重量 · 从15kg工作组起",
-                        "cue": "10/12.5kg低次数准备，15kg×8×2；留有充足余力、取放可控。首节不直接使用20kg工作组，也不另加高负重卷腹。",
+                        "tag": "每只15kg，两组",
+                        "cue": "按上一节的工作重量做每只15kg×8–10×2，留出余力。",
                         "unit": "kg",
                         "stepDelta": 2.5,
-                        "restSeconds": 150,
+                        "restSeconds": 180,
                         "sets": [
                               {
                                     "label": "热身",
@@ -663,18 +663,35 @@
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 15,
                                     "reps": 8,
                                     "done": false,
-                                    "restSeconds": 150
+                                    "restSeconds": 180
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 15,
                                     "reps": 8,
                                     "done": false,
-                                    "restSeconds": 150
+                                    "restSeconds": 180
+                              }
+                        ]
+                  },
+                  {
+                        "name": "Matrix 坐姿卷腹机",
+                        "tag": "可选一组",
+                        "cue": "背部舒适且前面动作轻松，可用同台机器试59kg×10；若该档偏重，选更轻档或跳过。",
+                        "unit": "kg",
+                        "stepDelta": 4.5,
+                        "restSeconds": 90,
+                        "sets": [
+                              {
+                                    "label": "可选组",
+                                    "weight": 59,
+                                    "reps": 10,
+                                    "done": false,
+                                    "restSeconds": 90
                               }
                         ]
                   }
@@ -682,43 +699,23 @@
       },
       "2": {
             "title": "Day 2",
-            "name": "恢复日 · 周三 11/18",
-            "sessionId": "recovery_wed",
-            "cue": "11月18日。不安排力量训练；正常生活、舒适日常活动和按需放松即可，不要求完成恢复配额。记录前一节后的感受，状态不佳时不急着推进下一节。",
+            "name": "机动日 · 周三 11/25",
+            "sessionId": "flex_wed",
+            "cue": "周二已训练时安排恢复。周二错过且周三状态正常，可前往Day 1完成同一节上肢A。",
             "typeLabel": "恢复",
-            "exercises": [
-                  {
-                        "name": "舒适活动或放松 (按需)",
-                        "tag": "不强拉痛点",
-                        "cue": "以舒服、不加重不适为限；正常进食、按需饮水并规律休息。",
-                        "unit": "分",
-                        "stepDelta": 5,
-                        "restSeconds": 0,
-                        "sets": [
-                              {
-                                    "label": "可选活动",
-                                    "weight": 0,
-                                    "reps": 15,
-                                    "done": false,
-                                    "restSeconds": 0
-                              }
-                        ],
-                        "repsUnit": "分钟",
-                        "repsStepDelta": 5
-                  }
-            ]
+            "exercises": []
       },
       "3": {
             "title": "Day 3",
-            "name": "Lower A · 11/21 已完成",
+            "name": "Lower A · 周四 11/26",
             "sessionId": "lower_a",
-            "cue": "原定11/19，实际11/21完成9组，用时34分23秒。倒蹬100kg×10×2，双腿伸腿45kg×10×2，腿弯举45kg分别12次和10次。下方表格保留原预设供核对。",
+            "cue": "35–55分钟。复用11/21验证过的工作重量和组数，留约3–4次余力。若上肢A改到周三，先看周四恢复情况再决定是否进行。",
             "typeLabel": "训练",
             "exercises": [
                   {
                         "name": "45° 倒蹬机 (Leg Press)",
-                        "tag": "轻量下肢适应",
-                        "cue": "50/80kg准备，100kg×8×2；选择骨盆稳定、可控无痛幅度，不直接回到125kg。",
+                        "tag": "100kg，两组",
+                        "cue": "按同台同设置做100kg×8–10×2。保持骨盆稳定、幅度舒适，8次已足够完成本组。",
                         "unit": "kg",
                         "stepDelta": 5,
                         "restSeconds": 150,
@@ -738,14 +735,14 @@
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 100,
                                     "reps": 8,
                                     "done": false,
                                     "restSeconds": 150
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 100,
                                     "reps": 8,
                                     "done": false,
@@ -755,21 +752,21 @@
                   },
                   {
                         "name": "坐姿伸腿训练器 (双腿)",
-                        "tag": "双腿两组",
-                        "cue": "双腿45kg×10×2；本节不额外安排左右单腿组，先控制总量。机器更换或设置不同按实际可控负重调整。",
+                        "tag": "45kg，两组",
+                        "cue": "同台同设置，双腿45kg×10×2。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "双腿 1",
+                                    "label": "工作组1",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "双腿 2",
+                                    "label": "工作组2",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
@@ -779,8 +776,8 @@
                   },
                   {
                         "name": "坐姿腿弯举",
-                        "tag": "保持骨盆稳定",
-                        "cue": "35kg×8准备，45kg×10×2；疲劳导致动作不稳或出现不适时结束相应动作。",
+                        "tag": "45kg，两组",
+                        "cue": "35kg准备后，45kg×10–12×2。骨盆保持稳定，按当组余力选择次数。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 120,
@@ -793,14 +790,14 @@
                                     "restSeconds": 60
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 120
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
@@ -812,43 +809,23 @@
       },
       "4": {
             "title": "Day 4",
-            "name": "恢复日 · 周五 11/20",
+            "name": "恢复日 · 周五 11/27",
             "sessionId": "recovery_fri",
-            "cue": "11月20日。不安排力量训练；正常生活、舒适日常活动和按需放松即可，不要求完成恢复配额。记录前一节后的感受，状态不佳时不急着推进下一节。",
+            "cue": "照常生活，按舒适程度活动。回顾前两节训练和次日反应，决定周末安排。",
             "typeLabel": "恢复",
-            "exercises": [
-                  {
-                        "name": "舒适活动或放松 (按需)",
-                        "tag": "不强拉痛点",
-                        "cue": "以舒服、不加重不适为限；正常进食、按需饮水并规律休息。",
-                        "unit": "分",
-                        "stepDelta": 5,
-                        "restSeconds": 0,
-                        "sets": [
-                              {
-                                    "label": "可选活动",
-                                    "weight": 0,
-                                    "reps": 15,
-                                    "done": false,
-                                    "restSeconds": 0
-                              }
-                        ],
-                        "repsUnit": "分钟",
-                        "repsStepDelta": 5
-                  }
-            ]
+            "exercises": []
       },
       "5": {
             "title": "Day 5",
-            "name": "Upper B · 本周暂缓",
+            "name": "Upper B · 周六 11/28",
             "sessionId": "upper_b",
-            "cue": "11/21安排已改为Day 3下肢A。上肢B留到下周期再排，下方为原计划。",
+            "cue": "45–60分钟。若本周已练场次及次日反应良好，当天状态也正常，可安排上肢B。工作组留约3–4次余力。推胸和划船优先，农夫行走按状态选做。",
             "typeLabel": "训练",
             "exercises": [
                   {
                         "name": "平卧哑铃推胸",
-                        "tag": "每只重量 · 留约3次余力",
-                        "cue": "12.5/15kg准备，17.5kg×10×2；正式组参考180秒，必要时按准备状态调整，不强凑次数。",
+                        "tag": "每只17.5kg，两组",
+                        "cue": "每只17.5kg×8–10×2，正式组休息约3分钟，保持取放和动作稳定。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 180,
@@ -868,16 +845,16 @@
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 17.5,
-                                    "reps": 10,
+                                    "reps": 8,
                                     "done": false,
                                     "restSeconds": 180
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 17.5,
-                                    "reps": 10,
+                                    "reps": 8,
                                     "done": false,
                                     "restSeconds": 180
                               }
@@ -885,8 +862,8 @@
                   },
                   {
                         "name": "Hammer Strength 胸垫高位划船",
-                        "tag": "单边挂片净重",
-                        "cue": "15kg×8准备，单边20kg×10×2；胸垫支撑，避免后仰借力。",
+                        "tag": "每边20kg，两组",
+                        "cue": "以单边挂片净重记录。胸垫支撑，单边20kg×10×2。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 120,
@@ -899,14 +876,14 @@
                                     "restSeconds": 60
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 20,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 120
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 20,
                                     "reps": 10,
                                     "done": false,
@@ -916,21 +893,21 @@
                   },
                   {
                         "name": "反向蝴蝶机飞鸟",
-                        "tag": "轻量后束两组",
-                        "cue": "25kg×12×2；本周不强制与侧平举做高密度交替，保持控制和余力。",
+                        "tag": "25kg，两组",
+                        "cue": "25kg×12×2。按普通组休息，保持可控幅度。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 25,
                                     "reps": 12,
                                     "done": false,
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 25,
                                     "reps": 12,
                                     "done": false,
@@ -940,21 +917,21 @@
                   },
                   {
                         "name": "哑铃侧平举",
-                        "tag": "每只5kg",
-                        "cue": "每只5kg×12×2；不用额外加次数补回总量。",
+                        "tag": "每只5kg，两组",
+                        "cue": "每只5kg×12–15×2。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 5,
                                     "reps": 12,
                                     "done": false,
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 5,
                                     "reps": 12,
                                     "done": false,
@@ -964,21 +941,14 @@
                   },
                   {
                         "name": "哑铃农夫行走",
-                        "tag": "每只20kg · 轻量两趟",
-                        "cue": "每只20kg×40–60步×2，预设40步；握持、取放和步态应轻松稳定。背部不适时不做携行，不追补步数。",
+                        "tag": "可选一趟",
+                        "cue": "前面动作轻松、背部舒适且握持稳时，可每只20kg走40步一趟。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 150,
                         "sets": [
                               {
-                                    "label": "组 1",
-                                    "weight": 20,
-                                    "reps": 40,
-                                    "done": false,
-                                    "restSeconds": 150
-                              },
-                              {
-                                    "label": "组 2",
+                                    "label": "可选组",
                                     "weight": 20,
                                     "reps": 40,
                                     "done": false,
@@ -992,15 +962,15 @@
       },
       "6": {
             "title": "Day 6",
-            "name": "Lower B · 本周安排恢复",
+            "name": "Lower B · 周日 11/29",
             "sessionId": "lower_b",
-            "cue": "11/22安排恢复观察。下肢B留到下周期再排，下方为原计划。",
+            "cue": "45–65分钟。周四练后及次日耐受良好，并且周六若训练也恢复正常时再做。工作组留约3–4次余力。周末只能练一天时，只选一节，另一节留到后续。",
             "typeLabel": "训练",
             "exercises": [
                   {
                         "name": "45° 线性哈克深蹲",
-                        "tag": "标示加片重量 · 空橇自重未知",
-                        "cue": "0/50kg准备，再70kg×8×2；0仅表示未加片，选择自身可控、无痛幅度。",
+                        "tag": "从70kg回到动作",
+                        "cue": "0表示空橇未加片。两组70kg×8，稳定控制深度和速度。",
                         "unit": "kg",
                         "stepDelta": 5,
                         "restSeconds": 150,
@@ -1020,14 +990,14 @@
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 70,
                                     "reps": 8,
                                     "done": false,
                                     "restSeconds": 150
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 70,
                                     "reps": 8,
                                     "done": false,
@@ -1037,21 +1007,21 @@
                   },
                   {
                         "name": "坐姿腿弯举",
-                        "tag": "轻量两组",
-                        "cue": "45kg×10×2；不加极限冲刺组。",
+                        "tag": "45kg，两组",
+                        "cue": "45kg×10×2，保留余力。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 120,
                         "sets": [
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 120
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
@@ -1061,8 +1031,8 @@
                   },
                   {
                         "name": "固定器械臀推 (Hip Thrust)",
-                        "tag": "保持控制",
-                        "cue": "25kg×8准备，再40kg×10×2；顶端不靠过度拱腰完成，出现背部不适时结束。",
+                        "tag": "40kg，两组",
+                        "cue": "25kg准备后做40kg×10×2，顶端保持可控姿势。",
                         "unit": "kg",
                         "stepDelta": 5,
                         "restSeconds": 150,
@@ -1075,14 +1045,14 @@
                                     "restSeconds": 60
                               },
                               {
-                                    "label": "组 1",
+                                    "label": "工作组1",
                                     "weight": 40,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 150
                               },
                               {
-                                    "label": "组 2",
+                                    "label": "工作组2",
                                     "weight": 40,
                                     "reps": 10,
                                     "done": false,
@@ -1092,21 +1062,21 @@
                   },
                   {
                         "name": "坐姿伸腿训练器 (双腿)",
-                        "tag": "45kg两组",
-                        "cue": "双腿45kg×10×2；动作可控，保持余力。",
+                        "tag": "45kg，两组",
+                        "cue": "双腿45kg×10×2。腿部疲劳明显时，先少做一组。",
                         "unit": "kg",
                         "stepDelta": 2.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "双腿 1",
+                                    "label": "工作组1",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
                                     "restSeconds": 90
                               },
                               {
-                                    "label": "双腿 2",
+                                    "label": "工作组2",
                                     "weight": 45,
                                     "reps": 10,
                                     "done": false,
@@ -1116,21 +1086,14 @@
                   },
                   {
                         "name": "Matrix 坐姿卷腹机",
-                        "tag": "轻量 · 可按状态下调",
-                        "cue": "59kg×10×2；若当前机器没有该档，选不高于该档的可控轻量。任何背部不适时跳过本动作，不强行补齐。",
+                        "tag": "可选一组",
+                        "cue": "背部舒适时可做59kg×10一组，也可选更轻档。",
                         "unit": "kg",
                         "stepDelta": 4.5,
                         "restSeconds": 90,
                         "sets": [
                               {
-                                    "label": "组 1",
-                                    "weight": 59,
-                                    "reps": 10,
-                                    "done": false,
-                                    "restSeconds": 90
-                              },
-                              {
-                                    "label": "组 2",
+                                    "label": "可选组",
                                     "weight": 59,
                                     "reps": 10,
                                     "done": false,
@@ -1142,36 +1105,16 @@
       },
       "7": {
             "title": "Day 7",
-            "name": "恢复与复盘 · 周一 11/23",
+            "name": "恢复与复盘 · 周一 11/30",
             "sessionId": "recovery_mon",
-            "cue": "11月23日。不安排力量训练；正常生活、舒适日常活动和按需放松即可，不要求完成恢复配额。记录前一节后的感受，状态不佳时不急着推进下一节。",
+            "cue": "记录完成的场次、末组余力和训练后及次日感受，作为下一周期的调整依据。",
             "typeLabel": "恢复",
-            "exercises": [
-                  {
-                        "name": "舒适活动或放松 (按需)",
-                        "tag": "不强拉痛点",
-                        "cue": "以舒服、不加重不适为限；正常进食、按需饮水并规律休息。",
-                        "unit": "分",
-                        "stepDelta": 5,
-                        "restSeconds": 0,
-                        "sets": [
-                              {
-                                    "label": "可选活动",
-                                    "weight": 0,
-                                    "reps": 15,
-                                    "done": false,
-                                    "restSeconds": 0
-                              }
-                        ],
-                        "repsUnit": "分钟",
-                        "repsStepDelta": 5
-                  }
-            ]
+            "exercises": []
       }
 };
 
     // --- State Management ---
-    const STORAGE_KEY = 'week23_workout_state_v1';
+    const STORAGE_KEY = 'week24_workout_state_v1';
     let currentDay = 1;
     let workoutState = {};
 
@@ -1214,7 +1157,7 @@
       const saved = readStoredState(STORAGE_KEY);
       workoutState = {};
       for (let day = 1; day <= 7; day++) {
-        workoutState[day] = mergeStoredDay(WEEK23_PLAN[day], saved ? saved[day] : null);
+        workoutState[day] = mergeStoredDay(WEEK24_PLAN[day], saved ? saved[day] : null);
       }
       // A new cycle never imports completed sets from a previous week.
       saveData();
@@ -1234,7 +1177,7 @@
         btn.onclick = () => switchDay(d);
         btn.innerHTML = `
           <span>${workoutState[d].title}</span>
-          <span class="sub">${workoutState[d].typeLabel || WEEK23_PLAN[d].typeLabel}</span>
+          <span class="sub">${workoutState[d].typeLabel || WEEK24_PLAN[d].typeLabel}</span>
         `;
         nav.appendChild(btn);
       }
@@ -1370,7 +1313,7 @@
 
     function resetDayData() {
       if (confirm(`确认重置 ${workoutState[currentDay].title} 为初始预设计划吗？`)) {
-        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK23_PLAN[currentDay]));
+        workoutState[currentDay] = JSON.parse(JSON.stringify(WEEK24_PLAN[currentDay]));
         saveData();
         renderDayContent();
         showToast("已重置今日预设计划");
